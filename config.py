@@ -1,6 +1,6 @@
 # config.py
 import os
-#basedir = os.path.abspath(os.path.dirname(__file__))
+basedir = os.path.abspath(os.path.dirname(__file__))
 #UPLOADPATH = os.getcwd() + '\\static\\_upload\\images\\'
 #P_IMAGEPATH = os.getcwd() + '\\static\\product\\images\\'
 #S_IMAGEPATH = os.getcwd() + '\\static\\story\\images\\'
@@ -10,7 +10,7 @@ import os
 #S_IMAGEPATH = os.getcwd() + '/static/story/images/'
 
 #IPPORT = 'bytaiwan.me'
-#IPPORT = '10.90.7.37:5000'
+IPPORT = '192.168.7.85:5000'
 #IPPORT = '192.168.0.18:5000'
 #IPPORT = '29fa258b.ngrok.io'
 mailpassword=''
@@ -32,7 +32,6 @@ class Config(object):
     FLASKY_MAIL_SUBJECT_PREFIX = '[ByTaiwan]'
     FLASKY_MAIL_SENDER = 'ByTaiwan Admin <bytaiwan5812@gmail.com>'
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
-    UPLOADED_IMAGES_DEST = UPLOADPATH
     REDIS_URL = "redis://localhost"
     
     @staticmethod
