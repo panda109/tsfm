@@ -3,9 +3,8 @@
 #!/usr/bin/env python
 import os
 from app import create_app, db
-from app.models import User, Role, Catalog, Story
 from flask_script import Manager, Shell, Server
-from flask_migrate import Migrate, MigrateCommand
+from flask_migrate import Migrate
 from flask_uploads import configure_uploads, patch_request_class
 from app import images
 from werkzeug.security import generate_password_hash
