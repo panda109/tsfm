@@ -16,7 +16,6 @@ IPPORT = '192.168.8.155:5000'
 mailpassword=''
 
 class Config(object):
-    print(IPPORT)
     SECRET_KEY = os.environ.get('SECRET_KEY') or '!QIOD*Lioisfhishiwiwe98ew9233'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
