@@ -1,0 +1,102 @@
+nginx 當 reverse proxy，轉發 port
+#proxy  #nginx  #sriov
+
+1. 優化 nginx 設定檔
+vi /etc/nginx/nginx.conf
+worker_processes 1; # 使用的處理器(核心)數量，預設 auto
+
+events {
+		proxy_headers_hash_max_size 51200;
+		proxy_headers_hash_bucket_size 6400;
+        worker_connections 3000;  # 最大連接數，# 註1
+        # multi_accept on;  # 允許接受多請求，# 註2
+}
+
+http {
+	加入以下部份
+	proxy_headers_hash_max_size 51200;
+	proxy_headers_hash_bucket_size 6400;
+	}
+
+
+
+
+2. 設定 proxy 參數，開啟轉送 WebSocket
+vi /etc/nginx/proxy_params
+
+3. 設定站台參數，轉送 port
+vi /etc/nginx/sites-available/default
+
+# 要轉送的 Server1 
+server {
+        listen 80;
+
+        location / {
+		proxy_pass http://0.0.0.0:5000;
+		proxy_redirect        off;
+		proxy_set_header Host $host;
+		proxy_set_header Connection '';
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_http_version 1.1;
+		chunked_transfer_encoding off;
+		proxy_cache off;
+		client_max_body_size 5M;
+		proxy_read_timeout 24h;
+                include /etc/nginx/proxy_params;
+        }
+
+        location /nginx_status {
+                stub_status on; 
+                access_log off; 
+        }
+}
+
+
+# 要轉送的 Server 2
+server {
+        set $ds_host_ip  '52.52.99.99';  # 目的地 Server IP
+        listen 8888 reuseport;
+}
+
+# 要轉送的 Server 3
+server {
+        set $ds_host_ip  '52.52.99.99';  # 目的地 Server IP
+        listen 81 reuseport;
+}
+
+# 要轉送的 Server 4
+server {
+        set $ds_host_ip  '52.52.99.99';  # 目的地 Server IP
+        listen 8080 reuseport;
+}
+
+# 要轉送的 Server 5
+server {
+        set $ds_host_ip  '52.52.99.99';  # 目的地 Server IP
+        listen 9999 reuseport;
+}
+
+
+註1.
+worker_connections - 預設是512,它在events模組中。
+：他指定了一個 worker 進程在同一時間可以處理的最大請求數。
+
+註2.
+multi_accept - 可以讓nginx worker進程儘可能多地接受請求。它的作用是
+：讓 worker 進程 一次性地接受監聽隊列裡的所有請求，然後處理。
+(如果multi_accept的值設為off，那麼worker進程必須一個一個地接受監聽隊列裡的請求。)
+
+註3. 
+proxy 要轉到 domain name，而非 IP 的設定方法 (站台設定檔)
+server {
+        listen 81;
+        resolver 8.8.8.8;  # DNS 位址
+
+        set $upstream_endpoint http://natELB-123123.ap-southeast-1.elb.amazonaws.com:81;
+                            # 須注意：listen 是什麼 port，pass 後的 domain 就要帶什麼 port
+        location / {
+                proxy_pass $upstream_endpoint;
+                include /etc/nginx/proxy_params;
+        }
+}
+
