@@ -1,1 +1,27 @@
-HELLO
+<!-- app/templates/index.html -->
+
+{% extends "base.html" %}
+
+{% block title %}ByTaiwan{% endblock %}
+
+{% block head %}
+	{{ super() }}
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+	<link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}"/>
+{% endblock %}
+
+{% block page_content %}
+		
+<div class="row">
+<p>
+HELLO!!
+<p>
+HELLO!!
+<p>
+HELLO!!
+<p>
+</div>
+</div>
+{% endblock %}

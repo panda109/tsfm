@@ -7,10 +7,10 @@ from flask_script import Manager, Shell, Server
 from flask_migrate import Migrate, MigrateCommand
 from werkzeug.security import generate_password_hash
 from sqlalchemy.orm.dynamic import CollectionHistory
+
 #from flask_uploads import UploadSet, IMAGES
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 #images = UploadSet('images', IMAGES)
-
 manager = Manager(app)
 
 
