@@ -9,18 +9,30 @@
 <body
 {% block content%}
 	<div class="container">
+			<div class="row">	
+			<P>
+			<p>
+				<div class="col-xs-12 col-sm-12">
+					<a href="要前往的連結網址"><img src="{{ url_for('static', filename='img/left-arrow-2568.png') }}" width="15" height="15" border="0"></a>
+				</div>
+			</div>
+	</div>
+	<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12">
-					<h3>PV Generation Alert</>
+					<h2>PV Generation Alert</>
 				</div>
+			</div>
 	</div>
 	<div class="container">
 			<div class="row">
 				<div class="col-xs-6 col-sm-6">
- 					<h4>Notification  ON/OFF</>
+				<p>
+				<p>
+ 					<h4 style="float:left" >Notification  ON/OFF</>
  				</div>
  				<div class="col-xs-6 col-sm-6">	
-					<label style="float:right" class="switch">
+					<label class="switch" style="float:right">
 				      <input type="checkbox">
 				    <span class="slider"></span>		      
 				</div>
