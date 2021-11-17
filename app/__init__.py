@@ -1,5 +1,4 @@
 # app/__init__.py
-# app/__init__.py
 
 from flask import Flask
 from flask_bootstrap import Bootstrap
@@ -16,6 +15,8 @@ def create_app(config_name):
     app = Flask(__name__)
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
+    app._static_folder = os.path.abspath("static/")
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
     bootstrap.init_app(app)
     moment.init_app(app)
     return app

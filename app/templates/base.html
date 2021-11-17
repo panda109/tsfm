@@ -1,50 +1,44 @@
 <!-- app/templates/base.html -->
-
+<html>
 {% extends "bootstrap/base.html" %}
 
-{% block title %}ByTaiwan{% endblock %}
-
 {% block head %}
-	{{ super() }}
-	<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
-	<link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}"/>
+	{{super()}}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
 {% endblock %}
+<body
+{% block content%}
+	<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-xs-12 col-sm-12">
+					<h3>PV Generation Alert</>
+				</div>
+	</div>
+	<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-xs-6 col-sm-6">
+ 					<h4>Aleart Switch On/Off</>
+ 				</div>
+ 				<div class="col-xs-6 col-sm-6">	
+					<label style="float:right" class="switch">
+				      <input type="checkbox">
+				    <span class="slider"></span>		      
+				</div>
+			</div>
+	        </div>
+	</div>
+<div>
 
-{% block content %}
 <div class="container">
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
-    </div>
-    {% endfor %}
-
+    <p>
+   	<div style='border-bottom:1px solid #ccc;'></div>
+   	<p>
     {% block page_content %}{% endblock %}
-
-    <div class="row">
-
-    <div class="footer text-center">
-    <p>
-    <p>
-		<div style='border-bottom:1px solid #ccc;'></div>
-		    <p></p>
-			<p></p>
-
-			<SPAN class="text-left" STYLE="float:left">
-			    <p>
-				<li>About ByTaiwan.me</li>
-				<li>How to buy</li>
-				<li>Online help</li>
-				<li>Login</li>
-				<li>Sign up</li>
-			    </p>
-			</SPAN>
-
-	</div> 
+    <div style='border-bottom:1px solid #ccc;'></div>
 </div>
 {% endblock %}
-
+</body>
+</html>
 {% block scripts %}
 {{ super() }}
 {{ moment.include_moment() }}
