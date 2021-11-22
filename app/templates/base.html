@@ -1,0 +1,60 @@
+<!-- app/templates/base.html -->
+<html>
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+	{{super()}}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+{% endblock %}
+<body
+{% block content%}
+	<div class="container">
+			<div class="row">	
+			<P>
+			<p>
+				<div class="col-xs-12 col-sm-12">
+					<a href="要前往的連結網址"><img src="{{ url_for('static', filename='img/Mask.png') }}" width="15" height="15" border="0"></a>
+				<p>
+				</div>
+			</div>
+	</div>
+	<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12" style="text-align:left;font-size:37px;">
+					<p>
+					PV Generation Alert
+					<p>
+				</div>
+			</div>
+	</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-9 col-sm-9"  style="text-align:left;font-size:30px;">
+				<p>
+				<p>
+ 					Notification  ON/OFF
+ 				</div>
+ 				<div class="col-xs-3 col-sm-3">
+					<label class="switch" style="float:right">
+				      <input type="checkbox">
+				    <span class="slider"></span>		      
+				</div>
+		</div>
+		</div>
+	</div>
+<div>
+
+<div class="container">
+    <p>
+   	<div style='border-bottom:1px solid #ccc;'></div>
+   	<p>
+    {% block page_content %}{% endblock %}
+    <div style='border-bottom:1px solid #ccc;'></div>
+</div>
+{% endblock %}
+</body>
+</html>
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{% endblock %}
