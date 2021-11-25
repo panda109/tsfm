@@ -1,0 +1,53 @@
+<!-- app/templates/index.html -->
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/setting.css') }}">
+	<link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet" />
+	<script src="{{ url_for('static', filename='js/setting.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+	<title>PV Notification Setting</title>
+</head>
+
+<body>
+	<div class = 'header'>
+		<button class = 'return-button' onclick="window.location.href='/hello'"><img src="{{ url_for('static', filename='img/arrow left.png') }}" width="15" height="15" border="0"></button>
+		<button class = 'save-button'>Save</button>
+	</div>
+	<div class='title'>QA PV System</div>
+	<div class='contaniner'>
+		<div class='settings'>
+			<div id ='notif'>
+				<span>Notification</span>
+				<label class="switch">
+			      <input type="checkbox">
+			    <span class="slider"></span>		      
+			</div>
+			<div class='option goal'>
+				<span>Goal</span>
+				<div><input class='goal-value' type="number" placeholder="1000" onKeyPress="if(this.value.length==4) return false;" onblur="verify_value()"><span class='unit'>kWh</span></div>
+			</div>
+			<div class='hint'> Please enter a number between 1~9.999 kWh.</div>
+			<div class='option' id='bound'>
+				<span>Lower Bound</span>
+				<div><span class='pnum'>20</span><span class='unit'>%</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
+			</div>
+		</div>
+	</div>
+	<div class='pop-up'>
+		<div class='pop-up-bg'>
+			<button>Done</button>
+			<div class='picker'>
+				<ul class='picker-list'></ul>
+				<div class='picker-blur-top'></div>
+				<div class='picker-focus'></div>
+				<div class='picker-blur-bottom'></div>
+			</div>
+		</div>
+	</div>
+	
+	
+
+</body>
+
