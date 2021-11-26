@@ -8,6 +8,10 @@ import psycopg2, json
 def publish_hello():
     return render_template('index.html')
 
+@main.route('/setting')
+def publish_setting():
+    return render_template('setting.html')
+
 @main.route("/tsfm_service_status", methods = ["POST"])
 def service_status():
     # get service status
