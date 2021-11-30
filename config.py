@@ -22,18 +22,7 @@ class Config(object):
     SERVER_NAME = IPPORT
     SESSION_COOKIE_NAME = IPPORT
     SESSION_COOKIE_DOMAIN = IPPORT
-    MAIL_SERVER = 'smtp.googlemail.com'
-    MAIL_PORT = 587
-    MAIL_USE_TLS = True
-    MAIL_USERNAME = 'bytaiwan5812@gmail.com'
-    MAIL_PASSWORD = mailpassword
-    # MAIL_USERNAME = os.getenv('MAIL_USERNAME')
-    # MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
-    FLASKY_MAIL_SUBJECT_PREFIX = '[ByTaiwan]'
-    FLASKY_MAIL_SENDER = 'ByTaiwan Admin <bytaiwan5812@gmail.com>'
-    FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
-    REDIS_URL = "redis://localhost"
-    
+        
     @staticmethod
     def init_app(app):
         pass
@@ -51,14 +40,13 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:1q2w3e4r@192.168.7.85:5432/TSFM"
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig,
 
-    'default': DevelopmentConfig
+    'default': ProductionConfig
 }

@@ -2,8 +2,9 @@
 
 #!/usr/bin/env python
 import os
-from app import create_app
+from app import create_app, db
 from flask_script import Manager, Shell, Server
+from app.models import User
 from flask_migrate import Migrate, MigrateCommand
 from werkzeug.security import generate_password_hash
 from sqlalchemy.orm.dynamic import CollectionHistory
@@ -28,6 +29,11 @@ def test():
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
 
+@manager.command
+def rebuild():
+    db.drop_all()
+    db.create_all()
+    db.session.commit()
 
 if __name__ == '__main__':
     manager.run()
