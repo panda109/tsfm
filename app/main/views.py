@@ -1,10 +1,16 @@
 
 from . import main
 from flask import render_template
+from flask import Flask, request, abort
+import psycopg2, json
 
 @main.route('/hello')
 def publish_hello():
     return render_template('index.html')
+
+@main.route('/setting')
+def publish_setting():
+    return render_template('setting.html')
 
 @main.route("/tsfm_service_status", methods = ["POST"])
 def service_status():
