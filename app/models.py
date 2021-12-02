@@ -26,7 +26,7 @@ class Device_Info(UserMixin, db.Model):
     uuid = db.Column(db.String(64),unique=True, primary_key=True)
     name = db.Column(db.String(64))
     model = db.Column(db.String(64))
-    online_status = db.Column(db.Integer)
+    online_status = db.Column(db.String(64))
     gw_uuid = db.Column(db.String(64))
     user_id = db.Column(db.String(64))
     associated = db.Column(db.Boolean)
