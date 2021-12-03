@@ -10,12 +10,12 @@ from . import db
 class Device_Data(UserMixin, db.Model):
     __tablename__ = 'device_data'
     id = db.Column(db.Integer, primary_key=True)
-    dev_uuid = db.Column(db.String(64), unique=True, index=True)
+    dev_uuid = db.Column(db.String(64), index = True)
     scope = db.Column(db.String(64))
     model = db.Column(db.String(64))
-    value = db.Column(db.Integer)
-    generated_time = db.Column(db.DateTime)
-    uploaded_time = db.Column(db.DateTime)
+    value = db.Column(db.String(64))
+    generated_time = db.Column(db.BigInteger)
+    uploaded_time = db.Column(db.BigInteger)
 
     def __repr__(self):
         return "<Device Data(UUID='%s', Model='%s', Value='%s')>" % (

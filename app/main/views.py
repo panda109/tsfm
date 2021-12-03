@@ -22,7 +22,21 @@ def required_data():
         return json.dumps(request.json, ensure_ascii = False)
     else:
         abort(400) 
+        
+    # Insert data to DB
+    dict_raw_data = request.json
+    list_data = dict_raw_data["data"]
+    for i in range(len(list_data)):
+        db.session.add(Device_Data(dev_uuid = list_data[i]['deviceUuid'],
+                                    model = list_data[i]['model'], 
+                                    scope = list_data[i]['scope'], 
+                                    value = list_data[i]['value'], 
+                                    generated_time = list_data[i]['generatedTime'], 
+                                    uploaded_time = list_data[i]['uploadedTime']))
+        db.session.commit()
+
     
+  
 @main.route("/tsfm_device_status", methods = ["POST"])
 def device_status():
     #get device status data
@@ -80,15 +94,3 @@ def service_status():
           db.session.add(Device_Info(associated = 'TRUE'))
           db.session.commit() 
 
-
-  
-           
-def dbconnect():
-    ## Insert data to database
-    conn = psycopg2.connect(database = "tsfm", user = "postgres", password = "link4581", host = "192.168.7.85", port = "5432")
-    print("DB connected")
-    cursor = conn.cursor()
-    cursor.close()
-    print("Cursor Closed")
-    conn.close()
-    print("DB Closed")
