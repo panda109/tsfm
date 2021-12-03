@@ -3,7 +3,7 @@ from . import main
 from flask import render_template
 from flask import Flask, request, abort
 import psycopg2, json
-from app.models import Device_Data , Device_Info , User_Mgmt
+from ..models import Device_Data , Device_Info , User_Mgmt
 from app import db
 
 @main.route('/hello')
@@ -39,10 +39,10 @@ def service_status():
         print("For TSFM SERVICE STATUS Data: \n", request.json)
         whkServiceStatus = json.dumps(request.json, ensure_ascii = False)
     else:
-        abort(400) 
+        abort(400)
 ## update user service status / insert new entry
-    if len(User_Mgmt.query.filter_by(user_id = whkServiceStatus['userId'])) > 0: 
-      User_Mgmt.query.filter_by(user_id = whkServiceStatus['userId']).update({
+    if len(User_Mgmt().query.filter_by(user_id = whkServiceStatus['userId'])) > 0: 
+      User_Mgmt().query.filter_by(user_id = whkServiceStatus['userId']).update({
           'activated': whkServiceStatus['status']
        })         
       db.session.commit()
@@ -57,8 +57,8 @@ def service_status():
     for i in range(whkServiceStatus['associations']) :
       _gatewayid_ = whkServiceStatus['associations'][i]['gateway']['uuid']
       for j in range(whkServiceStatus['associations'][i]['gateway']['devices']) :
-        if len(Device_Info.query.filter_by(uuid = whkServiceStatus['associations'][i]['gateway']['devices'][j]['uuid'])) > 0 : 
-          Device_Info.query.filter_by(uuid = whkServiceStatus['associations'][i]['gateway']['devices'][j]['uuid']).update({
+        if len(Device_Info().query.filter_by(uuid = whkServiceStatus['associations'][i]['gateway']['devices'][j]['uuid'])) > 0 : 
+          Device_Info().query.filter_by(uuid = whkServiceStatus['associations'][i]['gateway']['devices'][j]['uuid']).update({
             'online_status': whkServiceStatus['associations'][i]['gateway']['devices'][j]['status'],
             'name' : whkServiceStatus['associations'][i]['gateway']['devices'][j]['name'],
             'model': whkServiceStatus['associations'][i]['gateway']['devices'][j]['model'],
