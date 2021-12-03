@@ -41,7 +41,7 @@ class User_Mgmt(UserMixin, db.Model):
     user_id = db.Column(db.String(64), unique=True, primary_key=True)
     username = db.Column(db.String(64), index=True)
     email = db.Column(db.String(64))
-    activated = db.Column(db.Boolean)
+    activated = db.Column(db.String(64))
     activated_time = db.Column(db.DateTime)
     expired_time = db.Column(db.DateTime)
     notify_all = db.Column(db.String(64), default = "ON")
