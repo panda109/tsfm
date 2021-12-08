@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from werkzeug.security import generate_password_hash, check_password_hash
 #add JsonEncodedDict support
-from app.JsonEncodedDict import JsonEncodedDict
+#from app.JsonEncodedDict import JsonEncodedDict
 from . import db
     
     
@@ -57,7 +57,7 @@ class Rules(UserMixin, db.Model):
     id = db.Column(db.Integer, unique=True, primary_key=True)
     name = db.Column(db.String(64))
     dev_uuid = db.Column(db.String(64), index=True)
-    rule_info = db.Column(JsonEncodedDict)
+    rule_info = db.Column(db.Text)
 
     def __repr__(self):
         return "<Rules Info(ID='%s', Name='%s', Info='%s')>" % (
