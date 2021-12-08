@@ -5,6 +5,7 @@ from flask import Flask, request, abort
 import psycopg2, json
 from ..models import Device_Data , Device_Info , User_Mgmt
 from app import db
+from sqlalchemy import exists
 
 @main.route('/hello')
 def publish_hello():
@@ -45,6 +46,38 @@ def device_status():
         return json.dumps(request.json, ensure_ascii = False)
     else:
         abort(400)
+        
+    dict_data = request.json
+    if dict_data["gateway"]["devices"] is None:
+        pass
+    else:     
+        for i in range(len(dict_data["gateway"]["devices"])):
+            is_exist = db.session.query(exists().where(Device_Info.uuid == dict_data["gateway"]["devices"][i]["uuid"])).scalar()
+            #if device uuid already exist in DB
+            if is_exist == True:
+                Device_Info().query.filter_by(uuid = dict_data["gateway"]["devices"][i]["uuid"]).update(
+                        {
+                            "name": dict_data["gateway"]["devices"][i]["name"],
+                            "model": dict_data["gateway"]["devices"][i]["model"],
+                            "online_status": dict_data["gateway"]["devices"][i]["status"]
+                         }
+                    )
+            # Insert a new device uuid
+            else:
+                db.session.add(
+                                Device_Info(
+                                        uuid = dict_data["gateway"]["devices"][i]["uuid"],
+                                        name = dict_data["gateway"]["devices"][i]["name"],
+                                        model = dict_data["gateway"]["devices"][i]["model"],
+                                        online_status = dict_data["gateway"]["devices"][i]["status"],
+                                        gw_uuid = dict_data["gateway"]["uuid"],
+                                        user_id = dict_data["userId"],
+                                        associated = True
+                                    ))
+                db.session.commit()  
+                
+            ## Note:
+            ##  For now won't insert the data of gateway associate/dissociate
 
 @main.route("/tsfm_service_status", methods = ["POST"])
 def service_status():
