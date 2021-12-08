@@ -85,46 +85,48 @@ def service_status():
     #get device status data
     if request.method == "POST":
         print("For TSFM SERVICE STATUS Data: \n", request.json)
-        whkServiceStatus = request.json
+        whkSvcSta = request.json
     else:
         abort(400)
 ## update user service status / insert new entry
-    if User_Mgmt().query.filter_by(user_id = whkServiceStatus['userId']).count() > 0: 
-      User_Mgmt().query.filter_by(user_id = whkServiceStatus['userId']).update({
-          'activated': whkServiceStatus['status']
+    if User_Mgmt().query.filter_by(user_id = whkSvcSta['userId']).count() > 0: 
+      User_Mgmt().query.filter_by(user_id = whkSvcSta['userId']).update({
+          'activated': whkSvcSta['status']
        })         
       db.session.commit()
     else:  
-      db.session.add(User_Mgmt(user_id = whkServiceStatus['userId'], activated = whkServiceStatus['status']))
+      db.session.add(User_Mgmt(user_id = whkSvcSta['userId'], activated = whkSvcSta['status']))
       db.session.commit()
 
 ## save user id for device
-    _userid_ = whkServiceStatus['userId']
+    _userid_ = whkSvcSta['userId']
 ## update device list info / insert new device info entry
-    for i in range(whkServiceStatus['associations']) :
-      _gatewayid_ = whkServiceStatus['associations'][i]['gateway']['uuid']
-      for j in range(whkServiceStatus['associations'][i]['gateway']['devices']) :
-        if Device_Info().query.filter_by(uuid = whkServiceStatus['associations'][i]['gateway']['devices'][j]['uuid']).count() > 0 : 
-          Device_Info().query.filter_by(uuid = whkServiceStatus['associations'][i]['gateway']['devices'][j]['uuid']).update({
-            'online_status': whkServiceStatus['associations'][i]['gateway']['devices'][j]['status'],
-            'name' : whkServiceStatus['associations'][i]['gateway']['devices'][j]['name'],
-            'model': whkServiceStatus['associations'][i]['gateway']['devices'][j]['model'],
-            'gw_uuid': _gatewayid_ ,
-            'user_id': _userid_ ,
-            'associated': 'TRUE'
-            }
-          )
+    if len(whkSvcSta['associations']) > 0 :
+      for i in range(len(whkSvcSta['associations'])) :
+        _gatewayid_ = whkSvcSta['associations'][i]['gateway']['uuid']
+        for j in range(len(whkSvcSta['associations'][i]['gateway']['devices'])) :
+          if Device_Info().query.filter_by(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid']).count() > 0 : 
+            Device_Info().query.filter_by(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid']).update({
+              'online_status': whkSvcSta['associations'][i]['gateway']['devices'][j]['status'],
+              'name' : whkSvcSta['associations'][i]['gateway']['devices'][j]['name'],
+              'model': whkSvcSta['associations'][i]['gateway']['devices'][j]['model'],
+              'gw_uuid': _gatewayid_ ,
+              'user_id': _userid_ ,
+              'associated': 'TRUE'
+              }
+            )
 
-          db.session.commit()         
+            db.session.commit()         
         
-        else:  
-          db.session.add(Device_Info(uuid = whkServiceStatus['associations'][i]['gateway']['devices'][j]['uuid'], 
-            online_status = whkServiceStatus['associations'][i]['gateway']['devices'][j]['status'],
-            name = whkServiceStatus['associations'][i]['gateway']['devices'][j]['name'], 
-            model = whkServiceStatus['associations'][i]['gateway']['devices'][j]['model'], 
-            gw_uuid = _gatewayid_ , 
-            user_id = _userid_ , 
-            associated = 'TRUE'))
+          else:  
+            db.session.add(Device_Info(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid'], 
+              online_status = whkSvcSta['associations'][i]['gateway']['devices'][j]['status'],
+              name = whkSvcSta['associations'][i]['gateway']['devices'][j]['name'], 
+              model = whkSvcSta['associations'][i]['gateway']['devices'][j]['model'], 
+              gw_uuid = _gatewayid_ , 
+              user_id = _userid_ , 
+              associated = 'TRUE'))
           
-          db.session.commit() 
-
+            db.session.commit() 
+    
+    return json.dumps(request.json, ensure_ascii = False)
