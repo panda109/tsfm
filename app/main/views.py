@@ -20,7 +20,7 @@ def required_data():
     # get required data 
     if request.method == "POST":
         print("For TSFM REQUIRED DATA Data: \n", request.json)
-        return json.dumps(request.json, ensure_ascii = False)
+        #return json.dumps(request.json, ensure_ascii = False)
     else:
         abort(400) 
         
@@ -35,6 +35,7 @@ def required_data():
                                     generated_time = list_data[i]['generatedTime'], 
                                     uploaded_time = list_data[i]['uploadedTime']))
         db.session.commit()
+    return json.dumps(request.json, ensure_ascii = False)
 
     
   
@@ -43,7 +44,7 @@ def device_status():
     #get device status data
     if request.method == "POST":
         print("For TSFM DEVICE STATUS Data: \n", request.json)
-        return json.dumps(request.json, ensure_ascii = False)
+        #return json.dumps(request.json, ensure_ascii = False)
     else:
         abort(400)
         
@@ -60,7 +61,7 @@ def device_status():
                             "name": dict_data["gateway"]["devices"][i]["name"],
                             "model": dict_data["gateway"]["devices"][i]["model"],
                             "online_status": dict_data["gateway"]["devices"][i]["status"]
-                         }
+                         }  
                     )
             # Insert a new device uuid
             else:
@@ -75,7 +76,7 @@ def device_status():
                                         associated = True
                                     ))
                 db.session.commit()  
-                
+    return json.dumps(request.json, ensure_ascii = False)
             ## Note:
             ##  For now won't insert the data of gateway associate/dissociate
 
