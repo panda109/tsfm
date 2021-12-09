@@ -1,5 +1,6 @@
 # config.py
 import os
+from _ast import Pass
 basedir = os.path.abspath(os.path.dirname(__file__))
 #UPLOADPATH = os.getcwd() + '\\static\\_upload\\images\\'
 #P_IMAGEPATH = os.getcwd() + '\\static\\product\\images\\'
@@ -10,19 +11,16 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 #S_IMAGEPATH = os.getcwd() + '/static/story/images/'
 
 #IPPORT = 'bytaiwan.me'
-IPPORT = '192.168.8.155:5000'
+IPPORT = '192.168.7.26:5000'
 #IPPORT = '192.168.0.18:5000'
 #IPPORT = '29fa258b.ngrok.io'
 mailpassword=''
 
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or '!QIOD*Lioisfhishiwiwe98ew9233'
-    SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    SERVER_NAME = IPPORT
-    SESSION_COOKIE_NAME = IPPORT
-    SESSION_COOKIE_DOMAIN = IPPORT
-        
+    SQLALCHEMY_COMMIT_TEARDOWN = True
+    
     @staticmethod
     def init_app(app):
         pass
@@ -40,8 +38,8 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:1q2w3e4r@192.168.7.85:5432/test"
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:1q2w3e4r@192.168.7.85:5432/TEST"
+
 
 config = {
     'development': DevelopmentConfig,

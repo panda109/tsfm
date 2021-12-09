@@ -9,7 +9,10 @@ from sqlalchemy import exists
 
 @main.route('/hello')
 def publish_hello():
-    return render_template('index.html')
+    userid = 'd76ca10d-5fe1-459f-ad05-f18ab4215568'
+    devicelist = Device_Info.get_by_userid(userid)
+    return render_template('index.html',devices = devicelist)
+    #return render_template("product/order.html", orders=orders, catalogs=catalogs, message=message)
 
 @main.route('/setting')
 def publish_setting():

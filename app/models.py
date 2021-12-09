@@ -4,6 +4,7 @@ from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from werkzeug.security import generate_password_hash, check_password_hash
+from . import db
 #add JsonEncodedDict support
 #from app.JsonEncodedDict import JsonEncodedDict
 from . import db
@@ -33,6 +34,11 @@ class Device_Info(UserMixin, db.Model):
     user_id = db.Column(db.String(64))
     associated = db.Column(db.String(64))
     notify = db.Column(db.String(64), default ="ON")
+    
+    @classmethod
+    def get_by_userid(cls, userid):
+        devices = Device_Info.query.filter_by(user_id=userid)
+        return devices
 
     def __repr__(self):
         return "<Device Info(UUID='%s', Name='%s', Model='%s')>" % (
