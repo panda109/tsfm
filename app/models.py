@@ -53,10 +53,15 @@ class User_Mgmt(UserMixin, db.Model):
     activated_time = db.Column(db.DateTime)
     expired_time = db.Column(db.DateTime)
     notify_all = db.Column(db.String(64), default = "ON")
+    
+    @classmethod
+    def get_status(cls, userid):
+        user_info= User_Mgmt.query.filter_by(user_id=userid)
+        return user_info
 
     def __repr__(self):
-        return "<User Mgmt(UUID='%s', Name='%s', Email='%s')>" % (
-                                self.user_id, self.name, self.email)
+        return "<User Mgmt(UUID='%s', Name='%s', Email='%s', Notify_all='%s')>" % (
+                                self.user_id, self.username, self.email, self.notify_all)
 
 class Rules(UserMixin, db.Model):
     __tablename__ = 'rules'

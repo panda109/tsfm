@@ -23,6 +23,7 @@
 				<div class="col-xs-12 col-sm-12" style="text-align:left;font-size:37px;">
 					<p>
 					PV Generation Alert
+					 				{{user_info.notify_all}}
 					<p>
 				</div>
 			</div>
@@ -31,17 +32,32 @@
 				<p>
 				<p>
  					Notification  ON/OFF
+
  				</div>
+
  				<div class="col-xs-3 col-sm-3">
-					<label class="switch" style="float:right">
-					  <script>
-					  var url = "{{ url_for('main.test_post', userid = userid )}}"
-					  </script>
-				      <input type="checkbox" onclick="task(this)" />
-				    <span class="slider"></span>		      
+ 				
+					{% for user in user_info.all() %}
+					
+					
+						{% if user.notify_all == "ON" %}
+						<label class="switch" style="float:right">
+				      	<input type="checkbox" onclick="task(this)" checked/>
+				    	<span class="slider"></span>	
+						{% else %}
+						<label class="switch" style="float:right">
+				      	<input type="checkbox" onclick="task(this)"/>
+				    	<span class="slider"></span>	
+						{% endif %}
+					
+					
+					{% endfor %} 				
+ 				
+ 					<script>
+					  var url = "{{ url_for('main.test_post', userid=userid , status="ON")}}"
+					</script>
 				</div>
 	</div>
-	{{ userid }}
 <div>
 
 <div class="container">
@@ -60,18 +76,24 @@
 <script type=text/javascript>
 	function task(e){
 		if (e.checked){
+			status = "ON";
 			console.log("1");
-			userAction();
+			userAction(status);
 			
 		} else {
+			status="OFF";
 			console.log("0");
-			userAction();
+			userAction(status);
 		}
 	}
 	
-	function userAction(){
-		console.log(url);
+	function userAction(obj){
+
+	console.log(url);
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
 	}
-	
 </script>
 {% endblock %}
