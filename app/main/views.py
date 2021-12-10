@@ -9,16 +9,23 @@ from sqlalchemy import exists
 
 @main.route('/hello')
 def publish_hello():
-    userid = 'd76ca10d-5fe1-459f-ad05-f18ab4215568'
+    #userid = 'd76ca10d-5fe1-459f-ad05-f18ab4215568'
+    userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
     devicelist = Device_Info.get_by_userid(userid)
-    user_info = User_Mgmt.get_status(userid)
+    user_info = User_Mgmt.query.filter_by(user_id=userid)
     return render_template('index.html',userid = userid, user_info = user_info  , devices = devicelist)
     #return render_template("product/order.html", orders=orders, catalogs=catalogs, message=message)
 
 @main.route('/testpost/<userid>/<status>')
-def test_post(userid,status,methods = ["GET"]):
-    print(userid,status)
-    return("200")
+def update_notify_all(userid,status,methods = ["GET"]):
+
+    user = User_Mgmt.query.filter_by(user_id=userid).first()
+    if user != None :
+        user.notify_all = status
+        db.session.commit()
+        return("200")
+    else:
+        return("400")
 
 
 @main.route('/setting/<string:uuid>"')

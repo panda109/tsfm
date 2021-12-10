@@ -23,7 +23,6 @@
 				<div class="col-xs-12 col-sm-12" style="text-align:left;font-size:37px;">
 					<p>
 					PV Generation Alert
-					 				{{user_info.notify_all}}
 					<p>
 				</div>
 			</div>
@@ -54,7 +53,7 @@
 					{% endfor %} 				
  				
  					<script>
-					  var url = "{{ url_for('main.test_post', userid=userid , status="ON")}}"
+					  var url = "{{ url_for('main.update_notify_all', userid=userid , status="ON")}}"
 					</script>
 				</div>
 	</div>
@@ -76,20 +75,20 @@
 <script type=text/javascript>
 	function task(e){
 		if (e.checked){
-			status = "ON";
-			console.log("1");
-			userAction(status);
+			///console.log("1");
+			url = url.replace('OFF', 'ON')
+			userAction();
 			
 		} else {
-			status="OFF";
-			console.log("0");
-			userAction(status);
+			///console.log("0");
+			url = url.replace('ON', 'OFF')
+			userAction();
 		}
 	}
 	
-	function userAction(obj){
+	function userAction(){
 
-	console.log(url);
+	///console.log(url);
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url, false ); // false for synchronous request
     xmlHttp.send( null );

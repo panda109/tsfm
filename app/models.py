@@ -55,9 +55,9 @@ class User_Mgmt(UserMixin, db.Model):
     notify_all = db.Column(db.String(64), default = "ON")
     
     @classmethod
-    def get_status(cls, userid):
-        user_info= User_Mgmt.query.filter_by(user_id=userid)
-        return user_info
+    def get_by_id(cls, userid):
+        user= User_Mgmt.query.get(id)
+        return user
 
     def __repr__(self):
         return "<User Mgmt(UUID='%s', Name='%s', Email='%s', Notify_all='%s')>" % (
