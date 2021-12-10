@@ -14,9 +14,10 @@ def publish_hello():
     return render_template('index.html',userid = userid, devices = devicelist)
     #return render_template("product/order.html", orders=orders, catalogs=catalogs, message=message)
 
-@main.route('/testpost')
-def test_port(uuid,  methods = ["POST"]):
-    print(uuid)
+@main.route('/testpost/<string:userid>')
+def test_post(userid,  methods = ["POST"]):
+
+    return (userid)
 
 
 @main.route('/setting/<string:uuid>"')

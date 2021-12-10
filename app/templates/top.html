@@ -35,7 +35,7 @@
  				<div class="col-xs-3 col-sm-3">
 					<label class="switch" style="float:right">
 					  <script>
-					  url = {{ url_for }}
+					  var url = "{{ url_for('main.test_post', userid = userid )}}"
 					  </script>
 				      <input type="checkbox" onclick="task(this)" />
 				    <span class="slider"></span>		      
@@ -61,9 +61,17 @@
 	function task(e){
 		if (e.checked){
 			console.log("1");
+			userAction();
+			
 		} else {
 			console.log("0");
+			userAction();
 		}
 	}
+	
+	function userAction(){
+		console.log(url);
+	}
+	
 </script>
 {% endblock %}
