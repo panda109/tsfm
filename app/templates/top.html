@@ -34,7 +34,7 @@
  				</div>
  				<div class="col-xs-3 col-sm-3">
 					<label class="switch" style="float:right">
-				      <input type="checkbox">
+				      <input type="checkbox" onclick="task(this)" />
 				    <span class="slider"></span>		      
 				</div>
 	</div>
@@ -53,4 +53,13 @@
 {% block scripts %}
 {{ super() }}
 {{ moment.include_moment() }}
+<script type=text/javascript>
+	function task(e){
+		if (e.checked){
+			console.log("1");
+		} else {
+			console.log("0");
+		}
+	}
+</script>
 {% endblock %}

@@ -11,11 +11,16 @@ from sqlalchemy import exists
 def publish_hello():
     userid = 'd76ca10d-5fe1-459f-ad05-f18ab4215568'
     devicelist = Device_Info.get_by_userid(userid)
-    return render_template('index.html',devices = devicelist)
+    return render_template('index.html',userid = userid, devices = devicelist)
     #return render_template("product/order.html", orders=orders, catalogs=catalogs, message=message)
 
+@main.route('/testpost')
+def test_port(uuid,  methods = ["POST"]):
+    print(uuid)
+
+
 @main.route('/setting')
-def publish_setting():
+def publish_setting(uuid):
     return render_template('setting.html')
 
 @main.route("/tsfm_required_data", methods = ["POST"])
