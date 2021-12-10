@@ -16,7 +16,9 @@
 							{{ device.name }}
 							</div>							
 							<div class="col-xs-2 col-sm-2"  style="text-align:center">
-								<img src="{{ url_for('static', filename='img/Vector.png') }}" width="6" height="20" style="border:2px white" >			
+								<a href="{{ url_for('main.publish_setting', uuid = userid )}}">
+									<img src="{{ url_for('static', filename='img/Vector.png') }}" width="6" height="20" style="border:2px white" >			
+								</a>
 							</div>
 						</div>
 						

@@ -19,8 +19,9 @@ def test_port(uuid,  methods = ["POST"]):
     print(uuid)
 
 
-@main.route('/setting')
+@main.route('/setting/<string:uuid>"')
 def publish_setting(uuid):
+    print(uuid)
     return render_template('setting.html')
 
 @main.route("/tsfm_required_data", methods = ["POST"])
