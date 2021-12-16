@@ -23,7 +23,7 @@ function　option_clicked(){
 		if(current=='bound'){
 			setTimeout(function(){$('ul#bound').animate({scrollTop: (parseInt($('span.bound').text(),10)-1)*60}, 0)}, 200);	
 		}else if(current=='start'){
-			setTimeout(function(){$('ul#start').animate({scrollTop: (parseInt($('span.start').text(),10)-7)*60}, 0)}, 200);	
+			setTimeout(function(){$('ul#start').animate({scrollTop: (parseInt($('span.start').text(),10)-1)*60}, 0)}, 200);	
 		}else if(current=='end'){
 			setTimeout(function(){$('ul#end').animate({scrollTop: (parseInt($('span.end').text(),10)-12)*60}, 0)}, 200);	
 		}
@@ -57,7 +57,7 @@ function list_generator(){
 	for (i = 1; i < 100; i++) {
 		$('ul#bound').append('<div class="list">'+i+'%</div>');
 	}
-	for (j = 7; j < 19; j++) {
+	for (j = 1; j < 24; j++) {
 		if(j<12){
 			$('ul#start').append('<div class="list">'+j+' : 00</div>');
 		}else{
@@ -74,7 +74,7 @@ function detect_num(){
 	});
 	$('button#start').click(function(){
 		//set displayed value to user's preference
-		$('span.start').text(Math.round($('ul#start').scrollTop()/60)+7);
+		$('span.start').text(Math.round($('ul#start').scrollTop()/60)+1);
 	});
 	$('button#end').click(function(){
 		//set displayed value to user's preference
