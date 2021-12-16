@@ -49,7 +49,7 @@ def required_data():
         db.session.add(Device_Data(dev_uuid = list_data[i]['deviceUuid'],
                                     model = list_data[i]['model'], 
                                     scope = list_data[i]['scope'], 
-                                    value = list_data[i]['value'], 
+                                    value = float(list_data[i]['value']), 
                                     generated_time = list_data[i]['generatedTime'], 
                                     uploaded_time = list_data[i]['uploadedTime']))
         db.session.commit()

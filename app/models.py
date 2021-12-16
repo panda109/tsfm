@@ -7,8 +7,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 #add JsonEncodedDict support
 #from app.JsonEncodedDict import JsonEncodedDict
-from . import db
-    
     
 class Device_Data(UserMixin, db.Model):
     __tablename__ = 'device_data'
@@ -16,7 +14,7 @@ class Device_Data(UserMixin, db.Model):
     dev_uuid = db.Column(db.String(64), index = True)
     scope = db.Column(db.String(64))
     model = db.Column(db.String(64))
-    value = db.Column(db.String(64))
+    value = db.Column(db.Float)
     generated_time = db.Column(db.BigInteger)
     uploaded_time = db.Column(db.BigInteger)
 
