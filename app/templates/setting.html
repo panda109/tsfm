@@ -31,15 +31,45 @@
 			<div class='hint'> Please enter a number between 1~9.999 kWh.</div>
 			<div class='option' id='bound'>
 				<span>Lower Bound</span>
-				<div><span class='pnum'>20</span><span class='unit'>%</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
+				<div><span class='bound'>20</span><span class='unit'>%</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
+			</div>
+			<div class='option' id='start'>
+				<span>Starting Time</span>
+				<div><span class='start'>7</span>&nbsp;: 00</div>
+			</div>
+			<div class='option' id='end'>
+				<span>End Time</span>
+				<div><span class='end'>18</span>&nbsp;: 00</div>
 			</div>
 		</div>
 	</div>
-	<div class='pop-up'>
+	<div class='pop-up bound' >
 		<div class='pop-up-bg'>
-			<button>Done</button>
+			<button id='bound'>Done</button>
 			<div class='picker'>
-				<ul class='picker-list'></ul>
+				<ul class='picker-list' id='bound'></ul>
+				<div class='picker-blur-top'></div>
+				<div class='picker-focus'></div>
+				<div class='picker-blur-bottom'></div>
+			</div>
+		</div>
+	</div>
+	<div class='pop-up start'>
+		<div class='pop-up-bg'>
+			<button id='start'>Done</button>
+			<div class='picker'>
+				<ul class='picker-list' id='start'></ul>
+				<div class='picker-blur-top'></div>
+				<div class='picker-focus'></div>
+				<div class='picker-blur-bottom'></div>
+			</div>
+		</div>
+	</div>
+	<div class='pop-up end'>
+		<div class='pop-up-bg'>
+			<button id='end'>Done</button>
+			<div class='picker'>
+				<ul class='picker-list' id='end'></ul>
 				<div class='picker-blur-top'></div>
 				<div class='picker-focus'></div>
 				<div class='picker-blur-bottom'></div>
