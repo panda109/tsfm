@@ -31,6 +31,8 @@ class Device_Info(UserMixin, db.Model):
     gw_uuid = db.Column(db.String(64))
     user_id = db.Column(db.String(64))
     associated = db.Column(db.String(64))
+    target_energy_level = db.Cloumn(db.Float())
+    lower_bound = db.Cloumn(db.Integer())
     notify = db.Column(db.String(64), default ="ON")
     
     @classmethod
