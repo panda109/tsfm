@@ -114,7 +114,7 @@ def device_status():
                                         user_id = dict_data["userId"],
                                         associated = True
                                     ))
-                db.session.commit()  
+            db.session.commit()  
     return json.dumps(request.json, ensure_ascii = False)
             ## Note:
             ##  For now won't insert the data of gateway associate/dissociate
