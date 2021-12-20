@@ -103,6 +103,9 @@ def device_status():
             if list_exist_data[i] not in list_income_data:
                 Device_Info().query.filter_by(uuid = list_exist_data[i]).delete()
                 db.session.commit()
+    elif dict_data['triggerReason'] == "GATEWAY_DISASSOCIATED":
+        Device_Info().query.filter_by(gw_uuid = dict_data['gateway']['uuid']).delete()
+        db.session.commit()
     else:     
         for i in range(len(dict_data["gateway"]["devices"])):
             is_exist = db.session.query(exists().where(Device_Info.uuid == dict_data["gateway"]["devices"][i]["uuid"])).scalar()
