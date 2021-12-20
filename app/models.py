@@ -4,11 +4,9 @@ from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from werkzeug.security import generate_password_hash, check_password_hash
-from . import db
+
 #add JsonEncodedDict support
 #from app.JsonEncodedDict import JsonEncodedDict
-from . import db
-    
     
 class Device_Data(UserMixin, db.Model):
     __tablename__ = 'device_data'
