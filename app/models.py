@@ -33,6 +33,8 @@ class Device_Info(UserMixin, db.Model):
     associated = db.Column(db.String(64))
     target_energy_level = db.Column(db.Float())
     lower_bound = db.Column(db.Integer())
+	start_time = db.Column(db.Integer(),default = 8)
+	end_time = db.Column(db.Integer(),default = 17)
     notify = db.Column(db.String(64), default ="ON")
     
     @classmethod
@@ -50,8 +52,6 @@ class User_Mgmt(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True)
     email = db.Column(db.String(64))
     activated = db.Column(db.String(64))
-    activated_time = db.Column(db.DateTime)
-    expired_time = db.Column(db.DateTime)
     notify_all = db.Column(db.String(64), default = "ON")
     
     @classmethod
