@@ -14,7 +14,7 @@ class Device_Data(UserMixin, db.Model):
     dev_uuid = db.Column(db.String(64), index = True)
     scope = db.Column(db.String(64))
     model = db.Column(db.String(64))
-    value = db.Column(db.String(64))
+    value = db.Column(db.Float)
     generated_time = db.Column(db.BigInteger)
     uploaded_time = db.Column(db.BigInteger)
 
@@ -31,6 +31,8 @@ class Device_Info(UserMixin, db.Model):
     gw_uuid = db.Column(db.String(64))
     user_id = db.Column(db.String(64))
     associated = db.Column(db.String(64))
+    target_energy_level = db.Column(db.Float())
+    lower_bound = db.Column(db.Integer())
     notify = db.Column(db.String(64), default ="ON")
     
     @classmethod

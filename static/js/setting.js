@@ -7,19 +7,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //After everything(including css, img...) is fully loaded
 window.addEventListener('load', function () {
-	lower_bound_clicked();
+	option_clicked();
 	detect_num();
 });
 
-function　lower_bound_clicked(){
+function　option_clicked(){
 	//when lower bound option is clicked, toggle option picker 
-	$('#bound').click(function(){
-		gsap.to(".pop-up", {
+	$('div#bound, div#start, div#end').click(function(){
+		current = this.id;
+		gsap.to('div.'+current, {
 	        duration: 0.3,
 	        y: -window.innerHeight
 	    }).play();
 		//make sure displayed number & picker position are on the same spot
-		setTimeout(function(){$(".picker-list").animate({scrollTop: (parseInt($('.pnum').text(),10)-1)*60}, 0)}, 300);
+		if(current=='bound'){
+			setTimeout(function(){$('ul#bound').animate({scrollTop: (parseInt($('span.bound').text(),10)-1)*60}, 0)}, 200);	
+		}else if(current=='start'){
+			setTimeout(function(){$('ul#start').animate({scrollTop: (parseInt($('span.start').text(),10)-1)*60}, 0)}, 200);	
+		}else if(current=='end'){
+			setTimeout(function(){$('ul#end').animate({scrollTop: (parseInt($('span.end').text(),10)-12)*60}, 0)}, 200);	
+		}
+
 	});
 	//when user click outside of option picker, untoggle the option picker 
 	$('.pop-up').click(function(event){
@@ -47,15 +55,29 @@ function verify_value(){
 //generate % picker list
 function list_generator(){
 	for (i = 1; i < 100; i++) {
-		$('.picker-list').append('<div class="list">'+i+'%</div>');
+		$('ul#bound').append('<div class="list">'+i+'%</div>');
+	}
+	for (j = 1; j < 24; j++) {
+		if(j<12){
+			$('ul#start').append('<div class="list">'+j+' : 00</div>');
+		}else{
+			$('ul#end').append('<div class="list">'+j+' : 00</div>');
+		}
 	}
 }
 
 //executed when 'done' button is clicked 
 function detect_num(){
-	$('.pop-up button').click(function(){
+	$('button#bound').click(function(){
 		//set displayed value to user's preference
-		$('.pnum').text(Math.round($('.picker-list').scrollTop()/60)+1);
+		$('span.bound').text(Math.round($('ul#bound').scrollTop()/60)+1);
 	});
-	
+	$('button#start').click(function(){
+		//set displayed value to user's preference
+		$('span.start').text(Math.round($('ul#start').scrollTop()/60)+1);
+	});
+	$('button#end').click(function(){
+		//set displayed value to user's preference
+		$('span.end').text(Math.round($('ul#end').scrollTop()/60)+12);
+	});
 }
