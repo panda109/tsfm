@@ -32,8 +32,8 @@ class Device_Info(UserMixin, db.Model):
     gw_uuid = db.Column(db.String(64))
     user_id = db.Column(db.String(64))
     associated = db.Column(db.String(64))
-    target_energy_level = db.Column(db.Float())
-    lower_bound = db.Column(db.Integer())
+    target_energy_level = db.Column(db.Float(),default= 0.0)
+    lower_bound = db.Column(db.Integer(),default = 0)
     start_time = db.Column(db.Integer(),default = 8)
     end_time = db.Column(db.Integer(),default = 17)
     notify = db.Column(db.String(64), default ="ON")
@@ -42,6 +42,11 @@ class Device_Info(UserMixin, db.Model):
     def get_by_userid(cls, userid):
         devices = Device_Info.query.filter_by(user_id=userid)
         return devices
+
+    @classmethod
+    def get_by_id(cls, id):
+        device= Device_Info.query.get(id)
+        return device
 
     def __repr__(self):
         return "<Device Info(UUID='%s', Name='%s', Model='%s')>" % (

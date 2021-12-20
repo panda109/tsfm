@@ -15,6 +15,7 @@
 		<button class = 'return-button' onclick="window.location.href='/hello'"><img src="{{ url_for('static', filename='img/arrow left.png') }}" width="15" height="15" border="0"></button>
 		<button class = 'save-button'>Save</button>
 	</div>
+	{% for device in device_info %}
 	<div class='title'>QA PV System</div>
 	<div class='contaniner'>
 		<div class='settings'>
@@ -26,20 +27,20 @@
 			</div>
 			<div class='option goal'>
 				<span>Goal</span>
-				<div><input class='goal-value' type="number" placeholder="1000" onKeyPress="if(this.value.length==4) return false;" onblur="verify_value()"><span class='unit'>kWh</span></div>
+				<div><input class='goal-value' type="number" placeholder={{ device.target_energy_level }} onKeyPress="if(this.value.length==4) return false;" onblur="verify_value()"><span class='unit'>kWh</span></div>
 			</div>
 			<div class='hint'> Please enter a number between 1~9.999 kWh.</div>
 			<div class='option' id='bound'>
 				<span>Lower Bound</span>
-				<div><span class='bound'>20</span><span class='unit'>%</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
+				<div><span class='bound'>{{ device.lower_bound }}</span><span class='unit'>%</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
 			</div>
 			<div class='option' id='start'>
 				<span>Starting Time</span>
-				<div><span class='start'>7</span>&nbsp;: 00</div>
+				<div><span class='start'>{{ device.start_time }}</span>&nbsp;: 00</div>
 			</div>
 			<div class='option' id='end'>
 				<span>End Time</span>
-				<div><span class='end'>18</span>&nbsp;: 00</div>
+				<div><span class='end'>{{ device.end_time }}</span>&nbsp;: 00</div>
 			</div>
 		</div>
 	</div>
@@ -76,7 +77,7 @@
 			</div>
 		</div>
 	</div>
-	
+	{% endfor %}
 	
 
 </body>

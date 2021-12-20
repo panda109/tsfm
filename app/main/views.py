@@ -28,10 +28,31 @@ def update_notify_all(userid,status,methods = ["GET"]):
         return("400")
 
 
-@main.route('/setting/<string:uuid>"')
-def publish_setting(uuid):
-    print(uuid)
-    return render_template('setting.html')
+@main.route('/setting',methods = ["POST"])
+def update_device_setting():
+    # get required data 
+    if request.method == "POST":
+        print("For TSFM REQUIRED DATA Data: \n", request.json)
+        #return json.dumps(request.json, ensure_ascii = False)
+    else:
+        abort(400)
+        
+    device_data = request.json
+    uuid = device_data[0]['uuid']
+            
+    
+    
+    
+    
+        
+    device_info = Device_Info.query.filter_by(uuid=uuid)
+    return render_template('setting.html',device_info=device_info)
+
+@main.route('/setting/<string:uuid>')
+def publish_setting(uuid,methods = ["GET"]):
+    
+    device_info = Device_Info.query.filter_by(uuid=uuid)
+    return render_template('setting.html',device_info=device_info)
 
 @main.route("/tsfm_required_data", methods = ["POST"])
 def required_data():
