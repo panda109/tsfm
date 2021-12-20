@@ -90,6 +90,19 @@ def device_status():
     dict_data = request.json
     if dict_data["gateway"]["devices"] is None:
         pass
+    elif dict_data['triggerReason'] == "DEVICE_UNPAIRED":
+        list_exist_data = []
+        list_income_data = []
+        for device_info in Device_Info().query.filter_by(user_id = dict_data["userId"]):
+            #query all the devices which belongs to user_id = xxxxx
+            list_exist_data.append(device_info.uuid)
+        for new_income_data in range(len(dict_data['gateway']['devices'])):
+            list_income_data.append(dict_data['gateway']['devices'][new_income_data]['uuid'])
+
+        for i in range(len(list_exist_data)):
+            if list_exist_data[i] not in list_income_data:
+                Device_Info().query.filter_by(uuid = list_exist_data[i]).delete()
+                db.session.commit()
     else:     
         for i in range(len(dict_data["gateway"]["devices"])):
             is_exist = db.session.query(exists().where(Device_Info.uuid == dict_data["gateway"]["devices"][i]["uuid"])).scalar()
@@ -112,7 +125,7 @@ def device_status():
                                         online_status = dict_data["gateway"]["devices"][i]["status"],
                                         gw_uuid = dict_data["gateway"]["uuid"],
                                         user_id = dict_data["userId"],
-                                        associated = True
+                                        associated = 'TRUE'
                                     ))
             db.session.commit()  
     return json.dumps(request.json, ensure_ascii = False)
