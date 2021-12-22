@@ -21,7 +21,7 @@ function　option_clicked(){
 	    }).play();
 		//make sure displayed number & picker position are on the same spot
 		if(current=='bound'){
-			setTimeout(function(){$('ul#bound').animate({scrollTop: (parseInt($('input.bound').val(),10)-2)*60}, 0)}, 200);	
+			setTimeout(function(){$('ul#bound').animate({scrollTop: (parseInt($('input.bound').val(),10))*60}, 0)}, 200);	
 		}else if(current=='start'){
 			setTimeout(function(){$('ul#start').animate({scrollTop: (parseInt($('input.start').val(),10)-1)*60}, 0)}, 200);	
 		}else if(current=='end'){
