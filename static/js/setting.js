@@ -21,11 +21,11 @@ function　option_clicked(){
 	    }).play();
 		//make sure displayed number & picker position are on the same spot
 		if(current=='bound'){
-			setTimeout(function(){$('ul#bound').animate({scrollTop: (parseInt($('span.bound').text(),10)-1)*60}, 0)}, 200);	
+			setTimeout(function(){$('ul#bound').animate({scrollTop: (parseInt($('input.bound').val(),10)-2)*60}, 0)}, 200);	
 		}else if(current=='start'){
-			setTimeout(function(){$('ul#start').animate({scrollTop: (parseInt($('span.start').text(),10)-1)*60}, 0)}, 200);	
+			setTimeout(function(){$('ul#start').animate({scrollTop: (parseInt($('input.start').val(),10)-1)*60}, 0)}, 200);	
 		}else if(current=='end'){
-			setTimeout(function(){$('ul#end').animate({scrollTop: (parseInt($('span.end').text(),10)-12)*60}, 0)}, 200);	
+			setTimeout(function(){$('ul#end').animate({scrollTop: (parseInt($('input.end').val(),10)-12)*60}, 0)}, 200);	
 		}
 
 	});
@@ -54,7 +54,7 @@ function verify_value(){
 
 //generate % picker list
 function list_generator(){
-	for (i = 1; i < 100; i++) {
+	for (i = 0; i < 100; i++) {
 		$('ul#bound').append('<div class="list">'+i+'%</div>');
 	}
 	for (j = 1; j < 24; j++) {
@@ -68,16 +68,16 @@ function list_generator(){
 
 //executed when 'done' button is clicked 
 function detect_num(){
-	$('button#bound').click(function(){
+	$('span#bound').click(function(){
 		//set displayed value to user's preference
-		$('span.bound').text(Math.round($('ul#bound').scrollTop()/60)+1);
+		$('input.bound').val(Math.round($('ul#bound').scrollTop()/60));
 	});
-	$('button#start').click(function(){
+	$('span#start').click(function(){
 		//set displayed value to user's preference
-		$('span.start').text(Math.round($('ul#start').scrollTop()/60)+1);
+		$('input.start').val(Math.round($('ul#start').scrollTop()/60)+1);
 	});
-	$('button#end').click(function(){
+	$('span#end').click(function(){
 		//set displayed value to user's preference
-		$('span.end').text(Math.round($('ul#end').scrollTop()/60)+12);
+		$('input.end').val(Math.round($('ul#end').scrollTop()/60)+12);
 	});
 }

@@ -11,16 +11,10 @@
 </head>
 
 <body>
+<form action=''>
 	<div class = 'header'>
 		<button class = 'return-button' onclick="window.location.href='/hello'"><img src="{{ url_for('static', filename='img/arrow left.png') }}" width="15" height="15" border="0"></button>
-		
-		
-		<button class = 'save-button'>Save</button>
-	
-	
-	
-	
-	
+		<input type='submit' class='save-button'>
 	</div>
 	{% for device in device_info %}
 	<div class='title'>QA PV System</div>
@@ -28,32 +22,32 @@
 		<div class='settings'>
 			<div id ='notif'>
 				<span>Notification</span>
-				<label class="switch">
-			      <input type="checkbox">
+				<label for='notification' class="switch">
+			      <input type="checkbox" id='notification'>
 			    <span class="slider"></span>		      
 			</div>
 			<div class='option goal'>
-				<span>Goal</span>
-				<div><input class='goal-value' type="number" placeholder={{ device.target_energy_level }} onKeyPress="if(this.value.length==4) return false;" onblur="verify_value()"><span class='unit'>kWh</span></div>
+				<label for='goal'>Goal</label>
+				<div><input type="number" id='goal' name ='goal' class='goal-value' value={{ device.target_energy_level }} onKeyPress="if(this.value.length==4) return false;" onblur="verify_value()"><span class='unit'>kWh</span></div>
 			</div>
 			<div class='hint'> Please enter a number between 1~9.999 kWh.</div>
 			<div class='option' id='bound'>
-				<span>Lower Bound</span>
-				<div><span class='bound'>{{ device.lower_bound }}</span><span class='unit'>%</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
+				<label for='lower_bound'>Lower Bound</label>
+				<div><input type='number' id='lower_bound' class='bound' value={{ device.lower_bound }}><span class='unit'>%</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
 			</div>
 			<div class='option' id='start'>
-				<span>Starting Time</span>
-				<div><span class='start'>{{ device.start_time }}</span>&nbsp;: 00</div>
+				<label for='start_time'>Starting Time</label>
+				<div><input type='number' id='start_time' class='start' value={{ device.start_time }} >&nbsp;: 00</div>
 			</div>
 			<div class='option' id='end'>
-				<span>End Time</span>
-				<div><span class='end'>{{ device.end_time }}</span>&nbsp;: 00</div>
+				<label for='end_time'>End Time</label>
+				<div><input type='number' id='end_time' class='end' value={{ device.end_time }} >&nbsp;: 00</div>
 			</div>
 		</div>
 	</div>
 	<div class='pop-up bound' >
 		<div class='pop-up-bg'>
-			<button id='bound'>Done</button>
+			<span id='bound'>Done</span>
 			<div class='picker'>
 				<ul class='picker-list' id='bound'></ul>
 				<div class='picker-blur-top'></div>
@@ -64,7 +58,7 @@
 	</div>
 	<div class='pop-up start'>
 		<div class='pop-up-bg'>
-			<button id='start'>Done</button>
+			<span id='start'>Done</span>
 			<div class='picker'>
 				<ul class='picker-list' id='start'></ul>
 				<div class='picker-blur-top'></div>
@@ -75,7 +69,7 @@
 	</div>
 	<div class='pop-up end'>
 		<div class='pop-up-bg'>
-			<button id='end'>Done</button>
+			<span id='end'>Done</span>
 			<div class='picker'>
 				<ul class='picker-list' id='end'></ul>
 				<div class='picker-blur-top'></div>
@@ -86,6 +80,6 @@
 	</div>
 	{% endfor %}
 	
-
+</form>
 </body>
 
