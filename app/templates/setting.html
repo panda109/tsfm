@@ -23,7 +23,7 @@
 			<div id ='notif'>
 				<span>Notification</span>
 				<label for='notification' class="switch">
-			      <input type="checkbox" id='notification'>
+			      <input type="checkbox" id='notification' name='notification'>
 			    <span class="slider"></span>		      
 			</div>
 			<div class='option goal'>
@@ -33,15 +33,15 @@
 			<div class='hint'> Please enter a number between 1~9.999 kWh.</div>
 			<div class='option' id='bound'>
 				<label for='lower_bound'>Lower Bound</label>
-				<div><input type='number' id='lower_bound' class='bound' value={{ device.lower_bound }} readonly><span class='unit'>%</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
+				<div><input type='number' id='lower_bound' name='lower_bound' class='bound' value={{ device.lower_bound }} readonly><span class='unit'>%</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
 			</div>
 			<div class='option' id='start'>
 				<label for='start_time'>Starting Time</label>
-				<div><input type='number' id='start_time' class='start' value={{ device.start_time }} readonly>&nbsp;: 00</div>
+				<div><input type='number' id='start_time' name='start_time' class='start' value={{ device.start_time }} readonly>&nbsp;: 00</div>
 			</div>
 			<div class='option' id='end'>
 				<label for='end_time'>End Time</label>
-				<div><input type='number' id='end_time' class='end' value={{ device.end_time }} readonly>&nbsp;: 00</div>
+				<div><input type='number' id='end_time' name='end_time' class='end' value={{ device.end_time }} readonly>&nbsp;: 00</div>
 			</div>
 		</div>
 	</div>
