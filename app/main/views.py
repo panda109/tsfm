@@ -32,20 +32,12 @@ def update_notify_all(userid,status,methods = ["GET"]):
 def update_device_setting():
     # get required data 
     if request.method == "POST":
-        print("For TSFM REQUIRED DATA Data: \n", request.json)
+        print("For TSFM REQUIRED DATA Data: \n", request.form)
         #return json.dumps(request.json, ensure_ascii = False)
     else:
         abort(400)
         
-    device_data = request.json
-    uuid = device_data[0]['uuid']
-            
-    
-    
-    
-    
-        
-    device_info = Device_Info.query.filter_by(uuid=uuid)
+
     return render_template('setting.html',device_info=device_info)
 
 @main.route('/setting/<string:uuid>')
