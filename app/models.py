@@ -36,7 +36,7 @@ class Device_Info(UserMixin, db.Model):
     lower_bound = db.Column(db.Integer(), default = 0)
     start_time = db.Column(db.Integer(),default = 9)
     end_time = db.Column(db.Integer(),default = 17)
-    notify = db.Column(db.String(64), default ="OFF")
+    notify = db.Column(db.String(64), default ="ON")
     
     @classmethod
     def get_by_userid(cls, userid):
@@ -49,8 +49,8 @@ class Device_Info(UserMixin, db.Model):
         return device
 
     def __repr__(self):
-        return "<Device Info(UUID='%s', Name='%s', Model='%s')>" % (
-                                self.uuid, self.name, self.model)
+        return "<Device Info(UUID='%s', Name='%s', Model='%s' ,Goal='%s;, Target_energy_level='%s', Lower_bound='%s', Statr_time='%s', End_time='%s', Notify='%s' )>" % (
+                                self.uuid, self.name, self.model,self.goal , self.target_energy_level, self.lower_bound, self.start_time, self.end_time, self.notify)
 
 class User_Mgmt(UserMixin, db.Model):
     __tablename__ = 'user_mgmt'

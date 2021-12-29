@@ -36,9 +36,21 @@ def update_device_setting():
         #return json.dumps(request.json, ensure_ascii = False)
     else:
         abort(400)
-        
+    notification = "OFF"
+    for key,value in request.form.items():
+        if key == 'notification' :
+            notification = "ON"
+            break
+    notification = notification
+    goal = request.form["goal"]
+    lower_bound = request.form["lower_bound"]
+    start_time = request.form["start_time"]
+    end_time = request.form["end_time"]
+    db.session.query(Device_Info).filter_by(uuid=request.form["uuid"]).update(dict(lower_bound=lower_bound,start_time=start_time,end_time=end_time,target_energy_level=goal,notify=notification))
 
-    return render_template('setting.html',device_info=device_info)
+    db.session.commit()
+    device = Device_Info.query.filter_by(uuid=request.form["uuid"])
+    return render_template('setting.html',device_info=device)
 
 @main.route('/setting/<string:uuid>')
 def publish_setting(uuid,methods = ["GET"]):
