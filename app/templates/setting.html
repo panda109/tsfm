@@ -11,15 +11,20 @@
 </head>
 
 <body>
-
+        <script>
+  			var page = history.length - 2 ;
+        </script>
+	    
 	<form action="{{ url_for('main.update_device_setting') }}" method="post">
-		<div class = 'header'>
-		<a href="javascript:history.back(history.length);">Go Back</a>
-		<img src="{{ url_for('static', filename='img/arrow left.png') }}" width="15" height="15" border="0"></button>
-		
-		
-		
-		<input type='submit' class='save-button'>
+		<div class="container">
+			<div class="row">	
+				<div class="col-xs-4 col-sm-4">
+				<img src="{{ url_for('static', filename='img/Mask.png') }}" width="15" height="15" border="0" onclick="javascript:history.go(-page);"></button>
+				</div>
+				<div class="col-xs-4 col-sm-4">
+				<input type='submit' class='save-button'>
+				</div>
+			</div>
 		</div>
 	{% for device in device_info %}
 	<div class='title'>QA PV System</div>
