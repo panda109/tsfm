@@ -11,11 +11,17 @@
 </head>
 
 <body>
-<form action="{{ url_for('main.update_device_setting') }}" method="post">
-	<div class = 'header'>
-		<button class = 'return-button' onclick="window.location.href='/hello'"><img src="{{ url_for('static', filename='img/arrow left.png') }}" width="15" height="15" border="0"></button>
+
+	<form action="{{ url_for('main.update_device_setting') }}" method="post">
+		<div class = 'header'>
+		
+		
+		<img src="{{ url_for('static', filename='img/arrow left.png') }}" width="15" height="15" border="0"></button>
+		
+		
+		
 		<input type='submit' class='save-button'>
-	</div>
+		</div>
 	{% for device in device_info %}
 	<div class='title'>QA PV System</div>
 	<div class='contaniner'>
