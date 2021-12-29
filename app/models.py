@@ -32,10 +32,10 @@ class Device_Info(UserMixin, db.Model):
     gw_uuid = db.Column(db.String(64))
     user_id = db.Column(db.String(64))
     associated = db.Column(db.String(64))
-    target_energy_level = db.Column(db.Float(), default= 0) 
-    lower_bound = db.Column(db.Integer(), default = 0)
-    start_time = db.Column(db.Integer(),default = 9)
-    end_time = db.Column(db.Integer(),default = 17)
+    target_energy_level = db.Column(db.Float(), default= 5) 
+    lower_bound = db.Column(db.Integer(), default = 10)
+    start_time = db.Column(db.Integer(),default = 7)
+    end_time = db.Column(db.Integer(),default = 18)
     notify = db.Column(db.String(64), default ="ON")
     
     @classmethod
