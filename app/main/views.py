@@ -52,6 +52,11 @@ def update_device_setting():
     device = Device_Info.query.filter_by(uuid=request.form["uuid"])
     return render_template('setting.html',device_info=device)
 
+@main.route('/postpicture/<string:filename>')
+def get_postimage(filename,methords = ["GET"]):
+    return render_template('postpicture.html', filename=filename)
+
+
 @main.route('/setting/<string:uuid>')
 def publish_setting(uuid,methods = ["GET"]):
     
