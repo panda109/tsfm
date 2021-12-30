@@ -63,7 +63,6 @@ def update_device_setting():
 @main.route('/postpicture/<string:filename>')
 def get_postimage(filename,methords = ["GET"]):
     app_dir = os.getcwd()
-    print(app_dir)
     return send_from_directory(os.path.join(app_dir, 'static', 'img'), filename)
 
 
