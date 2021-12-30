@@ -1,4 +1,4 @@
-
+from flask import send_from_directory
 from . import main
 from flask import render_template
 from flask import Flask, request, abort
@@ -6,9 +6,16 @@ import psycopg2, json
 from ..models import Device_Data , Device_Info , User_Mgmt
 from app import db
 from sqlalchemy import exists
+import os
 
 @main.route('/hello',methods = ["GET"])
 def publish_hello():
+    
+    
+    
+    #Check the token with userid and enable logined 
+    
+    
     token = request.args.get('token')
     userid = request.args.get('userid')
     redirect_app = request.args.get('redirect_app')
@@ -55,7 +62,9 @@ def update_device_setting():
 
 @main.route('/postpicture/<string:filename>')
 def get_postimage(filename,methords = ["GET"]):
-    return render_template('postpicture.html', filename=filename)
+    app_dir = os.getcwd()
+    print(app_dir)
+    return send_from_directory(os.path.join(app_dir, 'static', 'img'), filename)
 
 
 @main.route('/setting/<string:uuid>')
