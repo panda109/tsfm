@@ -7,8 +7,13 @@ from ..models import Device_Data , Device_Info , User_Mgmt
 from app import db
 from sqlalchemy import exists
 
-@main.route('/hello')
+@main.route('/hello',methods = ["POST"])
 def publish_hello():
+    if request.method == "POST":
+        print("For TSFM REQUIRED DATA Data: \n", request.form)
+        #return json.dumps(request.json, ensure_ascii = False)
+    else:
+        abort(400)
     #userid = 'd76ca10d-5fe1-459f-ad05-f18ab4215568'
     userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
     devicelist = Device_Info.get_by_userid(userid)
