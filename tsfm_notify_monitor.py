@@ -108,8 +108,8 @@ class monitor(threading.Thread):
                                     objResponse = requests.post(strURL_ServiceStore + strPath_Post % listDevice[5], 
                                                                 data = json.dumps(self._gen_post(listDevice)), 
                                                                 headers = dicHeader)
-                                    print('Send notify:',objResponse,objResponse.content)
-                                    print()
+                                    #print('Send notify:',objResponse,objResponse.content)
+                                    #print()
                                     """
                                     print(listDevice[5])
                                     objResponse = requests.get(strURL_ServiceStore + '/v1/users/%s' % listDevice[5], headers = dicHeader2)

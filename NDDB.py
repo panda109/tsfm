@@ -2,7 +2,7 @@
 '''
 Created on Oct 8, 2021
 
-@author: shawn
+@author: shawn 
 '''
 import psycopg2
 from psycopg2 import Error
