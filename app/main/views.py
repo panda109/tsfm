@@ -15,14 +15,13 @@ def publish_hello():
     
     #Check the token with userid and enable logined 
     
-    
     token = request.args.get('token')
-    userid = request.args.get('userid')
+    #userid = request.args.get('userid')
     #userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
     redirect_app = request.args.get('redirect_app')
     devicelist = Device_Info.get_by_userid(userid)
     user_info = User_Mgmt.query.filter_by(user_id=userid)
-    return render_template('index.html',userid = userid, redirect_app = redirect_app , user_info = user_info , devices = devicelist)
+    return render_template('index.html',userid = userid,redirect_app=redirect_app ,user_info = user_info , devices = devicelist)
     #return render_template("product/order.html", orders=orders, catalogs=catalogs, message=message)
 
 @main.route('/testpost/<userid>/<status>')
@@ -67,8 +66,11 @@ def get_postimage(filename,methords = ["GET"]):
     return send_from_directory(os.path.join(app_dir, 'static', 'img'), filename)
 
 
-@main.route('/setting/<string:userid>/<string:uuid>/<string:redirect_app>')
-def publish_setting(userid,uuid,redirect_app,methods = ["GET"]):
+@main.route('/setting',methods = ["GET"])
+def publish_setting():
+    userid = request.args.get('userid')
+    redirect_app = request.args.get('redirect_app')
+    uuid = request.args.get('uuid')
     
     device_info = Device_Info.query.filter_by(uuid=uuid)
     return render_template('setting.html',userid=userid,redirect_app=redirect_app,device_info=device_info)
