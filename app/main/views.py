@@ -16,7 +16,7 @@ def publish_hello():
     #Check the token with userid and enable logined 
     
     token = request.args.get('token')
-    #userid = request.args.get('userid')
+    userid = request.args.get('userid')
     #userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
     redirect_app = request.args.get('redirect_app')
     devicelist = Device_Info.get_by_userid(userid)
