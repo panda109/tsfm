@@ -1,3 +1,4 @@
+var valid = true;
 
 //execute after document is loaded(does not wait for stylesheet)
 document.addEventListener('DOMContentLoaded', function() {
@@ -9,7 +10,24 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('load', function () {
 	option_clicked();
 	detect_num();
+	detect_number();
 });
+
+function detect_number(){
+	$('#goal').keyup(function(){
+		if ($(this).val() > 9999 || $('.goal-value').val() == 0 || $('.goal-value').val() == null){
+			$('.goal').css({'border-bottom': 'solid #F15837 1.5px'});
+			$('.hint').css({'color': '#F15837'});
+			$('#goal').css({'color': '#F15837'});
+			$('.save-button').css({'pointer-events': 'none', 'color':'grey'});
+		}else{
+			$('.goal').css({'border-bottom': 'solid #e6e6e8 1.5px'});
+			$('.hint').css({'color': '#BBBCBE'});
+			$('#goal').css({'color': 'black'});
+			$('.save-button').css({'pointer-events': 'auto', 'color':'#174A9F'});
+		}
+	});
+}
 
 function　option_clicked(){
 	//when lower bound option is clicked, toggle option picker 
@@ -40,18 +58,6 @@ function　option_clicked(){
 	}); 
 }
 
-//executed once input box is blured after focused
-function verify_value(){
-	//if value entered null or 0
-	if($('.goal-value').val() == 0 || $('.goal-value').val() == null){
-		$('.goal').css({'border-bottom': 'solid #F15837 1.5px'});
-		$('.hint').css({'color': '#F15837'});
-	}else{	//back to normal otherwise
-		$('.goal').css({'border-bottom': 'solid #e6e6e8 1.5px'});
-		$('.hint').css({'color': '#BBBCBE'});
-	}
-}
-
 //generate % picker list
 function list_generator(){
 	for (i = 0; i < 100; i++) {
@@ -59,9 +65,9 @@ function list_generator(){
 	}
 	for (j = 1; j < 24; j++) {
 		if(j<12){
-			$('ul#start').append('<div class="list">'+j+' : 00</div>');
+			$('ul#start').append('<div class="list">'+j+'</div>');
 		}else{
-			$('ul#end').append('<div class="list">'+j+' : 00</div>');
+			$('ul#end').append('<div class="list">'+j+'</div>');
 		}
 	}
 }

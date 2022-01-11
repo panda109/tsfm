@@ -3,11 +3,10 @@ body{
 	background-color:#fff;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
-	font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif !important;
-	width:100vw;
+	font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
 	margin:0 !important;
+	font-size:20px;
 }
 form{
 	width:100%;
@@ -18,6 +17,10 @@ form{
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+.des{
+	color: #BBBCBE;
+	align-self: start;
 }
 
 input[type="submit" i] {
@@ -34,11 +37,11 @@ input.bound, input.start, input.end{
 	width:50px;
 }
 
-a, button{
+a, button, span#bound, span#start,  span#end{
 	cursor: pointer;
 }
 
-button, input.save-button{
+button, input.save-button, .save-button{
 	background-color: #fff;
 	border:none;
 	transition: background-color 0.3s;
@@ -56,7 +59,7 @@ button, input.save-button{
 	font-size: 30px;
 	font-weight:500;
 	line-height: 3;
-	padding: 20px 0 ;
+	padding: 15px 0 0px 0 ;
 	width: 90%;
 }
 .contaniner{
@@ -68,7 +71,7 @@ button, input.save-button{
 	flex-direction:column-reverse;
 	position:fixed;
 	bottom:-100%;
-	width:100vw;
+	width:100%;
 	height:100%;
 	overflow:hidden;
 	background-color: rgba(0,0,0,0.35);
@@ -100,7 +103,7 @@ button, input.save-button{
 	background: #D4D8DD;
 }
 .picker-focus{
-	height:50px;
+	height:60px;
 }
 .picker-blur-top, .picker-blur-bottom{
 	z-index: 100;
@@ -121,16 +124,21 @@ button, input.save-button{
 .header{
 	height: 25px;
 	width: 95%;
-	padding:5px;
+	padding-top:8px;
 }
 
 .return-button{
 	height: 44px;
+	width: 44px;
 	border-radius: 70%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .return-button:hover, .save-button:hover{
 	background-color: rgba(23,74,159,0.2);
+	cursor: pointer;
 }
 
 .return-button img{
@@ -139,7 +147,6 @@ button, input.save-button{
 }
 
 .save-button{
-	font-family: Lato;
 	font-style: normal;
 	font-weight: bold;
 	font-size: 16px;
@@ -177,10 +184,11 @@ button, input.save-button{
 	border:none;
 	outline:none;
 	font-size: 18.5px;
-	width: 45px;
+	width: 90px;
+	text-align: right;
 }
 .goal-value:focus{
-	background: rgba(0,0,0,0.05);
+	border-bottom:1px black solid;
 }
 input::placeholder{
 	color:rgba(0,0,0,0.3);
@@ -201,6 +209,7 @@ input:focus::placeholder {
 	scroll-snap-type: block;
 	scroll-snap-stop: normal;
 	padding: 100px 0 ;
+	margin:0 !important;
 }
 .picker-list div{
 	height:60px;
@@ -208,4 +217,8 @@ input:focus::placeholder {
 	text-align: center;
 	scroll-snap-align: start;
 	scroll-margin-top: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
+

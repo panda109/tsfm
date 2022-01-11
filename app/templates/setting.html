@@ -16,19 +16,16 @@
         </script>
 	    
 	<form action="{{ url_for('main.update_device_setting') }}" method="post">
-		<div class="container">
-			<div class="row">	
-				<div class="col-xs-4 col-sm-4">
-				<img src="{{ url_for('static', filename='img/Mask.png') }}" width="15" height="15" border="0" onclick="javascript:history.go(-page);"></button>
-				</div>
-				<div class="col-xs-4 col-sm-4">
-				<input type='submit' class='save-button'>
-				</div>
-			</div>
+	<div class='header'>
+		<div class='return-button' onclick="javascript:history.go(-page);">
+			<img src="{{ url_for('static', filename='img/arrow left.png') }}" >
 		</div>
+		<input type='submit' class='save-button'>
+	</div>
 	{% for device in device_info %}
 	<div class='title'>QA PV System</div>
 	<div class='contaniner'>
+		<div class='des'>Send a notification once an hour according to the set time.</div>
 		<div class='settings'>
 			<div id ='notif'>
 				<span>Notification</span>
@@ -46,7 +43,7 @@
 			</div>
 			<div class='option goal'>
 				<label for='goal'>Goal</label>
-				<div><input type="number" id='goal' name ='goal' class='goal-value' value={{ device.target_energy_level }} onKeyPress="if(this.value.length==4) return false;" onblur="verify_value()"><span class='unit'>kWh</span></div>
+				<div><input type="number" id='goal' name ='goal' class='goal-value' value={{ device.target_energy_level }} oninput="if(value.length>8)value=value.slice(0,8)"><span class='unit'>kWh</span></div>
 			</div>
 			<div class='hint'> Please enter a number between 1~9.999 kWh.</div>
 			<div class='option' id='bound'>
@@ -55,11 +52,11 @@
 			</div>
 			<div class='option' id='start'>
 				<label for='start_time'>Starting Time</label>
-				<div><input type='number' id='start_time' name='start_time' class='start' value={{ device.start_time }} readonly>&nbsp;: 00</div>
+				<div><input type='number' id='start_time' name='start_time' class='start' value={{ device.start_time }} readonly>&nbsp;: 00<img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
 			</div>
 			<div class='option' id='end'>
 				<label for='end_time'>End Time</label>
-				<div><input type='number' id='end_time' name='end_time' class='end' value={{ device.end_time }} readonly>&nbsp;: 00</div>
+				<div><input type='number' id='end_time' name='end_time' class='end' value={{ device.end_time }} readonly>&nbsp;: 00<img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
 			</div>
 		</div>
 	</div>
