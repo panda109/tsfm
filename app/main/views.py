@@ -67,11 +67,11 @@ def get_postimage(filename,methords = ["GET"]):
     return send_from_directory(os.path.join(app_dir, 'static', 'img'), filename)
 
 
-@main.route('/setting/<string:uuid>')
-def publish_setting(uuid,methods = ["GET"]):
+@main.route('/setting/<string:userid>/<string:uuid>')
+def publish_setting(userid,uuid,methods = ["GET"]):
     
     device_info = Device_Info.query.filter_by(uuid=uuid)
-    return render_template('setting.html',device_info=device_info)
+    return render_template('setting.html',userid=userid,device_info=device_info)
 
 @main.route("/tsfm_required_data", methods = ["POST"])
 def required_data():

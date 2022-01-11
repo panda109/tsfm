@@ -13,15 +13,12 @@
 
 <body>
 <div class='container'>
-        <script>
-  			var page = history.length ;
-        </script>
-	    
 	<form action="{{ url_for('main.update_device_setting') }}" method="post">
 	<div class='header'>
-		<div class='return-button' onclick="javascript:history.go(-page);">
-			<img src="{{ url_for('static', filename='img/arrow left.png') }}" >
-		</div>
+
+		<a href="{{ url_for('main.publish_hello', userid=userid)}}">
+				<img src="{{ url_for('static', filename='img/arrow left.png') }}" width="30" height="30" border="0" >			
+		</a>
 		<input type='submit' class='save-button'>
 	</div>
 	{% for device in device_info %}
