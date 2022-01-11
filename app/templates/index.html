@@ -19,8 +19,8 @@
 							</div>
 							<div class="device-name" style="font-size:25px;">{{ device.name }}</div>							
 							<div class="col-xs-2 col-sm-2">
-								<a class='setting-button' href="{{ url_for('main.publish_setting', userid=userid , uuid = device.uuid)}}">
-									<img src="{{ url_for('static', filename='img/Vector.png') }}" width="6" height="20" >			
+								<a class='setting-button' href="{{ url_for('main.publish_setting', userid=userid , uuid = device.uuid, redirect_app = redirect_app)}}">
+									<img src="{{ url_for('static', filename='img/Vector.png') }}" width="6" height="20" >		
 								</a>
 							</div>
 						</div>
