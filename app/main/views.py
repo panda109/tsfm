@@ -54,11 +54,14 @@ def update_device_setting():
     lower_bound = request.form["lower_bound"]
     start_time = request.form["start_time"]
     end_time = request.form["end_time"]
+    userid = request.form["userid"]
+    redirect_app = request.form["redirect_app"]
+    
     db.session.query(Device_Info).filter_by(uuid=request.form["uuid"]).update(dict(lower_bound=lower_bound,start_time=start_time,end_time=end_time,target_energy_level=goal,notify=notification))
 
     db.session.commit()
     device = Device_Info.query.filter_by(uuid=request.form["uuid"])
-    return render_template('setting.html',device_info=device)
+    return render_template('setting.html',userid=userid,redirect_app=redirect_app,device_info=device)
 
 @main.route('/postpicture/<string:filename>')
 def get_postimage(filename,methords = ["GET"]):
