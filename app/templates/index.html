@@ -27,8 +27,8 @@
 							<div class="col-xs-8 col-sm-8"  style="text-align:center" >
 								<h3>Notification</>
 							</div>
-	
-							{% if device.online_status == "OFFLINE" %}	
+							{{ device.notify }}
+							{% if device.notify == "OFF" %}	
 		 						<div class="col-xs-3 col-sm-3"  style="text-align:right;font-size:25px;color:#E15A5A" >
 									 OFF
 								</div>
