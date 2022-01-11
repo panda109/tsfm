@@ -1,0 +1,122 @@
+body{
+	background-color:#fff;
+	font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+	margin:0 !important;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 21px;
+}
+.banner{
+	width: 95%;	
+	padding: 15px 0 10px 0;
+}
+
+.container{
+	width:100%;
+}
+.container2{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width:100%;
+}
+
+.return-button{
+	height: 44px;
+	width: 44px;
+	border-radius: 70%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.return-button:hover, .save-button:hover{
+	background-color: rgba(23,74,159,0.2);
+	cursor: pointer;
+}
+
+.return-button img{
+	height:30px;
+	width:auto;
+}
+
+.title{
+	font-size: 30px;
+	font-weight:500;
+	padding: 10px 0 0px 0 ;
+	width: 90%;
+}
+.sub-title{
+	font-size: 23px;
+	padding: 15px 0px 0px 0 ;
+	font-weight:500;
+	display:flex;
+	flex-direction: row;
+	justify-content: space-between;
+	line-height:3;
+	width: 80%;
+}
+
+.switch{
+	margin: 6px 0 0 0 !important;
+}
+
+.device-border{
+	border-radius:4px;
+	border: 0.5px solid rgba(187, 188, 188, 0.72);
+}
+
+.setting-button{
+	display: block;
+	width:25px;
+	margin:0 !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.col-xs-2{
+	width:auto !important;
+	position:absolute;
+	padding : 0px 5px 0 0;
+	right:0;
+	top:10px;
+}
+.no-device{
+	height: 70vh;
+	display: flex;
+	flex-direction:column;
+	justify-content: center;
+	align-items: center;
+}
+.no-device img{
+	width: 35vw;
+	height:auto;
+}
+.no-device p{
+	color:#BBBCBE;
+	font-size: 16px;
+	line-height:2;
+}
+.device-icon{
+	width:90px;
+	height:auto;
+	margin: 15px;
+}
+.device-name{
+	height:120px;
+	display: flex;
+	align-items: center;
+	padding-left: 50px;
+	font-weight:600;
+}
+.notif-status{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	font-weight:600;
+	margin:10px 30px 10px 20px;
+}
