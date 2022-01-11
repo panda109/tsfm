@@ -3,36 +3,37 @@
 {% extends "top.html" %}
 
 {% block page_content %}
+<head>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+	<link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet" />
+	<title>PV Notification Setting</title>
+</head>
+{% if devices.all() %}
 <div class="container">
 {% for device in devices.all() %}
 	<div class="row" style="border:10px white dashed;">
-				<div class="col-xs-12 col-sm-12" style="border-width:0.5px;border-style:solid;border-color:#BBBCBCB8;padding:5px;">
+				<div class="col-xs-12 col-sm-12 device-border" style="border-width:0.5px;border-style:solid;border-color:#BBBCBCB8;padding:5px;">
 						<div class="row">
-							<div class="col-xs-3 col-sm-" style="font-size:25px;">
-								<img src="{{ url_for('static', filename='img/sun.png') }}" width="100" height="100" style="border:10px white dashed;" ></>		
+							<div class="col-xs-3" style="font-size:25px;">
+								<img class='device-icon' src="{{ url_for('static', filename='img/icon_Active.png') }}" >		
 							</div>
-							<div class="col-xs-7 col-sm-7" style="font-size:25px;border:20px white dashed;">
-							{{ device.name }}
-							</div>							
-							<div class="col-xs-2 col-sm-2"  style="text-align:center">
-								<a href="{{ url_for('main.publish_setting', userid=userid , uuid = device.uuid)}}">
-									<img src="{{ url_for('static', filename='img/Vector.png') }}" width="6" height="20" style="border:2px white" >			
+							<div class="device-name" style="font-size:25px;">{{ device.name }}</div>							
+							<div class="col-xs-2 col-sm-2">
+								<a class='setting-button' href="{{ url_for('main.publish_setting', userid=userid , uuid = device.uuid)}}">
+									<img src="{{ url_for('static', filename='img/Vector.png') }}" width="6" height="20" >			
 								</a>
 							</div>
 						</div>
 						
-						<div>
-							<div class="col-xs-1 col-sm-1">
-							</div>
-							<div class="col-xs-8 col-sm-8"  style="text-align:center" >
-								<h3>Notification</>
-							</div>
-							{% if device.notify == "OFF" %}	
-		 						<div class="col-xs-3 col-sm-3"  style="text-align:right;font-size:25px;color:#E15A5A" >
+						<div class='notif-status'>
+							<span>Notification</span>
+	
+							{% if device.notify == "OFFLINE" %}	
+		 						<div class=" "  style="font-size:25px;color:#E15A5A" >
 									 OFF
 								</div>
 							{% else %}
-								<div class="col-xs-3 col-sm-3"  style="text-align:right;font-size:25px;color:#5EA76E" >
+								<div class=" "  style="font-size:25px;color:#5EA76E" >
 									 ON
 								</div>
 							{% endif %}
@@ -40,6 +41,6 @@
 				</div>
 	</div>
 {% endfor %}	
-
 </div>
+{% endif %}
 {% endblock %}

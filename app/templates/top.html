@@ -6,36 +6,17 @@
 	{{super()}}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
 {% endblock %}
-<body
+<body>
 {% block content%}
-	<div class="container">
-			<div class="row">	
-			<P>
-			<p>
-				<div class="col-xs-12 col-sm-12">
-					<a href="{{redirect_app}}"><img src="{{ url_for('static', filename='img/Mask.png') }}" width="30" height="30" border="0"></a>
-				<p>
-				</div>
-			</div>
+	<div class="banner">
+		<a class='return-button' href="{{redirect_app}}"><img src="{{ url_for('static', filename='img/arrow left.png') }}"></a>
 	</div>
-	<div class="container">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12" style="text-align:left;font-size:37px;">
-					<p>
+	<div class="container2">
+				<div class="col-xs-12 col-sm-12 title">
 					PV Generation Alert
-					<p>
 				</div>
-			</div>
-
-				<div class="col-xs-9 col-sm-9"  style="text-align:left;font-size:30px;">
-				<p>
-				<p>
- 					Notification  ON/OFF
-
- 				</div>
-
- 				<div class="col-xs-3 col-sm-3">
- 				
+				{% if user_info.all() %}
+				<div class="col-xs-9 col-sm-9 sub-title">Notification  ON/OFF
 					{% for user in user_info.all() %}
 					
 					
@@ -49,22 +30,24 @@
 				    	<span class="slider"></span>	
 						{% endif %}
 					
-					
-					{% endfor %} 				
- 				
- 					<script>
-					  var url = "{{ url_for('main.update_notify_all', userid=userid , status="ON")}}"
+					{% endfor %} 
+					<script>
+					  var url = "{{ url_for('main.update_notify_all', userid=userid , status="ON") }}"
 					</script>
+				{% else %}	
+				<div class='no-device'>
+					<div class='no-device'>
+					<img src="{{ url_for('static', filename='img/Nonactive.png') }}">
+					<p class='no-deive-text'>There is no device</p>
+					</div>
+				</div>
+ 				{% endif%}
+				
 				</div>
 	</div>
-<div>
 
 <div class="container">
-    <p>
-   	<div style='border-bottom:1px solid #ccc;'></div>
-   	<p>
     {% block page_content %}{% endblock %}
-    <div style='border-bottom:1px solid #ccc;'></div>
 </div>
 {% endblock %}
 </body>

@@ -15,9 +15,8 @@
 <div class='container'>
 	<form action="{{ url_for('main.update_device_setting') }}" method="post">
 	<div class='header'>
-
-		<a href="{{ url_for('main.publish_hello', userid=userid)}}">
-				<img src="{{ url_for('static', filename='img/arrow left.png') }}" width="30" height="30" border="0" >			
+		<a class='return-button' href="{{ url_for('main.publish_hello', userid=userid)}}">
+			<img src="{{ url_for('static', filename='img/arrow left.png') }}" >
 		</a>
 		<input type='submit' class='save-button'>
 	</div>
