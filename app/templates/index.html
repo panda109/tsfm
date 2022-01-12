@@ -17,10 +17,10 @@
 							<div class="col-xs-3" style="font-size:25px;">
 								<img class='device-icon' src="{{ url_for('static', filename='img/icon_Active.png') }}" >		
 							</div>
-							<div class="device-name" style="font-size:25px;">{{ device.name }}</div>							
+							<div class="device-name" style="font-size:25px;"><p>{{ device.name }}</p></div>							
 							<div class="col-xs-2 col-sm-2">
-								<a class='setting-button' href="{{ url_for('main.publish_setting', userid=userid , uuid = device.uuid, redirect_app=redirect_app)}}">
-									<img src="{{ url_for('static', filename='img/Vector.png') }}" width="6" height="20" >		
+								<a class='setting-button' href="{{ url_for('main.publish_setting', userid=userid , uuid = device.uuid)}}">
+									<img src="{{ url_for('static', filename='img/Vector.png') }}" width="6" height="20" >			
 								</a>
 							</div>
 						</div>
@@ -28,7 +28,7 @@
 						<div class='notif-status'>
 							<span>Notification</span>
 	
-							{% if device.notify == "OFF" %}	
+							{% if device.online_status == "OFFLINE" %}	
 		 						<div style="font-size:25px;color:#E15A5A" >
 									 OFF
 								</div>

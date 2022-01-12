@@ -61,7 +61,7 @@ function　option_clicked(){
 //generate % picker list
 function list_generator(){
 	for (i = 0; i < 100; i++) {
-		$('ul#bound').append('<div class="list">'+i+'%</div>');
+		$('ul#bound').append('<div class="list">'+i+'</div>');
 	}
 	for (j = 1; j < 24; j++) {
 		if(j<12){

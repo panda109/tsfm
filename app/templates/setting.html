@@ -12,18 +12,17 @@
 </head>
 
 <body>
-<div class='container'>
 	<form action="{{ url_for('main.update_device_setting') }}" method="post">
 	<div class='header'>
-		<a class='return-button' href="{{ url_for('main.publish_hello', userid=userid,redirect_app=redirect_app)}}">
+		<a class='return-button' href="{{ url_for('main.publish_hello', userid=userid)}}">
 			<img src="{{ url_for('static', filename='img/arrow left.png') }}" >
 		</a>
 		<input type='submit' class='save-button'>
 	</div>
 	{% for device in device_info %}
-	<div class='title'>QA PV System</div>
+	<div class='title'>{{ device.name }}</div>
 	<div class='contaniner'>
-		<div class='des'>Send a notification once an hour according to the set time.</div>
+		<p class='des'>Send a notification once an hour according to the set time.</p>
 		<div class='settings'>
 			<div id ='notif'>
 				<span>Notification</span>
@@ -35,24 +34,14 @@
 			      >
 			    <span class="slider"></span>		      
 			</div>
-			
-			<div class='option uuid'>
+			<div class='uuid'>
 			 <input type="hidden" id="uuid" name="uuid" value="{{ device.uuid }}">
 			</div>
-			</div>
-			<div class='option userid'>
-			 <input type="hidden" id="userid" name="userid" value="{{ userid }}">
-			</div>			
-			</div>
-			<div class='option redirect_app'>
-			 <input type="hidden" id="redirect_app" name="redirect_app" value="{{ redirect_app }}">
-			</div>						
-			
 			<div class='option goal'>
 				<label for='goal'>Goal</label>
 				<div><input type="number" id='goal' name ='goal' class='goal-value' value={{ device.target_energy_level }} oninput="if(value.length > 8)value=value.slice(0,8)"><span class='unit'>kWh</span></div>
 			</div>
-			<div class='hint'> Please enter a number between 1~9.999 kWh.</div>
+			<p class='hint'> Please enter a number between 1~9.999 kWh.</p>
 			<div class='option' id='bound'>
 				<label for='lower_bound'>Lower Bound</label>
 				<div><input type='number' id='lower_bound' name='lower_bound' class='bound' value={{ device.lower_bound }} readonly><span class='unit'>%</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
@@ -69,7 +58,7 @@
 	</div>
 	<div class='pop-up bound' >
 		<div class='pop-up-bg'>
-			<span id='bound'>Done</span>
+			<div class='func-bar'><span id='bound'>Done</span></div>
 			<div class='picker'>
 				<ul class='picker-list' id='bound'></ul>
 				<div class='picker-blur-top'></div>
@@ -80,7 +69,7 @@
 	</div>
 	<div class='pop-up start'>
 		<div class='pop-up-bg'>
-			<span id='start'>Done</span>
+			<div class='func-bar'><span id='start'>Done</span></div>
 			<div class='picker'>
 				<ul class='picker-list' id='start'></ul>
 				<div class='picker-blur-top'></div>
@@ -91,7 +80,7 @@
 	</div>
 	<div class='pop-up end'>
 		<div class='pop-up-bg'>
-			<span id='end'>Done</span>
+			<div class='func-bar'><span id='end'>Done</span></div>
 			<div class='picker'>
 				<ul class='picker-list' id='end'></ul>
 				<div class='picker-blur-top'></div>
@@ -103,6 +92,5 @@
 	{% endfor %}
 	
 </form>
-</div>
 </body>
 </html>
