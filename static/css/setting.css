@@ -48,7 +48,7 @@ input.bound, input.start, input.end{
 	width:50px;
 	pointer-events:none
 }
-label{
+.option label{
 	pointer-events:none
 }
 
