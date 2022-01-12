@@ -12,6 +12,7 @@ body{
 	padding-bottom:50px;
 }
 form{
+	width:100%;
 	display: block;
     margin-top: 0em;
     margin-block-end: 0em !important;
@@ -147,8 +148,8 @@ button, input.save-button, .save-button{
 	height:70px;
 	font-size: 18.5px;
 	border-bottom: solid #e6e6e8 1px;
-	width: 100%;
 	align-items: center;
+	width:88%;
 }
 
 .header{
