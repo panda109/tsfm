@@ -257,7 +257,7 @@ input:focus::placeholder {
 	align-items: center;
 }
 
-.uuid{
+.uuid, userid, redirect_app{
 	display:none;
 }
 
