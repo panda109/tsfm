@@ -28,7 +28,7 @@
 				<span>Notification</span>
 				<label for='notification' class="switch">
 			      <input type="checkbox" id='notification'  name='notification'
-			      {%if device.online_status =="ONLINE" %}
+			      {%if device.notify =="ON" %}
 			      checked
 			      {% endif %}
 			      >
