@@ -47,7 +47,7 @@
 			</div>						
 			<div class='option goal'>
 				<label for='goal'>Goal</label>
-				<div><input type="number" pattern="\d*" id='goal' name ='goal' class='goal-value' value={{ device.target_energy_level }} oninput="if(value.length > 8)value=value.slice(0,8)"><span class='unit'>kWh</span></div>
+				<div><input type="number" pattern="\d*" step="0.01" id='goal' name ='goal' class='goal-value' value={{ device.target_energy_level }} oninput="if(value.length > 8)value=value.slice(0,8)"><span class='unit'>kWh</span></div>
 			</div>
 			<p class='hint'> Please enter a number between 1~9.999 kWh.</p>
 			<div class='option' id='bound'>
