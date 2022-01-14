@@ -20,6 +20,7 @@
 		<input type='submit' class='save-button'>
 	</div>
 	{% for device in device_info %}
+	{% if device.model == 'SolarPW' %}
 	<div class='title'>{{ device.name }}</div>
 	<div class='contaniner'>
 		<p class='des'>Send a notification once an hour according to the set time.</p>
@@ -97,6 +98,7 @@
 			</div>
 		</div>
 	</div>
+	{% endif %}
 	{% endfor %}
 	
 </form>
