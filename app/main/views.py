@@ -61,7 +61,7 @@ def update_device_setting():
 
     db.session.commit()
     device = Device_Info.query.filter_by(uuid=request.form["uuid"])
-    return render_template('setting.html',userid=userid,redirect_app=redirect_app,device_info=device)
+    return render_template('index.html',userid=userid,redirect_app=redirect_app,device_info=device)
 
 @main.route('/postpicture/<string:filename>')
 def get_postimage(filename,methords = ["GET"]):
@@ -76,7 +76,7 @@ def publish_setting():
     uuid = request.args.get('uuid')
     
     device_info = Device_Info.query.filter_by(uuid=uuid)
-    return render_template('setting.html',userid=userid,redirect_app=redirect_app,device_info=device_info)
+    return render_template('setting.html',userid=userid,redirect_app=redirect_app)
 
 @main.route("/tsfm_required_data", methods = ["POST"])
 def required_data():
