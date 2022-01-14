@@ -9,6 +9,7 @@
 	<title>PV Notification Setting</title>
 </head>
 {% if devices.all() %}
+{% if device.model == 'SolarPW' %}
 <div class="container">
 {% for device in devices.all() %}
 	<div class="row" style="border:10px white dashed;">
@@ -40,6 +41,7 @@
 						</div>
 				</div>
 	</div>
+{% endif %}
 {% endfor %}	
 </div>
 {% endif %}
