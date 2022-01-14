@@ -60,8 +60,9 @@ def update_device_setting():
     db.session.query(Device_Info).filter_by(uuid=request.form["uuid"]).update(dict(lower_bound=lower_bound,start_time=start_time,end_time=end_time,target_energy_level=goal,notify=notification))
 
     db.session.commit()
-    device = Device_Info.query.filter_by(uuid=request.form["uuid"])
-    return render_template('setting.html',userid=userid,redirect_app=redirect_app,device_info=device)
+    devicelist = Device_Info.get_by_userid(userid)
+    user_info = User_Mgmt.query.filter_by(user_id=userid)
+    return render_template('index.html',userid = userid,redirect_app=redirect_app ,user_info = user_info , devices = devicelist)
 
 @main.route('/postpicture/<string:filename>')
 def get_postimage(filename,methords = ["GET"]):
