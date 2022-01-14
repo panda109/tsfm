@@ -86,7 +86,7 @@ class monitor(threading.Thread):
             while True:
                 # find users and devices that notify = ON
                 listResults = self.objTSFMDB.execute(self.strSQL_FindUser_ON % strSolarModel)
-                print('find ON user',listResults)
+                #print('find ON user',listResults)
                 # uuid,name,model,online_status,gw_uuid,user_id,associated,target_energy_level,lower_bound,start_time,end_time,notify
                 
                 for listDevice in listResults:
@@ -107,15 +107,15 @@ class monitor(threading.Thread):
                                 #print('litResults[0][0]',litResults[0][0],'litResults[-1][0]',litResults[-1][0])
                                 if (litResults[0][0] - litResults[-1][0]) < listDevice[7] * (listDevice[8]/100):
                                 #if (litResults[0][0] - litResults[-1][0]) >= listDevice[7] * (listDevice[8]/100): # for testing
-                                    print('call post...')
-                                    """
+                                    #print('call post...')
+                                    
                                     # call notify when sum(value) below the criteria
                                     objResponse = requests.post(strURL_ServiceStore + strPath_Post % listDevice[5], 
                                                                 data = json.dumps(self._gen_post(listDevice)), 
                                                                 headers = dicHeader)
                                     #print('Send notify:',objResponse,objResponse.content)
                                     #print()
-                                    """
+                                    
                                     """
                                     print(listDevice[5])
                                     objResponse = requests.get(strURL_ServiceStore + '/v1/users/%s' % listDevice[5], headers = dicHeader2)
@@ -125,7 +125,7 @@ class monitor(threading.Thread):
                 #print('outside of for loop')
                 time.sleep(self.intCheckInterval)
                 #raise Exception('thread is dead!')
-                break
+                #break
         
         except Exception as error:
             print('Error in monitor thread:',error)
@@ -165,7 +165,7 @@ def notify_with_sqlite():
             listResults = objCursor.fetchall()
             
             for listDevice in listResults:
-                print(listDevice)
+                #print(listDevice)
                 objNow = datetime.now()
                 intCurrentHour = int(objNow.strftime("%H"))
                 
@@ -199,7 +199,7 @@ def notify_with_sqlite():
             objConn.close()
             time.sleep(intMonitorInterval)
             #raise Exception('thread is dead!')
-            break
+            #break
                     
     except Exception as error:
         print(error)
@@ -210,8 +210,8 @@ if __name__ == '__main__':
     strEnv = os.getenv('FLASK_CONFIG')
     
     # for testing
-    strEnv = 'testing'
-    basedir = os.path.abspath(os.path.dirname(__file__))
+    #strEnv = 'testing'
+    #basedir = os.path.abspath(os.path.dirname(__file__))
     
     if strEnv == 'production':
         try:
@@ -219,7 +219,7 @@ if __name__ == '__main__':
             thdMonitor.start()
             time.sleep(1)
             while True:
-                break
+                #break
                 if not thdMonitor.is_alive():
                     thdMonitor = monitor(strEnv,intMonitorInterval)
                     thdMonitor.start()
