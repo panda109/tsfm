@@ -1,12 +1,13 @@
 # -*- coding: UTF-8 -*-
 import threading, time, json, os, requests, logging
-from datetime import datetime
+from datetime import datetime, timedelta
 import NDDB, NDLogger
 from config import IPPORT, basedir
 
 intMonitorInterval = 300
 intWatchInterval = 5
 strSolarModel = 'SolarPW'
+intTimeZoneHour = 8
 
 dicTSFM_DB = {
     'strHost':'192.168.7.85',
@@ -95,7 +96,8 @@ class monitor(threading.Thread):
                     #print(listDevice)
                     objLogger.debug('listDevice: %s' % str(listDevice))
                     objNow = datetime.now()
-                    intCurrentHour = int(objNow.strftime("%H"))
+                    objNewDateTime = objNow + timedelta(hours=intTimeZoneHour)
+                    intCurrentHour = int(objNewDateTime.strftime("%H"))
                     
                     if intCurrentHour >= listDevice[9] and intCurrentHour <= listDevice[10]: # Time period to check power
                         intTimeStamp_Now = int(objNow.timestamp()*1000)
@@ -177,7 +179,8 @@ def notify_with_sqlite():
                 #print(listDevice)
                 objLogger.debug('listDevice: %s' % str(listDevice))
                 objNow = datetime.now()
-                intCurrentHour = int(objNow.strftime("%H"))
+                objNewDateTime = objNow + timedelta(hours=intTimeZoneHour)
+                intCurrentHour = int(objNewDateTime.strftime("%H"))
                 
                 if intCurrentHour >= listDevice[9] and intCurrentHour <= listDevice[10]: # Time period to check power
                     intTimeStamp_Now = int(objNow.timestamp()*1000)
