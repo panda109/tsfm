@@ -114,7 +114,7 @@ class monitor(threading.Thread):
                                 #print('litResults[0][0]',litResults[0][0],'litResults[-1][0]',litResults[-1][0])
                                 objLogger.debug('litResults[0][0]: %s' % litResults[0][0])
                                 objLogger.debug('litResults[-1][0]: %s' % litResults[-1][0])
-                                if (litResults[0][0] - litResults[-1][0]) < listDevice[7] * (listDevice[8]/100):
+                                if (litResults[0][0] - litResults[-1][0]) < listDevice[7] * 1000 * (listDevice[8]/100):
                                 #if (litResults[0][0] - litResults[-1][0]) >= listDevice[7] * (listDevice[8]/100): # for testing
                                     #print('call post...')
                                     
@@ -203,7 +203,7 @@ def notify_with_sqlite():
                         if listResults[0][0] is not None:
                             objLogger.debug('litResults[0][0]: %s' % listResults[0][0])
                             objLogger.debug('litResults[-1][0]: %s' % listResults[-1][0])
-                            if (listResults[0][0] - listResults[-1][0]) < listDevice[7] * (listDevice[8]/100):
+                            if (listResults[0][0] - listResults[-1][0]) < listDevice[7] * 1000 * (listDevice[8]/100):
                             #if (listResults[0][0] - listResults[-1][0]) >= listDevice[7] * (listDevice[8]/100): # for testing
                                 #print('call post...')
                                 objLogger.debug('call post...')
