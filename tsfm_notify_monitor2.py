@@ -5,7 +5,7 @@ import requests
 import NDDB
 from config import IPPORT, basedir
 
-intMonitorInterval = 3600
+intMonitorInterval = 300
 intWatchInterval = 5
 strSolarModel = 'SolarPW'
 
