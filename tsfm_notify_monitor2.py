@@ -240,8 +240,8 @@ if __name__ == '__main__':
     strEnv = os.getenv('FLASK_CONFIG')
     
     # for testing
-    strEnv = 'testing'
-    basedir = os.path.abspath(os.path.dirname(__file__))    
+    #strEnv = 'testing'
+    #basedir = os.path.abspath(os.path.dirname(__file__))    
     
     if strEnv == 'production':
         try:
