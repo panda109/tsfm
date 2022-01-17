@@ -98,6 +98,7 @@ class monitor(threading.Thread):
                     objNow = datetime.now()
                     objNewDateTime = objNow + timedelta(hours=intTimeZoneHour)
                     intCurrentHour = int(objNewDateTime.strftime("%H"))
+                    objLogger.info('Current hour: %s' % intCurrentHour)
                     
                     if intCurrentHour >= listDevice[9] and intCurrentHour <= listDevice[10]: # Time period to check power
                         intTimeStamp_Now = int(objNow.timestamp()*1000)
@@ -107,7 +108,7 @@ class monitor(threading.Thread):
                         
                         litResults = self.objTSFMDB.query(self.strSQL_QueryValue % (strSolarModel,listDevice[0],intTimeStamp_Start,intTimeStamp_Now))
                         #print('litResults',litResults)
-                        objLogger.debug('litResults: %s' % str(litResults))
+                        #objLogger.debug('litResults: %s' % str(litResults))
                         if litResults != []:
                             if litResults[0][0] is not None:
                                 #print('litResults[0][0]',litResults[0][0],'litResults[-1][0]',litResults[-1][0])
@@ -181,6 +182,7 @@ def notify_with_sqlite():
                 objNow = datetime.now()
                 objNewDateTime = objNow + timedelta(hours=intTimeZoneHour)
                 intCurrentHour = int(objNewDateTime.strftime("%H"))
+                objLogger.info('Current hour: %s' % intCurrentHour)
                 
                 if intCurrentHour >= listDevice[9] and intCurrentHour <= listDevice[10]: # Time period to check power
                     intTimeStamp_Now = int(objNow.timestamp()*1000)
@@ -196,7 +198,7 @@ def notify_with_sqlite():
                     objCursor = objConn.execute(strSQL % (strSolarModel,listDevice[0],intTimeStamp_Start,intTimeStamp_Now))
                     listResults = objCursor.fetchall()
                     #print('listResults',listResults)
-                    objLogger.debug('listResults: %s' % str(listResults))
+                    #objLogger.debug('listResults: %s' % str(listResults))
                     if listResults != []:
                         if listResults[0][0] is not None:
                             objLogger.debug('litResults[0][0]: %s' % listResults[0][0])
