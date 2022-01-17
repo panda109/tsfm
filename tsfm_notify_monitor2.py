@@ -1,8 +1,7 @@
 # -*- coding: UTF-8 -*-
-import threading, time, json, os
+import threading, time, json, os, requests, logging
 from datetime import datetime
-import requests
-import NDDB
+import NDDB, NDLogger
 from config import IPPORT, basedir
 
 intMonitorInterval = 300
@@ -33,9 +32,11 @@ strDB_Test = 'data-test.sqlite'
 
 class monitor(threading.Thread):
     def __init__(self,strDBType,intInterval):
+        objLogger.debug('Init Monitor class...')
         threading.Thread.__init__(self)
         self.daemon = True
         self.intCheckInterval = intInterval
+        objLogger.debug('DB Type: %s' % strDBType)
         if strDBType == 'production':
             self._conn_postgres_db()
         elif strDBType == 'testing':
@@ -86,11 +87,13 @@ class monitor(threading.Thread):
             while True:
                 # find users and devices that notify = ON
                 listResults = self.objTSFMDB.execute(self.strSQL_FindUser_ON % strSolarModel)
+                #objLogger.debug('find ON user: %s' % str(stResults))
                 #print('find ON user',listResults)
                 # uuid,name,model,online_status,gw_uuid,user_id,associated,target_energy_level,lower_bound,start_time,end_time,notify
                 
                 for listDevice in listResults:
                     #print(listDevice)
+                    objLogger.debug('listDevice: %s' % str(listDevice))
                     objNow = datetime.now()
                     intCurrentHour = int(objNow.strftime("%H"))
                     
@@ -102,9 +105,12 @@ class monitor(threading.Thread):
                         
                         litResults = self.objTSFMDB.query(self.strSQL_QueryValue % (strSolarModel,listDevice[0],intTimeStamp_Start,intTimeStamp_Now))
                         #print('litResults',litResults)
+                        objLogger.debug('litResults: %s' % str(litResults))
                         if litResults != []:
                             if litResults[0][0] is not None:
                                 #print('litResults[0][0]',litResults[0][0],'litResults[-1][0]',litResults[-1][0])
+                                objLogger.debug('litResults[0][0]: %s' % litResults[0][0])
+                                objLogger.debug('litResults[-1][0]: %s' % litResults[-1][0])
                                 if (litResults[0][0] - litResults[-1][0]) < listDevice[7] * (listDevice[8]/100):
                                 #if (litResults[0][0] - litResults[-1][0]) >= listDevice[7] * (listDevice[8]/100): # for testing
                                     #print('call post...')
@@ -115,6 +121,8 @@ class monitor(threading.Thread):
                                                                 headers = dicHeader)
                                     #print('Send notify:',objResponse,objResponse.content)
                                     #print()
+                                    objLogger.debug('Send notify: %s, %s' % (objResponse,objResponse.content))
+                                    objLogger.debug('')
                                     
                                     """
                                     print(listDevice[5])
@@ -122,14 +130,15 @@ class monitor(threading.Thread):
                                     print('get user data:',objResponse,objResponse.content)
                                     print()
                                     """
-                #print('outside of for loop')
                 time.sleep(self.intCheckInterval)
                 #raise Exception('thread is dead!')
                 #break
         
         except Exception as error:
             print('Error in monitor thread:',error)
+            objLogger.error(error, exc_info=True)
             self.objTSFMDB.closeDB()
+            objLogger.info('Close DB')
             
             
 def gen_post_sqlite3(listDev):
@@ -163,9 +172,10 @@ def notify_with_sqlite():
             objConn = sqlite3.connect(os.path.join(basedir,strDB_Test))
             objCursor = objConn.execute("select * from device_info where model = '%s' and notify = 'ON'" % strSolarModel)
             listResults = objCursor.fetchall()
-            
+            #objLogger.debug('listResults: %s' % str(listResults))
             for listDevice in listResults:
                 #print(listDevice)
+                objLogger.debug('listDevice: %s' % str(listDevice))
                 objNow = datetime.now()
                 intCurrentHour = int(objNow.strftime("%H"))
                 
@@ -183,11 +193,15 @@ def notify_with_sqlite():
                     objCursor = objConn.execute(strSQL % (strSolarModel,listDevice[0],intTimeStamp_Start,intTimeStamp_Now))
                     listResults = objCursor.fetchall()
                     #print('listResults',listResults)
+                    objLogger.debug('listResults: %s' % str(listResults))
                     if listResults != []:
                         if listResults[0][0] is not None:
+                            objLogger.debug('litResults[0][0]: %s' % listResults[0][0])
+                            objLogger.debug('litResults[-1][0]: %s' % listResults[-1][0])
                             if (listResults[0][0] - listResults[-1][0]) < listDevice[7] * (listDevice[8]/100):
                             #if (listResults[0][0] - listResults[-1][0]) >= listDevice[7] * (listDevice[8]/100): # for testing
                                 #print('call post...')
+                                objLogger.debug('call post...')
                                 # call notify when sum(value) below the criteria
                                 
                                 objResponse = requests.post(strURL_ServiceStore + strPath_Post % listDevice[5], 
@@ -195,6 +209,8 @@ def notify_with_sqlite():
                                                             headers = dicHeader)
                                 #print('Send notify:',objResponse,objResponse.content)
                                 #print()                                    
+                                objLogger.debug('Send notify: %s, %s' % (objResponse,objResponse.content))
+                                objLogger.debug('')
             
             objConn.close()
             time.sleep(intMonitorInterval)
@@ -203,15 +219,24 @@ def notify_with_sqlite():
                     
     except Exception as error:
         print(error)
+        objLogger.error(error, exc_info=True)
     
 
 if __name__ == '__main__':
+    
+    # init debug log
+    strCurrentPath = os.path.dirname(os.path.realpath(__file__))
+    strLogFile = datetime.now().strftime("TSFM_Notify_%Y%m%d_%H%M%S")
+    NDLogger.Logger(strLogFile,strCurrentPath)
+    objLogger = logging.getLogger('tsfm_notify_monitor2')
+    objLogger.info('TSFM Notify Monitor starts....')
+    
     # check system setting
     strEnv = os.getenv('FLASK_CONFIG')
     
     # for testing
-    #strEnv = 'testing'
-    #basedir = os.path.abspath(os.path.dirname(__file__))
+    strEnv = 'testing'
+    basedir = os.path.abspath(os.path.dirname(__file__))    
     
     if strEnv == 'production':
         try:
@@ -225,13 +250,15 @@ if __name__ == '__main__':
                     thdMonitor.start()
                     time.sleep(1)
                 #print('monitor thread id:',thdMonitor.get_thread_ID())
+                objLogger.info('Re-launch monitor thread id:',thdMonitor.get_thread_ID())
                 time.sleep(intWatchInterval)
                 
         except Exception as error:
             print('Main gets error:',error)
+            objLogger.error('Main gets error:',error)
         
     else:
         notify_with_sqlite()
 
-
+    objLogger.info('Notify monitor is down....')
     print('Notify monitor is down....')
