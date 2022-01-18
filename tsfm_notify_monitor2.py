@@ -256,7 +256,7 @@ if __name__ == '__main__':
             time.sleep(1)
             while True:
                 #break
-                objLogger.info('monitor thread hearbeat...')
+                #objLogger.info('monitor thread hearbeat...')
                 if not thdMonitor.is_alive():
                     objLogger.debug('Original monitor thread is dead. Now re-launch it.')
                     thdMonitor = monitor(strEnv,intMonitorInterval)
@@ -276,7 +276,7 @@ if __name__ == '__main__':
         time.sleep(1)
         while True:
             #break
-            objLogger.info('monitor thread hearbeat...')
+            #objLogger.info('monitor thread hearbeat...')
             if not thdNotify.is_alive():
                 objLogger.debug('Original monitor thread is dead. Now re-launch it.')
                 thdNotify = threading.Thread(target = notify_with_sqlite)
