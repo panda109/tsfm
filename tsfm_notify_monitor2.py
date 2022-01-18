@@ -3,9 +3,10 @@ import threading, time, json, os, requests, logging
 from datetime import datetime, timedelta
 import NDDB, NDLogger
 from config import IPPORT, basedir
+from pathlib import Path
 
 intMonitorInterval = 300
-intWatchInterval = 5
+intWatchInterval = 10
 strSolarModel = 'SolarPW'
 intTimeZoneHour = 8
 
@@ -231,8 +232,13 @@ if __name__ == '__main__':
     
     # init debug log
     strCurrentPath = os.path.dirname(os.path.realpath(__file__))
+    
+    objCurrentPath = Path(strCurrentPath)
+    strTargetLogDir = os.path.join(objCurrentPath.parent.absolute(),'notify_log')
+    if not os.path.isdir(strTargetLogDir):
+        os.mkdir(strTargetLogDir)
     strLogFile = datetime.now().strftime("TSFM_Notify_%Y%m%d_%H%M%S")
-    NDLogger.Logger(strLogFile,strCurrentPath)
+    NDLogger.Logger(strLogFile,strTargetLogDir)
     objLogger = logging.getLogger('tsfm_notify_monitor2')
     objLogger.info('TSFM Notify Monitor starts....')
     
@@ -250,12 +256,14 @@ if __name__ == '__main__':
             time.sleep(1)
             while True:
                 #break
+                objLogger.info('monitor thread hearbeat...')
                 if not thdMonitor.is_alive():
+                    objLogger.debug('Original monitor thread is dead. Now re-launch it.')
                     thdMonitor = monitor(strEnv,intMonitorInterval)
                     thdMonitor.start()
                     time.sleep(1)
-                #print('monitor thread id:',thdMonitor.get_thread_ID())
-                objLogger.info('Re-launch monitor thread id:',thdMonitor.get_thread_ID())
+                    #print('monitor thread id:',thdMonitor.get_thread_ID())
+                    objLogger.info('Re-launch monitor thread id:',thdMonitor.get_thread_ID())
                 time.sleep(intWatchInterval)
                 
         except Exception as error:
@@ -263,7 +271,20 @@ if __name__ == '__main__':
             objLogger.error('Main gets error:',error)
         
     else:
-        notify_with_sqlite()
+        thdNotify = threading.Thread(target = notify_with_sqlite)
+        thdNotify.start()
+        time.sleep(1)
+        while True:
+            #break
+            objLogger.info('monitor thread hearbeat...')
+            if not thdNotify.is_alive():
+                objLogger.debug('Original monitor thread is dead. Now re-launch it.')
+                thdNotify = threading.Thread(target = notify_with_sqlite)
+                thdNotify.start()
+                time.sleep(1)
+                #print('monitor thread id:',thdMonitor.get_thread_ID())
+                objLogger.info('Re-launch monitor thread id:',thdNotify.get_thread_ID())
+            time.sleep(intWatchInterval)
 
     objLogger.info('Notify monitor is down....')
     print('Notify monitor is down....')
