@@ -17,7 +17,7 @@
 		<a class='return-button' href="{{ url_for('main.publish_hello', userid=userid,redirect_app=redirect_app)}}">
 			<img src="{{ url_for('static', filename='img/arrow left.png') }}" >
 		</a>
-		<input type='submit' class='save-button'>
+		<input type='submit' class='save-button' value="Save">
 	</div>
 	{% for device in device_info %}
 	<div class='title'>{{ device.name }}</div>

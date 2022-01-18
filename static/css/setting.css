@@ -168,8 +168,9 @@ button, input.save-button, .save-button{
 }
 
 .return-button:hover, .save-button:hover{
-	background-color: rgba(23,74,159,0.2);
+	background-color: rgba(23,74,159,0.2) !important;
 	cursor: pointer;
+	background: none !important;
 }
 
 .return-button img{
@@ -185,7 +186,12 @@ button, input.save-button, .save-button{
 	color: #174A9F;
 	height: 44px;
 	width: 80px;
-	border-radius: 5%;
+	border-radius: 3px;
+	background: none !important;
+}
+
+.save-button:focus{
+	background: none !important;
 }
 
 .option img{
