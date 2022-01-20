@@ -13,25 +13,19 @@ from . import language
 @main.route('/hello',methods = ["GET"])
 def publish_hello():
     
+    #
     #lan = language.Language()
     #print(lan.clanguage['PV_01_01'])
     #get figma string into list and send to template
+
+    token = request.args.get('token')
+    userid = request.args.get('userid')
+    redirect_app = request.args.get('redirect_app')
     
-    
-    
-    
-    
-    
-    
-    #token = request.args.get('token')
-    #userid = request.args.get('userid')
-    #redirect_app = request.args.get('redirect_app')
-    
-    token = ""
-    userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
-    redirect_app = ""
-    
-    
+    #token = ""
+    #userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
+    #redirect_app = ""
+
     devicelist = Device_Info.get_by_userid(userid)
     user_info = User_Mgmt.query.filter_by(user_id=userid)
     return render_template('index.html',userid = userid,redirect_app=redirect_app ,user_info = user_info , devices = devicelist)
