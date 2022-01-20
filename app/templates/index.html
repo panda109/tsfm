@@ -6,7 +6,7 @@
 <head>
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 	<link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet" />
-	<title>PV Notification Setting</title>
+	<title>通知方法設定</title>
 </head>
 {% if devices.all() %}
 <div class="container">
@@ -27,7 +27,7 @@
 						</div>
 						
 						<div class='notif-status'>
-							<span>Notification</span>
+							<span>通知</span>
 	
 							{% if device.notify == "OFF" %}	
 		 						<div style="font-size:25px;color:#E15A5A" >

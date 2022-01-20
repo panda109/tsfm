@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import send_from_directory
 from . import main
 from flask import render_template
@@ -7,22 +8,28 @@ from ..models import Device_Data , Device_Info , User_Mgmt
 from app import db
 from sqlalchemy import exists
 import os
-from flask import current_app
+from . import language
 
 @main.route('/hello',methods = ["GET"])
 def publish_hello():
     
-    sk = current_app.config['SECRET_KEY']
-    print(sk)
-    #Check the token with userid and enable logined 
+    #lan = language.Language()
+    #print(lan.clanguage['PV_01_01'])
+    #get figma string into list and send to template
     
-    token = request.args.get('token')
-    userid = request.args.get('userid')
-    redirect_app = request.args.get('redirect_app')
     
-    #token = ""
-    #userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
-    #redirect_app = ""
+    
+    
+    
+    
+    
+    #token = request.args.get('token')
+    #userid = request.args.get('userid')
+    #redirect_app = request.args.get('redirect_app')
+    
+    token = ""
+    userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
+    redirect_app = ""
     
     
     devicelist = Device_Info.get_by_userid(userid)
