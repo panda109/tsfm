@@ -103,7 +103,7 @@ body{
 	line-height:2;
 }
 .device-icon{
-	width:90px;
+	width:83px;
 	height:auto;
 	margin: 15px;
 }
@@ -122,11 +122,43 @@ body{
   	width:100%;
   	margin:0 !important;
 }
-.notif-status{
+
+/*.notif-status{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
 	font-weight:600;
 	margin:10px 30px 10px 20px;
+}*/
+
+.additional-info{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-bottom:10px;
+}
+
+.additional-info div{
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	width: 50%;
+}
+
+.instanceElectricity{
+	border-right: 0.5px solid rgba(187, 188, 190, 0.4);
+}
+
+.additional-info span{
+	color: #97A0AF;
+	font-weight: 500;
+	font-size: 18px;
+}
+.additional-info p{
+	font-weight: 600;
+	font-size: 20px;
+	margin:0 !important;
 }

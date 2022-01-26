@@ -23,25 +23,24 @@
 								</a>
 							</div>
 						</div>
-						
-						<div class='notif-status'>
-							<span>通知</span>
-	
-							{% if device.notify == "OFF" %}	
-		 						<div style="font-size:25px;color:#E15A5A" >
+						<div class="additional-info">
+							<div class="instanceElectricity">
+								<span>瞬時產電</span>
+								<p>{{ get_instanceElectricity(device.uuid)  }} kWh</p>
+							</div>
+							<div class='notif-status'>
+								<span>通知</span>
+								{% if device.notify == "OFF" %}	
+		 						<p style="color:#E15A5A" >
 									 OFF
-								</div>
-							{% else %}
-								<div style="font-size:25px;color:#5EA76E" >
+								</p>
+								{% else %}
+								<p style="color:#5EA76E" >
 									 ON
-								</div>
-							{% endif %}
-						</div>
-						<div class="instanceElectricity">
-						{{ get_instanceElectricity(device.uuid)  }}
-						</div>
-						
-						
+								</p>
+								{% endif %}
+							</div>
+						</div>				
 				</div>
 	</div>
 {% endif %}
