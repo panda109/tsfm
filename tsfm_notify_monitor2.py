@@ -176,9 +176,12 @@ def notify_with_sqlite():
             intTimeStamp_ToBeDelete = int(objDateTimeToBeDelete.timestamp()*1000)
             objLogger.debug('Data before %s would be deleted!' % intTimeStamp_ToBeDelete)
             
-            objCursor.execute("Delete from device_data where generated_time < '%s'" % intTimeStamp_ToBeDelete)
+            objCursor.execute("delete from device_data where generated_time < %s" % intTimeStamp_ToBeDelete)
             objConn.commit()
             objLogger.info('Finish deleting....')
+            objCursor.execute("vacuum")
+            objLogger.info('Run vacuum to reduce DB size....')
+            time.sleep(5)
             
             # start to query and notify           
             objCursor = objConn.execute("select * from device_info where model = '%s' and notify = 'ON'" % strSolarModel)
