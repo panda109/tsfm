@@ -18,11 +18,9 @@ def get_instanceElectricity(uuid):
     model='Delta_RPI-M10A'
     scope='instanceElectricity'
     time = (datetime.now().timestamp()-1800)*1000
-    print(time)
     devicedata = Device_Data.get_by_data(uuid,model,scope,time).first()
     
     if devicedata:
-        print(devicedata)
         return(devicedata.value)
     #if empty return 0
     else:
