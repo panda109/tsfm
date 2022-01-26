@@ -146,13 +146,13 @@ def gen_post_sqlite3(listDev):
     dicNotify = {
         "format": 1,
         "name": "NextDrive TSFM",
-        "icon": "https://%s/postpicture/SolarPanel.png" % strIP,
+        "icon": "http://%s/postpicture/SolarPanel.png" % strIP,
         "title": "發電低下通知",
         "description": "太陽能發電模組, %s, 發電量低於通知設定" % listDev[1],
         "images": [
                 {
-                    "previewImageUrl": "https://%s/postpicture/LowSellingPower.png" % strIP,
-                    "originalContentUrl": "https://%s/postpicture/LowSellingPower.png" % strIP
+                    "previewImageUrl": "http://%s/postpicture/LowSellingPower.png" % strIP,
+                    "originalContentUrl": "http://%s/postpicture/LowSellingPower.png" % strIP
                 }
             ],
         "contents": []
