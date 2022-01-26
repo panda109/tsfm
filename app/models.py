@@ -18,10 +18,15 @@ class Device_Data(UserMixin, db.Model):
     value = db.Column(db.Float)
     generated_time = db.Column(db.BigInteger)
     uploaded_time = db.Column(db.BigInteger)
+    
+    @classmethod
+    def get_by_data(cls, uuid , model , scope , time):
+        devices = Device_Data.query.filter_by(dev_uuid=uuid,model=model,scope=scope).filter(Device_Data.generated_time>=time).order_by(Device_Data.generated_time.desc())
+        return devices
 
     def __repr__(self):
-        return "<Device Data(UUID='%s', Model='%s', Value='%s')>" % (
-                                self.dev_uuid, self.model, self.value)
+        return "<Device Data(UUID='%s',Scope='%s', Model='%s', Value='%s' , Generated_time='%s')>" % (
+                                self.dev_uuid,self.scope , self.model, self.value, self.generated_time)
 
 class Device_Info(UserMixin, db.Model):
     __tablename__ = 'device_info'
@@ -49,8 +54,8 @@ class Device_Info(UserMixin, db.Model):
         return device
 
     def __repr__(self):
-        return "<Device Info(UUID='%s', Name='%s', Model='%s' ,Goal='%s;, Target_energy_level='%s', Lower_bound='%s', Statr_time='%s', End_time='%s', Notify='%s' )>" % (
-                                self.uuid, self.name, self.model,self.goal , self.target_energy_level, self.lower_bound, self.start_time, self.end_time, self.notify)
+        return "<Device Info(UUID='%s', Name='%s', Model='%s' , Target_energy_level='%s', Lower_bound='%s', Statr_time='%s', End_time='%s', Notify='%s' )>" % (
+                                self.uuid, self.name, self.model , self.target_energy_level, self.lower_bound, self.start_time, self.end_time, self.notify)
 
 class User_Mgmt(UserMixin, db.Model):
     __tablename__ = 'user_mgmt'

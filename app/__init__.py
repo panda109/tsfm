@@ -7,10 +7,27 @@ from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 import os
+from datetime import datetime
+
 bootstrap = Bootstrap()
 moment = Moment()
 db = SQLAlchemy()
+from .models import Device_Data , Device_Info , User_Mgmt
 
+def get_instanceElectricity(uuid):
+    model='Delta_RPI-M10A'
+    scope='instanceElectricity'
+    time = (datetime.now().timestamp()-1800)*1000
+    print(time)
+    devicedata = Device_Data.get_by_data(uuid,model,scope,time).first()
+    
+    if devicedata:
+        print(devicedata)
+        return(devicedata.value)
+    #if empty return 0
+    else:
+        return(0)
+    
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
@@ -23,4 +40,5 @@ def create_app(config_name):
     db.init_app(app)
     bootstrap.init_app(app)
     moment.init_app(app)
+    app.jinja_env.globals.update(get_instanceElectricity=get_instanceElectricity)
     return app
