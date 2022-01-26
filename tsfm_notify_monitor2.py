@@ -87,14 +87,26 @@ class monitor(threading.Thread):
         #self.strThreadID = threading.get_ident()
         try:
             while True:
+                
+                # remove old data (24-hours-before)
+                objNow = datetime.now()
+                objLogger.info('Start to delete old data....')
+                objDateTimeToBeDelete = objNow - timedelta(hours=24)
+                intTimeStamp_ToBeDelete = int(objDateTimeToBeDelete.timestamp()*1000)
+                objLogger.debug('Data before %s would be deleted!' % intTimeStamp_ToBeDelete)
+                
+                self.objTSFMDB.objCursor.execute("Delete from device_data where generated_time < '%s'" % intTimeStamp_ToBeDelete)
+                self.objTSFMDB.objConn.commit()
+                objLogger.info('Finish deleting....')
+                
                 # find users and devices that notify = ON
-                listResults = self.objTSFMDB.execute(self.strSQL_FindUser_ON % strSolarModel)
+                listResults = self.objTSFMDB.query(self.strSQL_FindUser_ON % strSolarModel)
                 #objLogger.debug('find ON user: %s' % str(stResults))
                 # uuid,name,model,online_status,gw_uuid,user_id,associated,target_energy_level,lower_bound,start_time,end_time,notify
                 
                 for listDevice in listResults:
                     objLogger.debug('listDevice: %s' % str(listDevice))
-                    objNow = datetime.now()
+                    #objNow = datetime.now()
                     objNewDateTime = objNow + timedelta(hours=intTimeZoneHour)
                     intCurrentHour = int(objNewDateTime.strftime("%H"))
                     objLogger.info('Current hour: %s' % intCurrentHour)
@@ -154,7 +166,6 @@ def notify_with_sqlite():
     try:
         while True:
             # connect to sqlite3 DB
-            # find users and devices that notify = ON
             objConn = sqlite3.connect(os.path.join(basedir,strDB_Test))
             objCursor = objConn.cursor()
                         
@@ -197,14 +208,13 @@ def notify_with_sqlite():
                             objLogger.debug('litResults[0][0]: %s' % listResults[0][0])
                             objLogger.debug('litResults[-1][0]: %s' % listResults[-1][0])
                             if (listResults[0][0] - listResults[-1][0]) < listDevice[7] * 1000 * (listDevice[8]/100):
-                            #if (listResults[0][0] - listResults[-1][0]) >= listDevice[7] * (listDevice[8]/100): # for testing
                                 objLogger.debug('call post...')
-                                """
+                                
                                 objResponse = requests.post(strURL_ServiceStore + strPath_Post % listDevice[5], 
                                                             data = json.dumps(gen_post_sqlite3(listDevice)), 
                                                             headers = dicHeader)
                                 objLogger.debug('Send notify: %s, %s' % (objResponse,objResponse.content))
-                                """
+                                
                                 objLogger.debug('')
             
             objConn.close()
@@ -232,8 +242,8 @@ if __name__ == '__main__':
     strEnv = os.getenv('FLASK_CONFIG')
     
     # for testing
-    strEnv = 'testing'
-    basedir = os.path.abspath(os.path.dirname(__file__))    
+    #strEnv = 'testing'
+    #basedir = os.path.abspath(os.path.dirname(__file__))    
     
     if strEnv == 'production':
         try:
