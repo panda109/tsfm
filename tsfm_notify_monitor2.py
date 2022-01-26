@@ -176,7 +176,7 @@ def notify_with_sqlite():
             intTimeStamp_ToBeDelete = int(objDateTimeToBeDelete.timestamp()*1000)
             objLogger.debug('Data before %s would be deleted!' % intTimeStamp_ToBeDelete)
             
-            objCursor.execute("Delete from device_data where generated_time < '%s'" % intTimeStamp_ToBeDelete)
+            objCursor.execute("Delete from device_data where generated_time < %s" % intTimeStamp_ToBeDelete)
             objConn.commit()
             objLogger.info('Finish deleting....')
             
