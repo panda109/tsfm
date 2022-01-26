@@ -90,11 +90,9 @@ class monitor(threading.Thread):
                 # find users and devices that notify = ON
                 listResults = self.objTSFMDB.execute(self.strSQL_FindUser_ON % strSolarModel)
                 #objLogger.debug('find ON user: %s' % str(stResults))
-                #print('find ON user',listResults)
                 # uuid,name,model,online_status,gw_uuid,user_id,associated,target_energy_level,lower_bound,start_time,end_time,notify
                 
                 for listDevice in listResults:
-                    #print(listDevice)
                     objLogger.debug('listDevice: %s' % str(listDevice))
                     objNow = datetime.now()
                     objNewDateTime = objNow + timedelta(hours=intTimeZoneHour)
@@ -108,38 +106,22 @@ class monitor(threading.Thread):
                         intTimeStamp_Start = int(objFrom.timestamp()*1000)
                         
                         litResults = self.objTSFMDB.query(self.strSQL_QueryValue % (strSolarModel,listDevice[0],intTimeStamp_Start,intTimeStamp_Now))
-                        #print('litResults',litResults)
                         #objLogger.debug('litResults: %s' % str(litResults))
                         if litResults != []:
                             if litResults[0][0] is not None:
-                                #print('litResults[0][0]',litResults[0][0],'litResults[-1][0]',litResults[-1][0])
                                 objLogger.debug('litResults[0][0]: %s' % litResults[0][0])
                                 objLogger.debug('litResults[-1][0]: %s' % litResults[-1][0])
                                 if (litResults[0][0] - litResults[-1][0]) < listDevice[7] * 1000 * (listDevice[8]/100):
                                 #if (litResults[0][0] - litResults[-1][0]) >= listDevice[7] * (listDevice[8]/100): # for testing
-                                    #print('call post...')
-                                    
-                                    # call notify when sum(value) below the criteria
                                     objResponse = requests.post(strURL_ServiceStore + strPath_Post % listDevice[5], 
                                                                 data = json.dumps(self._gen_post(listDevice)), 
                                                                 headers = dicHeader)
-                                    #print('Send notify:',objResponse,objResponse.content)
-                                    #print()
                                     objLogger.debug('Send notify: %s, %s' % (objResponse,objResponse.content))
                                     objLogger.debug('')
-                                    
-                                    """
-                                    print(listDevice[5])
-                                    objResponse = requests.get(strURL_ServiceStore + '/v1/users/%s' % listDevice[5], headers = dicHeader2)
-                                    print('get user data:',objResponse,objResponse.content)
-                                    print()
-                                    """
+
                 time.sleep(self.intCheckInterval)
-                #raise Exception('thread is dead!')
-                #break
-        
+                
         except Exception as error:
-            print('Error in monitor thread:',error)
             objLogger.error(error, exc_info=True)
             self.objTSFMDB.closeDB()
             objLogger.info('Close DB')
@@ -174,13 +156,25 @@ def notify_with_sqlite():
             # connect to sqlite3 DB
             # find users and devices that notify = ON
             objConn = sqlite3.connect(os.path.join(basedir,strDB_Test))
+            objCursor = objConn.cursor()
+                        
+            # remove old data (24-hours-before)
+            objNow = datetime.now()
+            objLogger.info('Start to delete old data....')
+            objDateTimeToBeDelete = objNow - timedelta(hours=24)
+            intTimeStamp_ToBeDelete = int(objDateTimeToBeDelete.timestamp()*1000)
+            objLogger.debug('Data before %s would be deleted!' % intTimeStamp_ToBeDelete)
+            
+            objCursor.execute("Delete from device_data where generated_time < '%s'" % intTimeStamp_ToBeDelete)
+            objConn.commit()
+            objLogger.info('Finish deleting....')
+            
+            # start to query and notify           
             objCursor = objConn.execute("select * from device_info where model = '%s' and notify = 'ON'" % strSolarModel)
             listResults = objCursor.fetchall()
             #objLogger.debug('listResults: %s' % str(listResults))
             for listDevice in listResults:
-                #print(listDevice)
                 objLogger.debug('listDevice: %s' % str(listDevice))
-                objNow = datetime.now()
                 objNewDateTime = objNow + timedelta(hours=intTimeZoneHour)
                 intCurrentHour = int(objNewDateTime.strftime("%H"))
                 objLogger.info('Current hour: %s' % intCurrentHour)
@@ -198,33 +192,25 @@ def notify_with_sqlite():
                     """
                     objCursor = objConn.execute(strSQL % (strSolarModel,listDevice[0],intTimeStamp_Start,intTimeStamp_Now))
                     listResults = objCursor.fetchall()
-                    #print('listResults',listResults)
-                    #objLogger.debug('listResults: %s' % str(listResults))
                     if listResults != []:
                         if listResults[0][0] is not None:
                             objLogger.debug('litResults[0][0]: %s' % listResults[0][0])
                             objLogger.debug('litResults[-1][0]: %s' % listResults[-1][0])
                             if (listResults[0][0] - listResults[-1][0]) < listDevice[7] * 1000 * (listDevice[8]/100):
                             #if (listResults[0][0] - listResults[-1][0]) >= listDevice[7] * (listDevice[8]/100): # for testing
-                                #print('call post...')
                                 objLogger.debug('call post...')
-                                # call notify when sum(value) below the criteria
-                                
+                                """
                                 objResponse = requests.post(strURL_ServiceStore + strPath_Post % listDevice[5], 
                                                             data = json.dumps(gen_post_sqlite3(listDevice)), 
                                                             headers = dicHeader)
-                                #print('Send notify:',objResponse,objResponse.content)
-                                #print()                                    
                                 objLogger.debug('Send notify: %s, %s' % (objResponse,objResponse.content))
+                                """
                                 objLogger.debug('')
             
             objConn.close()
             time.sleep(intMonitorInterval)
-            #raise Exception('thread is dead!')
-            #break
-                    
+            
     except Exception as error:
-        print(error)
         objLogger.error(error, exc_info=True)
     
 
@@ -246,8 +232,8 @@ if __name__ == '__main__':
     strEnv = os.getenv('FLASK_CONFIG')
     
     # for testing
-    #strEnv = 'testing'
-    #basedir = os.path.abspath(os.path.dirname(__file__))    
+    strEnv = 'testing'
+    basedir = os.path.abspath(os.path.dirname(__file__))    
     
     if strEnv == 'production':
         try:
@@ -256,13 +242,12 @@ if __name__ == '__main__':
             time.sleep(1)
             while True:
                 #break
-                #objLogger.info('monitor thread hearbeat...')
+                #objLogger.info('monitor thread heartbeat...')
                 if not thdMonitor.is_alive():
                     objLogger.debug('Original monitor thread is dead. Now re-launch it.')
                     thdMonitor = monitor(strEnv,intMonitorInterval)
                     thdMonitor.start()
                     time.sleep(1)
-                    #print('monitor thread id:',thdMonitor.get_thread_ID())
                     objLogger.info('Re-launch monitor thread id:',thdMonitor.get_thread_ID())
                 time.sleep(intWatchInterval)
                 
@@ -276,15 +261,14 @@ if __name__ == '__main__':
         time.sleep(1)
         while True:
             #break
-            #objLogger.info('monitor thread hearbeat...')
+            #objLogger.info('monitor thread heartbeat...')
             if not thdNotify.is_alive():
                 objLogger.debug('Original monitor thread is dead. Now re-launch it.')
                 thdNotify = threading.Thread(target = notify_with_sqlite)
                 thdNotify.start()
                 time.sleep(1)
-                #print('monitor thread id:',thdMonitor.get_thread_ID())
                 objLogger.info('Re-launch monitor thread id:',thdNotify.get_thread_ID())
             time.sleep(intWatchInterval)
 
     objLogger.info('Notify monitor is down....')
-    print('Notify monitor is down....')
+    
