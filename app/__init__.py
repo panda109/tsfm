@@ -71,5 +71,7 @@ def create_app(config_name):
     bootstrap.init_app(app)
     moment.init_app(app)
     app.jinja_env.globals.update(get_instanceElectricity=get_instanceElectricity)
+    app.jinja_env.globals.update(get_generatedElectricity=get_generatedElectricity)
+    app.jinja_env.globals.update(get_yesterdaygeneratedElectricity=get_yesterdaygeneratedElectricity)
     app.jinja_env.globals.update(no_device=no_device)
     return app
