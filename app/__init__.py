@@ -27,7 +27,6 @@ def get_instanceElectricity(uuid):
         return(0)
     
 def no_device(list):
-#   device_list = Device_Info.get_by_userid(uuid)
     count = False
     for device in list: 
         if device.model == 'Delta_RPI-M10A' :
