@@ -26,6 +26,14 @@ def get_instanceElectricity(uuid):
     else:
         return(0)
     
+def no_device(list):
+#   device_list = Device_Info.get_by_userid(uuid)
+    count = False
+    for device in list: 
+        if device.model == 'Delta_RPI-M10A' :
+            count = True
+    return count
+    
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
@@ -39,4 +47,5 @@ def create_app(config_name):
     bootstrap.init_app(app)
     moment.init_app(app)
     app.jinja_env.globals.update(get_instanceElectricity=get_instanceElectricity)
+    app.jinja_env.globals.update(no_device=no_device)
     return app
