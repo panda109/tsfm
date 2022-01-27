@@ -20,7 +20,12 @@ class Device_Data(UserMixin, db.Model):
     uploaded_time = db.Column(db.BigInteger)
     
     @classmethod
-    def get_by_data(cls, uuid , model , scope , time):
+    def getyesterday(cls, uuid , model , scope , time):
+        devices = Device_Data.query.filter_by(dev_uuid=uuid,model=model,scope=scope).filter(Device_Data.generated_time>=time).order_by(Device_Data.generated_time.desc())
+        return devices
+    
+    @classmethod
+    def gettoday(cls, uuid , model , scope , time):
         devices = Device_Data.query.filter_by(dev_uuid=uuid,model=model,scope=scope).filter(Device_Data.generated_time>=time).order_by(Device_Data.generated_time.desc())
         return devices
 

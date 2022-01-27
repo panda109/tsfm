@@ -27,6 +27,8 @@
 							<div class="instanceElectricity">
 								<span>瞬時產電</span>
 								<p>{{ get_instanceElectricity(device.uuid)  }} kWh</p>
+								<p>{{ get_generatedElectricity(device.uuid)  }} kWh</p>
+								<p>{{ get_yesterdaygeneratedElectricity(device.uuid)  }} kWh</p>
 							</div>
 							<div class='notif-status'>
 								<span>通知</span>

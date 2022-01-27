@@ -14,11 +14,36 @@ moment = Moment()
 db = SQLAlchemy()
 from .models import Device_Data , Device_Info , User_Mgmt
 
+
+def get_yesterdaygeneratedElectricity(uuid):
+    model='Delta_RPI-M10A'
+    scope='generatedElectricity'
+    time = (datetime.now().timestamp()-1800)*1000
+    devicedata = Device_Data.gettoday(uuid,model,scope,time).first()
+    
+    if devicedata:
+        return(devicedata.value)
+    #if empty return 0
+    else:
+        return(0)
+
+def get_generatedElectricity(uuid):
+    model='Delta_RPI-M10A'
+    scope='generatedElectricity'
+    time = (datetime.now().timestamp()-1800)*1000
+    devicedata = Device_Data.gettoday(uuid,model,scope,time).first()
+    
+    if devicedata:
+        return(devicedata.value)
+    #if empty return 0
+    else:
+        return(0)
+
 def get_instanceElectricity(uuid):
     model='Delta_RPI-M10A'
     scope='instanceElectricity'
     time = (datetime.now().timestamp()-1800)*1000
-    devicedata = Device_Data.get_by_data(uuid,model,scope,time).first()
+    devicedata = Device_Data.gettoday(uuid,model,scope,time).first()
     
     if devicedata:
         return(devicedata.value)
