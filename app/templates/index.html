@@ -6,7 +6,7 @@
 	<link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet" />
 	<title>通知方法設定</title>
 </head>
-{% if devices.all() %}
+{% if no_device(devices.all()) %}
 <div class="container">
 {% for device in devices.all() %}
 {% if device.model == 'Delta_RPI-M10A' %}
