@@ -7,6 +7,13 @@ body{
 	align-items: center;
 	font-size: 21px;
 	padding-bottom:50px;
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 .banner{
 	width: 96%;	
@@ -53,7 +60,7 @@ body{
 .sub-title{
 	font-size: 23px;
 	padding: 15px 0px 0px 0 ;
-	font-weight:500;
+	font-weight:600;
 	display:flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -67,7 +74,7 @@ body{
 
 .device-border{
 	border-radius:4px;
-	border: 0.5px solid rgba(187, 188, 188, 0.72);
+	border: 1px solid rgba(187, 188, 190, 0.8);
 }
 
 .setting-button{
@@ -102,16 +109,20 @@ body{
 	font-size: 16px;
 	line-height:2;
 }
+
+.row{
+	margin-top :15px;
+}
 .device-icon{
-	width:90px;
+	width:80px;
 	height:auto;
-	margin: 15px;
+	margin: 0 15px;
 }
 .device-name{
-	height:120px;
+	height:80px;
 	display: flex;
 	align-items: center;
-	padding-left: 40px;
+	padding-left: 34px;
 	font-weight:600;
 	margin-right: 30px;
 }
@@ -122,11 +133,61 @@ body{
   	width:100%;
   	margin:0 !important;
 }
-.notif-status{
+
+/*.notif-status{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
 	font-weight:600;
 	margin:10px 30px 10px 20px;
+}*/
+
+.additional-info{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-bottom:5px;
+}
+
+.additional-info div{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	width: 33%;
+}
+
+.today-gen, .yesterday-gen{
+	border-right: 1px solid rgba(187, 188, 190, 0.6);
+}
+
+.instanceElectricity{
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	margin-bottom:6px
+}
+
+.instanceElectricity p{
+	font-size: 24px !important;
+}
+
+.instanceElectricity span{
+	letter-spacing: 5px;
+	font-size: 22px;
+	color: #97A0AF;
+}
+
+.additional-info span{
+	color: #97A0AF;
+	/*font-weight: 500;*/
+	font-size: 15px;
+}
+.additional-info p, .instanceElectricity p{
+	font-weight: 600;
+	font-size: 15px;
+	margin:0 !important;
 }

@@ -10,13 +10,9 @@ from sqlalchemy import exists
 import os
 from . import language
 
+
 @main.route('/hello',methods = ["GET"])
 def publish_hello():
-    
-    #
-    #lan = language.Language()
-    #print(lan.clanguage['PV_01_01'])
-    #get figma string into list and send to template
 
     token = request.args.get('token')
     userid = request.args.get('userid')
