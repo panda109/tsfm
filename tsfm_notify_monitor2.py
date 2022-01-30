@@ -8,6 +8,7 @@ from pathlib import Path
 intMonitorInterval = 300
 intWatchInterval = 10
 strSolarModel = 'SolarPW'
+strInverterModelFile = 'inverter_model.json'
 intTimeZoneHour = 8
 
 dicTSFM_DB = {
@@ -159,7 +160,7 @@ def gen_post_sqlite3(listDev):
     }
     return dicNotify
 
-def notify_with_sqlite():
+def notify_with_sqlite(strSolarModels):
     # since sqlite3 cannot be run in different threads, we cannot use the same method as Postgresql DB module.
     import sqlite3
     
@@ -184,7 +185,8 @@ def notify_with_sqlite():
             time.sleep(5)
             
             # start to query and notify           
-            objCursor = objConn.execute("select * from device_info where model = '%s' and notify = 'ON'" % strSolarModel)
+            objCursor = objConn.execute("select * from device_info where model in %s and notify = 'ON'" % strSolarModels)
+            
             listResults = objCursor.fetchall()
             #objLogger.debug('listResults: %s' % str(listResults))
             for listDevice in listResults:
@@ -198,13 +200,13 @@ def notify_with_sqlite():
                     strFrom = objNow.strftime("%Y-%m-%d 00:00:00")
                     objFrom = datetime.strptime(strFrom,"%Y-%m-%d %H:%M:%S")
                     intTimeStamp_Start = int(objFrom.timestamp()*1000)
-                    
+
                     strSQL = """select value,generated_time from device_data where 
-                    model = '%s' and scope = 'generatedElectricity' and dev_uuid = '%s' and 
+                    model in %s and scope = 'generatedElectricity' and dev_uuid = '%s' and 
                     generated_time >= %s and generated_time <= %s 
                     order by generated_time desc
                     """
-                    objCursor = objConn.execute(strSQL % (strSolarModel,listDevice[0],intTimeStamp_Start,intTimeStamp_Now))
+                    objCursor = objConn.execute(strSQL % (strSolarModels,listDevice[0],intTimeStamp_Start,intTimeStamp_Now))
                     listResults = objCursor.fetchall()
                     if listResults != []:
                         if listResults[0][0] is not None:
@@ -219,13 +221,18 @@ def notify_with_sqlite():
                                 objLogger.debug('Send notify: %s, %s' % (objResponse,objResponse.content))
                                 
                                 objLogger.debug('')
-            
+                    
             objConn.close()
             time.sleep(intMonitorInterval)
             
     except Exception as error:
         objLogger.error(error, exc_info=True)
     
+
+def get_inverter_model():
+    with open(os.path.join(strCurrentPath,strInverterModelFile)) as fileJson:
+        dicData = json.load(fileJson)
+    return dicData['model']
 
 if __name__ == '__main__':
     
@@ -243,10 +250,17 @@ if __name__ == '__main__':
     
     # check system setting
     strEnv = os.getenv('FLASK_CONFIG')
-    
+    # load supported solar inverter model
+    listModels = get_inverter_model()
+    tupModels = tuple(listModels)
+    if len(tupModels) == 1:
+        strModle_Tuple = str(tupModels).replace(',','')
+    else:
+        strModle_Tuple = str(tupModels)
+
     # for testing
-    #strEnv = 'testing'
-    #basedir = os.path.abspath(os.path.dirname(__file__))    
+    strEnv = 'testing'
+    basedir = os.path.abspath(os.path.dirname(__file__))    
     
     if strEnv == 'production':
         try:
@@ -268,8 +282,8 @@ if __name__ == '__main__':
             print('Main gets error:',error)
             objLogger.error('Main gets error:',error)
         
-    else:
-        thdNotify = threading.Thread(target = notify_with_sqlite)
+    else: # load sqlite db
+        thdNotify = threading.Thread(target = notify_with_sqlite, args = (strModle_Tuple,))
         thdNotify.start()
         time.sleep(1)
         while True:
@@ -277,11 +291,11 @@ if __name__ == '__main__':
             #objLogger.info('monitor thread heartbeat...')
             if not thdNotify.is_alive():
                 objLogger.debug('Original monitor thread is dead. Now re-launch it.')
-                thdNotify = threading.Thread(target = notify_with_sqlite)
+                thdNotify = threading.Thread(target = notify_with_sqlite, args = (strModle_Tuple,))
                 thdNotify.start()
                 time.sleep(1)
                 objLogger.info('Re-launch monitor thread id:',thdNotify.get_thread_ID())
             time.sleep(intWatchInterval)
-
+    
     objLogger.info('Notify monitor is down....')
     
