@@ -124,7 +124,7 @@ class monitor(threading.Thread):
                             if litResults[0][0] is not None:
                                 objLogger.debug('litResults[0][0]: %s' % litResults[0][0])
                                 objLogger.debug('litResults[-1][0]: %s' % litResults[-1][0])
-                                if (litResults[0][0] - litResults[-1][0]) < listDevice[7] * 1000 * (listDevice[8]/100):
+                                if (litResults[0][0] - litResults[-1][0])  * 1000 < listDevice[7] * 1000 * (listDevice[8]/100):
                                 #if (litResults[0][0] - litResults[-1][0]) >= listDevice[7] * (listDevice[8]/100): # for testing
                                     objResponse = requests.post(strURL_ServiceStore + strPath_Post % listDevice[5], 
                                                                 data = json.dumps(self._gen_post(listDevice)), 
@@ -212,7 +212,7 @@ def notify_with_sqlite(strSolarModels):
                         if listResults[0][0] is not None:
                             objLogger.debug('litResults[0][0]: %s' % listResults[0][0])
                             objLogger.debug('litResults[-1][0]: %s' % listResults[-1][0])
-                            if (listResults[0][0] - listResults[-1][0]) < listDevice[7] * 1000 * (listDevice[8]/100):
+                            if (listResults[0][0] - listResults[-1][0]) * 1000 < listDevice[7] * 1000 * (listDevice[8]/100):
                                 objLogger.debug('call post...')
                                 
                                 objResponse = requests.post(strURL_ServiceStore + strPath_Post % listDevice[5], 
@@ -298,4 +298,12 @@ if __name__ == '__main__':
             time.sleep(intWatchInterval)
     
     objLogger.info('Notify monitor is down....')
+    
+    '''
+    2. "當機沒有發電資料送上來"的通知
+    3. Also need to have multiple languages of strings
+    4. 發電低下通知Post字串與spec不一致
+    5. 把 notify 整個包起來
+    '''
+    
     
