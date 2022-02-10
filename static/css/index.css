@@ -107,7 +107,7 @@ body{
 .no-device p{
 	color:#BBBCBE;
 	font-size: 16px;
-	line-height:2;
+	margin-top: 10px;
 }
 
 .row{
