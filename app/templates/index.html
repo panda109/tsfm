@@ -1,47 +1,58 @@
 <!-- app/templates/index.html -->
-
 {% extends "top.html" %}
-
 {% block page_content %}
+<head>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/index.min.css') }}">
+	<link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet" />
+	<title>通知方法設定</title>
+</head>
+{% if no_device(devices.all()) %}
 <div class="container">
-
 {% for device in devices.all() %}
+{% if device.model == 'Delta_RPI-M10A' %}
 	<div class="row" style="border:10px white dashed;">
-				<div class="col-xs-12 col-sm-12" style="border-width:0.5px;border-style:solid;border-color:#BBBCBCB8;padding:5px;">
+				<div class="col-xs-12 col-sm-12 device-border" style="border-width:0.5px;border-style:solid;border-color:#BBBCBCB8;padding:5px;">
 						<div class="row">
-							<div class="col-xs-3 col-sm-" style="font-size:25px;">
-								<img src="{{ url_for('static', filename='img/Smartmeter_icon_Nonactive.png') }}" width="100" height="100" style="border:10px white dashed;" ></>		
+							<div class="col-xs-3" style="font-size:25px;">
+								<img class='device-icon' src="{{ url_for('static', filename='img/icon_Active.png') }}" >		
 							</div>
-							<div class="col-xs-7 col-sm-7" style="font-size:25px;border:20px white dashed;">
-							{{ device.name }}
-							</div>							
-							<div class="col-xs-2 col-sm-2"  style="text-align:center">
-								<a href="{{ url_for('main.publish_setting', uuid = device.uuid )}}">
-									<img src="{{ url_for('static', filename='img/Vector.png') }}" width="6" height="20" style="border:2px white" >			
+							<div class="device-name" style="font-size:23px;"><p>{{ device.name }}</p></div>							
+							<div class="col-xs-2 col-sm-2">
+								<a class='setting-button' href="{{ url_for('main.publish_setting', userid=userid , uuid = device.uuid, redirect_app=redirect_app)}}">
+									<img src="{{ url_for('static', filename='img/Vector.png') }}" width="6" height="20" >			
 								</a>
 							</div>
 						</div>
-						
-						<div>
-							<div class="col-xs-1 col-sm-1">
-							</div>
-							<div class="col-xs-8 col-sm-8"  style="text-align:center" >
-								<h3>Notification</>
-							</div>
-	
-							{% if device.online_status == "OFFLINE" %}	
-		 						<div class="col-xs-3 col-sm-3"  style="text-align:right;font-size:25px;color:#E15A5A" >
-									 OFF
-								</div>
-							{% else %}
-								<div class="col-xs-3 col-sm-3"  style="text-align:right;font-size:25px;color:#5EA76E" >
-									 ON
-								</div>
-							{% endif %}
+						<div class="instanceElectricity">
+							<span>瞬時產電</span>
+							<p>{{ get_instanceElectricity(device.uuid)  }} kWh</p>
 						</div>
+						<div class="additional-info">
+							<div class='today-gen'>
+								<span>當日總發電量</span>
+								<p>{{ get_generatedElectricity(device.uuid)  }} kWh</p>
+							</div>
+							<div class='yesterday-gen'>
+								<span>昨日總發電量</span>
+								<p>{{ get_yesterdaygeneratedElectricity(device.uuid)  }} kWh</p>
+							</div>
+							<div class='notif-status'>
+								<span>通知</span>
+								{% if device.notify == "OFF" %}	
+		 						<p style="color:#E15A5A" >
+									 OFF
+								</p>
+								{% else %}
+								<p style="color:#5EA76E" >
+									 ON
+								</p>
+								{% endif %}
+							</div>
+						</div>				
 				</div>
 	</div>
+{% endif %}
 {% endfor %}	
-
 </div>
+{% endif %}
 {% endblock %}

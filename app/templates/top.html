@@ -5,37 +5,19 @@
 {% block head %}
 	{{super()}}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 {% endblock %}
-<body
+<body>
 {% block content%}
-	<div class="container">
-			<div class="row">	
-			<P>
-			<p>
-				<div class="col-xs-12 col-sm-12">
-					<a href="要前往的連結網址"><img src="{{ url_for('static', filename='img/Mask.png') }}" width="15" height="15" border="0"></a>
-				<p>
-				</div>
-			</div>
+	<div class="banner">
+		<a class='return-button' href="{{redirect_app}}"><img src="{{ url_for('static', filename='img/arrow left.png') }}"></a>
 	</div>
-	<div class="container">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12" style="text-align:left;font-size:37px;">
-					<p>
-					PV Generation Alert
-					<p>
+	<div class="container2">
+				<div class="col-xs-12 col-sm-12 title">
+					通知方法設定
 				</div>
-			</div>
-
-				<div class="col-xs-9 col-sm-9"  style="text-align:left;font-size:30px;">
-				<p>
-				<p>
- 					Notification  ON/OFF
-
- 				</div>
-
- 				<div class="col-xs-3 col-sm-3">
- 				
+				{% if no_device(devices.all()) %}
+				<div class="col-xs-9 col-sm-9 sub-title">通知  OFF/ON
 					{% for user in user_info.all() %}
 					
 					
@@ -49,22 +31,24 @@
 				    	<span class="slider"></span>	
 						{% endif %}
 					
-					
-					{% endfor %} 				
- 				
- 					<script>
-					  var url = "{{ url_for('main.update_notify_all', userid=userid , status="ON")}}"
+					{% endfor %} 
+					<script>
+					  var url = "{{ url_for('main.update_notify_all', userid=userid , status="ON") }}"
 					</script>
+				{% else %}	
+				<div class='no-device'>
+					<div class='no-device others'>
+					<img src="{{ url_for('static', filename='img/Nonactive.png') }}">
+					<p class='no-deive-text'>尚無配對的太陽能板。<br/>請先完成裝置的配對。</p> 
+					</div>
+				</div>
+ 				{% endif%}
+				
 				</div>
 	</div>
-<div>
 
 <div class="container">
-    <p>
-   	<div style='border-bottom:1px solid #ccc;'></div>
-   	<p>
     {% block page_content %}{% endblock %}
-    <div style='border-bottom:1px solid #ccc;'></div>
 </div>
 {% endblock %}
 </body>
