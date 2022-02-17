@@ -1,0 +1,193 @@
+body{
+	background-color:#fff;
+	font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+	margin:0 !important;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 21px;
+	padding-bottom:50px;
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+.banner{
+	width: 96%;	
+	padding: 15px 0 10px 0;
+}
+
+.container{
+	width:93%;
+	padding:0 !important;
+}
+.container2{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width:100%;
+}
+
+.return-button{
+	height: 44px;
+	width: 44px;
+	border-radius: 70%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.return-button:hover, .save-button:hover{
+	background-color: rgba(23,74,159,0.2);
+	cursor: pointer;
+}
+
+.return-button img{
+	height:30px;
+	width:auto;
+}
+
+.title{
+	font-size: 30px;
+	font-weight:500;
+	padding: 10px 0 0px 0 ;
+	width: 90%;
+}
+.sub-title{
+	font-size: 23px;
+	padding: 15px 0px 0px 0 ;
+	font-weight:600;
+	display:flex;
+	flex-direction: row;
+	justify-content: space-between;
+	line-height:3;
+	width: 80%;
+}
+
+.switch{
+	margin: 6px 0 0 0 !important;
+}
+
+.device-border{
+	border-radius:4px;
+	border: 1px solid rgba(187, 188, 190, 0.8);
+}
+
+.setting-button{
+	display: block;
+	width:25px;
+	margin:0 !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.col-xs-2{
+	width:auto !important;
+	position:absolute;
+	padding : 0px 5px 0 0;
+	right:0;
+	top:10px;
+}
+.no-device{
+	height: 70vh;
+	display: flex;
+	flex-direction:column;
+	justify-content: center;
+	align-items: center;
+}
+.no-device img{
+	width: 35vw;
+	height:auto;
+}
+.no-device p{
+	color:#BBBCBE;
+	font-size: 16px;
+	margin-top: 10px;
+}
+
+.row{
+	margin-top :15px;
+}
+.device-icon{
+	width:80px;
+	height:auto;
+	margin: 0 15px;
+}
+.device-name{
+	height:80px;
+	display: flex;
+	align-items: center;
+	padding-left: 34px;
+	font-weight:600;
+	margin-right: 30px;
+}
+.device-name p{
+	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  	width:100%;
+  	margin:0 !important;
+}
+
+/*.notif-status{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	font-weight:600;
+	margin:10px 30px 10px 20px;
+}*/
+
+.additional-info{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-bottom:5px;
+}
+
+.additional-info div{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	width: 33%;
+}
+
+.today-gen, .yesterday-gen{
+	border-right: 1px solid rgba(187, 188, 190, 0.6);
+}
+
+.instanceElectricity{
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	margin-bottom:6px
+}
+
+.instanceElectricity p{
+	font-size: 24px !important;
+}
+
+.instanceElectricity span{
+	letter-spacing: 5px;
+	font-size: 22px;
+	color: #97A0AF;
+}
+
+.additional-info span{
+	color: #97A0AF;
+	/*font-weight: 500;*/
+	font-size: 15px;
+}
+.additional-info p, .instanceElectricity p{
+	font-weight: 600;
+	font-size: 15px;
+	margin:0 !important;
+}
