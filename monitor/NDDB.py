@@ -4,8 +4,10 @@ Created on Oct 8, 2021
 
 @author: shawn 
 '''
-import psycopg2
+import psycopg2, logging
 from psycopg2 import Error
+
+objLogger = logging.getLogger(__name__)
 
 class NDDB(object):
     '''
@@ -23,20 +25,18 @@ class NDDB(object):
                                             port=strPort,
                                             database=strDB)
             self.objCursor = self.objConn.cursor()
-            print('NDDB is connected!')
+            objLogger.info('NDDB is connected!')
             
         except (Exception, psycopg2.DatabaseError) as error:
-            print("Error while connecting to NDDB!", error)
-        finally:
-            print()
-        
+            objLogger.error("Error while connecting to NDDB!\n%s" % error)
+                    
     
     def query(self,strSQLCmd):
         try:
             self.objCursor.execute(strSQLCmd)
             return self.objCursor.fetchall() # list
         except (Exception, psycopg2.DatabaseError) as error:
-            print("Error while querying!", error)
+            objLogger.error("Error while querying!\n%s" % error)
             self.closeDB()
         
     
@@ -44,16 +44,27 @@ class NDDB(object):
         try:
             self.objCursor.execute(strSQLCmd)
             self.objConn.commit()
-            print('DB update successfully...')
-            print()
+            objLogger.info('DB update successfully...')
         except (Exception, psycopg2.DatabaseError) as error:
-            print("Error while inserting!", error)
+            objLogger.error("Error while inserting!\n%s" % error)
             self.closeDB()
-
+            
+            
+    def delete(self,strSQLCmd):
+        try:
+            self.objCursor.execute(strSQLCmd)
+            self.objConn.commit()
+            objLogger.info('Deleting data successfully...')
+            objLogger.info("Total number of rows deleted : %s" % self.objCursor.rowcount)
+        except (Exception, psycopg2.DatabaseError) as error:
+            objLogger.error("Error while deleting!\n%s" % error)
+            self.objCursor.close()
+            self.objConn.close()
+            
             
     def closeDB(self):
         self.objCursor.close()
         self.objConn.close()
-        print("NDDB connection is closed!")
+        objLogger.info('NDDB connection is closed!')
         
     
