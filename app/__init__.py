@@ -58,6 +58,11 @@ def no_device(list):
         if device.model == 'Delta_RPI-M10A' :
             count = True
     return count
+
+def display_device_name(device):
+    if device.group_id != '0':
+        return "群組"+device.group_id+"："+device.name
+    return device.name
     
 def create_app(config_name):
     app = Flask(__name__)
@@ -75,4 +80,5 @@ def create_app(config_name):
     app.jinja_env.globals.update(get_generatedElectricity=get_generatedElectricity)
     app.jinja_env.globals.update(get_yesterdaygeneratedElectricity=get_yesterdaygeneratedElectricity)
     app.jinja_env.globals.update(no_device=no_device)
+    app.jinja_env.globals.update(display_device_name=display_device_name)
     return app

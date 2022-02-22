@@ -3,9 +3,9 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/setting.min.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/setting.css') }}">
 	<link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet" />
-	<script src="{{ url_for('static', filename='js/setting.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/setting.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>PV Notification Setting</title>
@@ -37,31 +37,42 @@
 			<div class='uuid'>
 			 <input type="hidden" id="uuid" name="uuid" value="{{ device.uuid }}">
 			</div>
-			</div>
 			<div class='userid'>
 			 <input type="hidden" id="userid" name="userid" value="{{ userid }}">
 			</div>			
-			</div>
 			<div class='redirect_app'>
 			 <input type="hidden" id="redirect_app" name="redirect_app" value="{{ redirect_app }}">
 			</div>						
 			<div class='option goal'>
 				<label for='goal'>目標量</label>
-				<div><input type="number" pattern="\d*" step="0.01" id='goal' name ='goal' class='goal-value' value={{ device.target_energy_level }} oninput="if(value.length > 8)value=value.slice(0,8)"><span class='unit'>瓩⋅時</span></div>
+				<div><input type="number" pattern="\d*" step="0.01" id='goal' name ='goal' class='goal-value' value={{ device.target_energy_level }} oninput="if(value.length > 8)value=value.slice(0,8)"><span class='unit'>kWh</span></div>
 			</div>
-			<p class='hint'> 請輸入1~9,999的數字。</p>
+			<p class='goal-hint'> 請輸入1~9,999的數字。</p>
 			<div class='option' id='bound'>
 				<label for='lower_bound'>低於該值時通知</label>
 				<div><input type='number' id='lower_bound' name='lower_bound' class='bound' value={{ device.lower_bound }} readonly><span class='unit'>%</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
 			</div>
 			<div class='option' id='start'>
 				<label for='start_time'>開始時間</label>
-				<div><input type='number' id='start_time' name='start_time' class='start' value={{ device.start_time }} readonly>&nbsp;: 00<img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
+				<div><input type='number' id='start_time' name='start_time' class='start' value={{ device.start_time }} readonly><span>&nbsp;: 00</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
 			</div>
 			<div class='option' id='end'>
 				<label for='end_time'>結束時間</label>
-				<div><input type='number' id='end_time' name='end_time' class='end' value={{ device.end_time }} readonly>&nbsp;: 00<img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
+				<div><input type='number' id='end_time' name='end_time' class='end' value={{ device.end_time }} readonly><span>&nbsp;: 00</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
 			</div>
+			<div id ='group-setting'>
+				<span>群組設定</span>	
+				<div>根據設定的值每天發送一次通知。</div>	      
+			</div>
+			<div class='option' id='gp'>
+				<label for='group'>群組</label>
+				<div><span class="no-gp">未加入任何群組</span><input type='text' id='group' name='group' class='gp' value={{ device.group_id }} placeholder="未加入任何群組" readonly><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
+			</div>
+			<div class='option diff'>
+				<label for='diff'>差異值高於該值時通知</label>
+				<div><input type="number" id='diff' min="1" step="1" pattern="\d*" name ='diff' class='diff-setting' value={{ device.group_lower_bound }} oninput="if(value.length > 4)value=value.slice(0,4)"><span class='unit'>W</span></div>
+			</div>
+			<p class='diff-hint'> 請輸入1~9,999的數字。</p>
 		</div>
 	</div>
 	<div class='pop-up bound' >
@@ -91,6 +102,19 @@
 			<div class='func-bar'><span id='end'>完成</span></div>
 			<div class='picker'>
 				<ul class='picker-list' id='end'></ul>
+				<div class='picker-blur-top'></div>
+				<div class='picker-focus'></div>
+				<div class='picker-blur-bottom'></div>
+			</div>
+		</div>
+	</div>
+	<div class='pop-up gp'>
+		<div class='pop-up-bg'>
+			<div class='func-bar'><span id='gp'>完成</span></div>
+			<div class='picker'>
+				<ul class='picker-list' id='gp'>
+					<div class="list">未加入任何群組</div>
+				</ul>
 				<div class='picker-blur-top'></div>
 				<div class='picker-focus'></div>
 				<div class='picker-blur-bottom'></div>

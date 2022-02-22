@@ -14,13 +14,13 @@ from . import language
 @main.route('/hello',methods = ["GET"])
 def publish_hello():
 
-    token = request.args.get('token')
-    userid = request.args.get('userid')
-    redirect_app = request.args.get('redirect_app')
+     token = request.args.get('token')
+     userid = request.args.get('userid')
+     redirect_app = request.args.get('redirect_app')
     
-    #token = ""
-    #userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
-    #redirect_app = ""
+#     token = ""
+#     userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
+#     redirect_app = ""
 
     devicelist = Device_Info.get_by_userid(userid)
     user_info = User_Mgmt.query.filter_by(user_id=userid)
@@ -58,9 +58,11 @@ def update_device_setting():
     start_time = request.form["start_time"]
     end_time = request.form["end_time"]
     userid = request.form["userid"]
+    group = request.form["group"]
+    diff = request.form["diff"]
     redirect_app = request.form["redirect_app"]
     
-    db.session.query(Device_Info).filter_by(uuid=request.form["uuid"]).update(dict(lower_bound=lower_bound,start_time=start_time,end_time=end_time,target_energy_level=goal,notify=notification))
+    db.session.query(Device_Info).filter_by(uuid=request.form["uuid"]).update(dict(lower_bound=lower_bound,start_time=start_time,end_time=end_time,target_energy_level=goal,notify=notification,group_id=group,group_lower_bound=diff))
 
     db.session.commit()
     devicelist = Device_Info.get_by_userid(userid)
