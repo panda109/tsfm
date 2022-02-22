@@ -41,6 +41,7 @@ class Device_Info(UserMixin, db.Model):
     model = db.Column(db.String(64))
     online_status = db.Column(db.String(64))
     gw_uuid = db.Column(db.String(64))
+    gw_status = db.Column(db.String(64))
     user_id = db.Column(db.String(64))
     associated = db.Column(db.String(64))
     target_energy_level = db.Column(db.Float(), default= 5)
@@ -48,6 +49,9 @@ class Device_Info(UserMixin, db.Model):
     start_time = db.Column(db.Integer(),default = 7)
     end_time = db.Column(db.Integer(),default = 18)
     notify = db.Column(db.String(64), default ="ON")
+    group_id = db.Column(db.String(64), default = "0")
+    group_noti = db.Column(db.String(64),default = "ON")
+    group_lower_bound = db.Column(db.Integer(),default = 5)
     
     @classmethod
     def get_by_userid(cls, userid):
