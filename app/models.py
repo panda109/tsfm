@@ -70,7 +70,7 @@ class Device_Info(UserMixin, db.Model):
 class User_Mgmt(UserMixin, db.Model):
     __tablename__ = 'user_mgmt'
     user_id = db.Column(db.String(64), unique=True, primary_key=True)
-    username = db.Column(db.String(64), index=True)
+    username = db.Column(db.String(64))
     email = db.Column(db.String(64))
     activated = db.Column(db.String(64))
     notify_all = db.Column(db.String(64), default = "ON")
@@ -88,7 +88,7 @@ class Rules(UserMixin, db.Model):
     __tablename__ = 'rules'
     id = db.Column(db.Integer, unique=True, primary_key=True)
     name = db.Column(db.String(64))
-    dev_uuid = db.Column(db.String(64), index=True)
+    dev_uuid = db.Column(db.String(64))
     rule_info = db.Column(db.Text)
 
     def __repr__(self):
