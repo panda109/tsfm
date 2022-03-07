@@ -52,6 +52,8 @@ class Device_Info(UserMixin, db.Model):
     notify = db.Column(db.String(64), default ="ON")
     group_id = db.Column(db.String(64), default = "0")
     group_lower_bound = db.Column(db.Integer(),default = 5000)
+    weekly_energy_amount = db.Column(db.Float(), default= 0)
+    monthly_energy_amount = db.Column(db.Float(), default= 0)
     
     @classmethod
     def get_by_userid(cls, userid):
