@@ -45,7 +45,7 @@
 			</div>						
 			<div class='option goal'>
 				<label for='goal'>目標量</label>
-				<div><input type="number" pattern="\d*" step="0.01" id='goal' name ='goal' class='goal-value' value={{ device.target_energy_level }} oninput="if(value.length > 8)value=value.slice(0,8)"><span class='unit'>kWh</span></div>
+				<div><input type="number"  inputmode="decimal" step="0.01" id='goal' name ='goal' class='goal-value' value={{ device.target_energy_level }} oninput="if(value.length > 8)value=value.slice(0,8)"><span class='unit'>kWh</span></div>
 			</div>
 			<p class='goal-hint'> 請輸入1~9,999的數字。</p>
 			<div class='option' id='bound'>
@@ -61,8 +61,7 @@
 				<div><input type='number' id='end_time' name='end_time' class='end' value={{ device.end_time }} readonly><span>&nbsp;: 00</span><img src="{{ url_for('static', filename='img/chevron-right.png') }}"></div>
 			</div>
 			<div id ='group-setting'>
-				<span>群組設定</span>	
-				<div>根據設定的值每天發送一次通知。</div>	      
+				<span>群組設定</span>	     
 			</div>
 			<div class='option' id='gp'>
 				<label for='group'>群組</label>
