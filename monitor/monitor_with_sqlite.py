@@ -8,6 +8,7 @@ import sqlite3, requests
 import os, logging, time, json
 from datetime import datetime, timedelta
 from monitor.gen_post import GenPosts
+from monitor.find_group_diff import find_group_diff
 
 intMonitorInterval = 300
 intTimeZoneHour = 8
@@ -25,7 +26,7 @@ def monitorPV(strDBPath,strSolarModels):
             objCursor = objConn.cursor()
             
             objNow = datetime.now()
-            
+            """
             # remove old data (24-hours-before)
             objLogger.info('Start to delete old data....')
             objDateTimeToBeDelete = objNow - timedelta(hours=24)
@@ -38,7 +39,7 @@ def monitorPV(strDBPath,strSolarModels):
             objCursor.execute("vacuum")
             objLogger.info('Run vacuum to reduce DB size....')
             time.sleep(5)
-            
+            """
             # start to query and notify           
             objCursor = objConn.execute("select * from device_info where model in %s and notify = 'ON'" % strSolarModels)
             listResults = objCursor.fetchall()
@@ -93,6 +94,9 @@ def monitorPV(strDBPath,strSolarModels):
                                 objLogger.debug('Send notify: %s, %s' % (objResponse,objResponse.content))
                                 
                                 objLogger.debug('')
+            
+            find_group_diff('sqlite',objConn,strSolarModels,objPost,str(intCheckNoPowerInterval/60))
+            
             objConn.close()
             time.sleep(intMonitorInterval)
             

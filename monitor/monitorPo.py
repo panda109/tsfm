@@ -8,6 +8,7 @@ import threading,logging,time,requests,json
 from datetime import datetime, timedelta
 from monitor import NDDB
 from monitor.gen_post import GenPosts
+from monitor.find_group_diff import find_group_diff
 
 intTimeZoneHour = 8
 intCheckNoPowerInterval = 600
@@ -113,6 +114,8 @@ class monitorPo(threading.Thread):
                                     objLogger.debug('Send notify: %s, %s' % (objResponse,objResponse.content))
                                     
                                     objLogger.debug('')
+                
+                find_group_diff('postgresql',self.objTSFMDB,self.strSolarModels,self.objPost,str(intCheckNoPowerInterval/60))
                 self.objTSFMDB.closeDB()
                 time.sleep(self.intCheckInterval)
                 

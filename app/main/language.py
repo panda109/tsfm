@@ -1,4 +1,4 @@
-# _*_ coding: utf_8 _*_
+# -*- coding: UTF-8 -*-
 '''
 Created on 2022年1月19日
 
@@ -27,7 +27,9 @@ class Language(object):
         'PST_01_01'   :    "發電低下通知",
         'PST_01_02'   :    "太陽能發電模組 %s，今日 %s ~ %s 發電量： %s kWh。低於 %s kWh 的 %s%。",
         'PST_02_01'   :    "發電異常通知",
-        'PST_02_02'   :    "太陽能發電模組 %s，過去 %s 分鐘內發電狀況異常，請檢查設備狀態。"
+        'PST_02_02'   :    "太陽能發電模組 %s，過去 %s 分鐘內發電狀況異常，請檢查設備狀態。",
+        'PST_03_01'   :    "群組發電異常通知",
+        'PST_03_02'   :    "群組 %s 中，過去 %s 分鐘內有部份太陽能發電模組發電狀況異常，請檢查設備狀態。"    
         }
     
     elanguage = {
@@ -47,7 +49,9 @@ class Language(object):
         'PST_01_01' :  'Low power generation notification',
         'PST_01_02' :  "Today %s ~ %s power generation: %s kWh. Below %s% of %s kWh.",
         'PST_02_01' :  'Abnormal power generation notification',
-        'PST_02_02' :  'Abnormal power generation in the past %s minutes, please check your equipments.'
+        'PST_02_02' :  'Abnormal power generation in the past %s minutes, please check your equipments.',
+        'PST_03_01' :  'Abnormal group power generation notification',
+        'PST_03_02' :  'Abnormal power generation in the group, %s, in the past %s minutes, please check your equipments.'    
         }
         
     jlanguage = {
@@ -70,7 +74,9 @@ class Language(object):
         'PST_01_01'   :    "發電低下通知",
         'PST_01_02'   :    "今日 %s ~ %s 發電量： %s kWh。低於 %s kWh 的 %s%。",
         'PST_02_01'   :    "發電異常通知",
-        'PST_02_02'   :    "過去 %s 分鐘內發電狀況異常，請檢查設備狀態。"
+        'PST_02_02'   :    "過去 %s 分鐘內發電狀況異常，請檢查設備狀態。",
+        'PST_03_01'   :    "群組發電異常通知",
+        'PST_03_02'   :    "群組 %s 中，過去 %s 分鐘內有部份太陽能發電模組發電狀況異常，請檢查設備狀態。"    
         }
 
     def __init__(self):
