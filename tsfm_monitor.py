@@ -28,14 +28,15 @@ if __name__ == '__main__':
     # init debug log
     strCurrentPath = os.path.dirname(os.path.realpath(__file__))
     objCurrentPath = Path(strCurrentPath)
-    objParentPath = Path(objCurrentPath.parent)
-    strTargetLogDir = os.path.join(objParentPath.parent.absolute(),'notify_log')
+    #objParentPath = Path(objCurrentPath.parent)
+    #strTargetLogDir = os.path.join(objParentPath.parent.absolute(),'notify_log')
+    strTargetLogDir = os.path.join(objCurrentPath.parent.absolute(),'notify_log')
     
     if not os.path.isdir(strTargetLogDir):
         os.mkdir(strTargetLogDir)
     strLogFile = datetime.now().strftime("TSFM_Notify_%Y%m%d_%H%M%S")
     NDLogger.Logger(strLogFile,strTargetLogDir)
-    objLogger = logging.getLogger('tsfm_notify_monitor2')
+    objLogger = logging.getLogger('tsfm_monitor')
     objLogger.info('TSFM Notify Monitor starts....')
     
 
