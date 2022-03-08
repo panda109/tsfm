@@ -17,8 +17,9 @@ intWatchInterval = 10
 strInverterModelFile = 'inverter_model.json'
 
 
-def get_inverter_model():
-    with open(os.path.join(strCurrentPath,strInverterModelFile)) as fileJson:
+def get_inverter_model(strCurrentPath):
+    strMonitorPath = os.path.join(strCurrentPath,'monitor')
+    with open(os.path.join(strMonitorPath,strInverterModelFile)) as fileJson:
         dicData = json.load(fileJson)
     return dicData['model']
 
@@ -43,7 +44,7 @@ if __name__ == '__main__':
     # check system setting
     strEnv = os.getenv('FLASK_CONFIG')
     # load supported solar inverter model
-    listModels = get_inverter_model()
+    listModels = get_inverter_model(objCurrentPath)
     tupModels = tuple(listModels)
     if len(tupModels) == 1:
         strModle_Tuple = str(tupModels).replace(',','')
