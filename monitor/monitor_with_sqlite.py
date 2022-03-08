@@ -26,7 +26,7 @@ def monitorPV(strDBPath,strSolarModels):
             objCursor = objConn.cursor()
             
             objNow = datetime.now()
-            """
+            
             # remove old data (24-hours-before)
             objLogger.info('Start to delete old data....')
             objDateTimeToBeDelete = objNow - timedelta(hours=24)
@@ -39,7 +39,7 @@ def monitorPV(strDBPath,strSolarModels):
             objCursor.execute("vacuum")
             objLogger.info('Run vacuum to reduce DB size....')
             time.sleep(5)
-            """
+            
             # start to query and notify           
             objCursor = objConn.execute("select * from device_info where model in %s and notify = 'ON'" % strSolarModels)
             listResults = objCursor.fetchall()
