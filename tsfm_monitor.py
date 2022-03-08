@@ -53,8 +53,9 @@ if __name__ == '__main__':
     objLogger.info('Supported models of PV inventer: %s' % strModle_Tuple)
 
     # for testing
-    #strEnv = 'testing'
+    strEnv = 'testing'
     #basedir = objCurrentPath.parent
+    basedir = os.path.abspath(os.path.dirname(__file__))
     #####################
     
     if strEnv == 'production': # load postgresql DB
