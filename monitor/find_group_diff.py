@@ -70,7 +70,7 @@ def find_group_diff(strDBType,objDB,strModels,objNotify,strCheckingInterval):
                 else:
                     listInstancePower.append(0)
                 #print('listInstancePower',listInstancePower)
-                objLogger.debug('listInstancePower: '+ listInstancePower)
+                objLogger.debug('listInstancePower: '+ str(listInstancePower))
                                 
             listInstancePower.sort(reverse = True)
             #print(listInstancePower)
