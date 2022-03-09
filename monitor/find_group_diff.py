@@ -65,8 +65,12 @@ def find_group_diff(strDBType,objDB,strModels,objNotify,strCheckingInterval):
             for listDeviceLowBond in listResults:
                 listResults = objDB2.query("select value, generated_time from device_data where dev_uuid = '%s' and scope = 'instanceElectricity' order by generated_time desc LIMIT 1" % listDeviceLowBond[0])
                 #print(listResults)
-                listInstancePower.append(int(listResults[0][0]*1000))
+                if listResults != []:
+                    listInstancePower.append(int(listResults[0][0]*1000))
+                else:
+                    listInstancePower.append(0)
                 #print('listInstancePower',listInstancePower)
+                objLogger.debug('listInstancePower: '+ listInstancePower)
                                 
             listInstancePower.sort(reverse = True)
             #print(listInstancePower)
