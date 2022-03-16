@@ -41,13 +41,13 @@
 					<p>{{ get_monthlygenElec(device.uuid) }} kWh</p>
 				</div>
 				<div class='info-col-3'>
-					<span>通知</span>
+					<span>通　　知</span>
 					{% if device.notify == "OFF" %}	
 						<p style="color:#E15A5A">OFF</p>
 					{% else %}
 					<p style="color:#5EA76E">ON</p>
 					{% endif %}
-					<span>高低差異值</span>
+					<span>告警差異值</span>
 					<p>{{ get_grpLowerBound(device) }}</p>
 				</div>
 			</div>			
