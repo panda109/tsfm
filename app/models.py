@@ -30,6 +30,18 @@ class Device_Data(UserMixin, db.Model):
         #print(scope,time)
         devices = Device_Data.query.filter_by(dev_uuid=uuid,model=model,scope=scope).filter(Device_Data.generated_time>=time).order_by(Device_Data.generated_time.desc())
         return devices
+    
+    @classmethod
+    def getweek(cls, uuid , model , scope , wtime):
+        #print(scope,wtime)
+        wdevices = Device_Data.query.filter_by(dev_uuid=uuid,model=model,scope=scope).filter(Device_Data.generated_time>=wtime).order_by(Device_Data.generated_time.desc())
+        return wdevices
+    
+    @classmethod
+    def getmonth(cls, uuid , model , scope , mtime):
+        #print(scope,mtime)
+        mdevices = Device_Data.query.filter_by(dev_uuid=uuid,model=model,scope=scope).filter(Device_Data.generated_time>=mtime).order_by(Device_Data.generated_time.desc())
+        return mdevices
 
     def __repr__(self):
         return "<Device Data(UUID='%s',Scope='%s', Model='%s', Value='%s' , Generated_time='%s')>" % (
