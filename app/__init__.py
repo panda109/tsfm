@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from config import config
 import os,time
 from datetime import datetime, timedelta
+from calendar import week
 
 bootstrap = Bootstrap()
 moment = Moment()
@@ -46,22 +47,30 @@ def get_weeklygenElec(uuid):
     scope='generatedElectricity'
     now_time = datetime.now()
     prev_monday = now_time - timedelta(days=now_time.weekday())
-    wtime = int(prev_monday.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000
-    devicedata_week = Device_Data.getweek(uuid,model,scope,wtime)
+    start_time = int(prev_monday.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000
+    end_time = start_time + 86400000
+    max_time = int(now_time.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000+86400000
     week_sum = 0
-    for d in devicedata_week:
-        week_sum += d.value
+    while end_time <= max_time :
+        if Device_Data.getyesterday(uuid,model,scope,start_time,end_time).first():
+            week_sum += Device_Data.getyesterday(uuid,model,scope,start_time,end_time).first().value
+        end_time += 86400000
+        start_time += 86400000
     return(week_sum)
     
 def get_monthlygenElec(uuid):
     model='Delta_RPI-M10A'
     scope='generatedElectricity'
     firstDayofMonth = datetime.today().replace(day=1)
-    mtime = int(firstDayofMonth.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000
-    devicedata_month = Device_Data.getmonth(uuid,model,scope,mtime)
+    start_time = int(firstDayofMonth.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000
+    end_time = start_time + 86400000
+    max_time = int(datetime.now().replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000+86400000
     month_sum = 0
-    for d in devicedata_month:
-        month_sum += d.value
+    while end_time <= max_time :
+        if Device_Data.getyesterday(uuid,model,scope,start_time,end_time).first():
+            month_sum += Device_Data.getyesterday(uuid,model,scope,start_time,end_time).first().value
+        end_time += 86400000
+        start_time += 86400000
     return(month_sum)
 
 def get_instanceElectricity(uuid):
