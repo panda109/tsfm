@@ -28,37 +28,29 @@
 				<p>{{ get_instanceElectricity(device.uuid) }} kWh</p>
 			</div>
 			<div class="additional-info additional-info-1">
-				<div class='today-gen'>
+				<div class='info-col-1'>
 					<span>當日總發電量</span>
 					<p>{{ get_generatedElectricity(device.uuid) }} kWh</p>
+					<span>本週總發電量</span>
+					<p>{{ get_weeklygenElec(device.uuid) }} kWh</p>
 				</div>
-				<div class='yesterday-gen'>
+				<div class='info-col-2'>
 					<span>昨日總發電量</span>
 					<p>{{ get_yesterdaygeneratedElectricity(device.uuid) }} kWh</p>
+					<span>當月總發電量</span>
+					<p>{{ get_monthlygenElec(device.uuid) }} kWh</p>
 				</div>
-				<div class='notif-status'>
+				<div class='info-col-3'>
 					<span>通知</span>
 					{% if device.notify == "OFF" %}	
 						<p style="color:#E15A5A">OFF</p>
 					{% else %}
 					<p style="color:#5EA76E">ON</p>
 					{% endif %}
-				</div>
-			</div>
-			<div class="additional-info additional-info-2">
-				<div class='weekly-gen'>
-					<span>本週總發電量</span>
-					<p>{{ get_weeklygenElec(device.uuid) }} kWh</p>
-				</div>
-				<div class='monthly-gen'>
-					<span>當月總發電量</span>
-					<p>{{ get_monthlygenElec(device.uuid) }} kWh</p>
-				</div>
-				<div class='notif-status'>
-					<span>群組高低差異值</span>
+					<span>高低差異值</span>
 					<p>{{ get_grpLowerBound(device) }}</p>
 				</div>
-			</div>				
+			</div>			
 		</div>
 	</div>
 {% endif %}

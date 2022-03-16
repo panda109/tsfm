@@ -148,6 +148,7 @@ body{
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
+	margin-bottom: 12px;
 }
 
 .additional-info div{
@@ -159,7 +160,7 @@ body{
 	width: 33%;
 }
 
-.today-gen, .yesterday-gen, .weekly-gen, .monthly-gen{
+.info-col-1, .info-col-2{
 	border-right: 1px solid rgba(187, 188, 190, 0.6);
 }
 
@@ -184,16 +185,12 @@ body{
 	color: #97A0AF;
 	/*font-weight: 500;*/
 	font-size: 15px;
+	margin-top: 5px;
 }
 .additional-info p, .instanceElectricity p{
 	font-weight: 600;
 	font-size: 15px;
 	margin:0 !important;
 	padding-top: 3px;
-}
-.additional-info-1 p{
-	padding-bottom: 13px;
-}
-.additional-info-2{
-	margin-bottom:10px;
+	padding-bottom: 5px;
 }
