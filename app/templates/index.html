@@ -6,10 +6,10 @@
 		setTimeout(function(){
 			gsap.to(".loading", {
 		        duration: 0.2,
-		        opacity: 0
+		        opacity: 0,
+		        onComplete: function(){$('.loading').css("display","none");}
 		    }).play();
 		}, 300);
-		setTimeout(function(){$('.loading').css("display","none");}, 500);
 	});
 </script>
 {% if no_device(devices.all()) %}

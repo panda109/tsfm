@@ -17,9 +17,9 @@ window.addEventListener('load', function () {
 	detect_number();
 	gsap.to(".loading", {
         duration: 0.15,
-        opacity: 0
+        opacity: 0,
+		onComplete: function(){$('.loading').css("display","none");}
     }).play();
-	setTimeout(function(){$('.loading').css("display","none");}, 150);
 });
 
 function detect_number(){
