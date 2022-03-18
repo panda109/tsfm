@@ -15,6 +15,11 @@ window.addEventListener('load', function () {
 	option_clicked();
 	detect_num();
 	detect_number();
+	gsap.to(".loading", {
+        duration: 0.15,
+        opacity: 0
+    }).play();
+	setTimeout(function(){$('.loading').css("display","none");}, 150);
 });
 
 function detect_number(){

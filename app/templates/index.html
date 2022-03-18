@@ -1,11 +1,17 @@
 <!-- app/templates/index.html -->
 {% extends "top.html" %}
 {% block page_content %}
-<head>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-	<link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet" />
-	<title>通知方法設定</title>
-</head>
+<script>
+	window.addEventListener('load', function () {
+		setTimeout(function(){
+			gsap.to(".loading", {
+		        duration: 0.2,
+		        opacity: 0
+		    }).play();
+		}, 300);
+		setTimeout(function(){$('.loading').css("display","none");}, 500);
+	});
+</script>
 {% if no_device(devices.all()) %}
 <div class="container">
 {% for device in devices.all() %}
@@ -41,7 +47,7 @@
 					<p>{{ get_monthlygenElec(device.uuid) }} kWh</p>
 				</div>
 				<div class='info-col-3'>
-					<span>通　　知</span>
+					<span>通　知</span>
 					{% if device.notify == "OFF" %}	
 						<p style="color:#E15A5A">OFF</p>
 					{% else %}
@@ -57,4 +63,12 @@
 {% endfor %}	
 </div>
 {% endif %}
+
+<div class="loading">
+	<div class="loadingio-spinner-rolling-pu3e71b2nko"><div class="ldio-of15j30uy2">
+		<div></div>
+	</div></div>
+</div>
+</body>
+</html>
 {% endblock %}

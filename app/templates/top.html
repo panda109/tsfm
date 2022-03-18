@@ -6,6 +6,10 @@
 	{{super()}}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+	<link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+	<title>通知方法設定</title>
 {% endblock %}
 <body>
 {% block content%}
@@ -51,8 +55,7 @@
     {% block page_content %}{% endblock %}
 </div>
 {% endblock %}
-</body>
-</html>
+
 {% block scripts %}
 {{ super() }}
 {{ moment.include_moment() }}
