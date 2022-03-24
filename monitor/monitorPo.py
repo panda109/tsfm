@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from monitor import NDDB
 from monitor.gen_post import GenPosts
 from monitor.find_group_diff import find_group_diff
+from monitor.update_period_data import update_period_data
 
 intTimeZoneHour = 8
 intCheckNoPowerInterval = 600
@@ -58,13 +59,15 @@ class monitorPo(threading.Thread):
                 self._conn_postgres_db()
                 objNow = datetime.now()
                 
+                update_period_data('postgresql',self.objTSFMDB,self.strSolarModels)
+                
                 # remove old data (24-hours-before)
                 objLogger.info('Start to delete old data....')
                 objDateTimeToBeDelete = objNow - timedelta(hours=24)
                 intTimeStamp_ToBeDelete = int(objDateTimeToBeDelete.timestamp()*1000)
                 objLogger.debug('Data before %s would be deleted!' % intTimeStamp_ToBeDelete)
                 self.objTSFMDB.delete(self.strSQL_DelData % intTimeStamp_ToBeDelete)
-                # reduce DB size? have SRE DBA to do it?
+                time.sleep(5)
                 
                 # find users and devices that notify = ON
                 listResults = self.objTSFMDB.query(self.strSQL_FindUser_ON % self.strSolarModel)

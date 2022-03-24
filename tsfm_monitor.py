@@ -12,7 +12,7 @@ from pathlib import Path
 
 from config import basedir
 
-intMonitorInterval = 300
+intMonitorInterval = 3600
 intWatchInterval = 10
 strInverterModelFile = 'inverter_model.json'
 
@@ -83,7 +83,7 @@ if __name__ == '__main__':
         from monitor.monitor_with_sqlite import monitorPV
         import threading
         
-        thdNotify = threading.Thread(target = monitorPV, args = (basedir,strModle_Tuple))
+        thdNotify = threading.Thread(target = monitorPV, args = (basedir,strModle_Tuple,intMonitorInterval))
         thdNotify.start()
         time.sleep(1)
         while True:
@@ -91,7 +91,7 @@ if __name__ == '__main__':
             ##objLogger.info('monitor thread heartbeat...')
             if not thdNotify.is_alive():
                 objLogger.debug('Original monitor thread is dead. Now re-launch it.')
-                thdNotify = threading.Thread(target = monitorPV, args = (basedir,strModle_Tuple))
+                thdNotify = threading.Thread(target = monitorPV, args = (basedir,strModle_Tuple,intMonitorInterval))
                 thdNotify.start()
                 time.sleep(1)
                 objLogger.info('Re-launch monitor thread id:',thdNotify.get_thread_ID())

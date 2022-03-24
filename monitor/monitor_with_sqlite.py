@@ -9,15 +9,15 @@ import os, logging, time, json
 from datetime import datetime, timedelta
 from monitor.gen_post import GenPosts
 from monitor.find_group_diff import find_group_diff
+from monitor.update_period_data import update_period_data
 
-intMonitorInterval = 300
 intTimeZoneHour = 8
 intCheckNoPowerInterval = 600
 strDB_Test = 'data-test.sqlite'
 
 objLogger = logging.getLogger(__name__)
 
-def monitorPV(strDBPath,strSolarModels):
+def monitorPV(strDBPath,strSolarModels,intMonitorInterval):
     objPost = GenPosts('zh_tw') # 2022.02.11 need to load locale setting in the future
     try:
         while True:
@@ -26,6 +26,9 @@ def monitorPV(strDBPath,strSolarModels):
             objCursor = objConn.cursor()
             
             objNow = datetime.now()
+            
+            # update weekly/monthly generated power
+            update_period_data('sqlite',objConn,strSolarModels)
             
             # remove old data (24-hours-before)
             objLogger.info('Start to delete old data....')
