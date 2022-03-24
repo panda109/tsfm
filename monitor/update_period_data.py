@@ -28,10 +28,10 @@ class Sqlite3DB(object):
             #print('Error when querying DB: ',error)
             self.close()
     
-    def update(self,strSQLCmd, listData):
+    def update(self,strSQLCmd,listData):
         try:
             objCursor = self.objDB.cursor()
-            objCursor.execute(strSQLCmd,tuple(listData))
+            objCursor.execute(strSQLCmd % tuple(listData))
             self.objDB.commit()
         except (Exception) as error:
             objLogger.error("Error while updating!\n%s" % error)
@@ -81,7 +81,7 @@ def update_period_data(strDBType,objDB,strModels):
                         floatMonthlyAmount = listDevice[2] + listGenPower[0][0]
                     objLogger.debug('floatWeeklyAmount: '+ str(floatWeeklyAmount))
                     objLogger.debug('floatMonthlyAmount: '+ str(floatMonthlyAmount))
-                    objDB2.update("update device_info set weekly_energy_amount = %s, monthly_energy_amount = %s where uuid = '%s'" % (floatWeeklyAmount,floatMonthlyAmount,listDevice[0]))
+                    objDB2.update("update device_info set weekly_energy_amount = %s, monthly_energy_amount = %s where uuid = '%s'", [floatWeeklyAmount,floatMonthlyAmount,listDevice[0]])
                     time.sleep(1)
     
     except Exception as error:
