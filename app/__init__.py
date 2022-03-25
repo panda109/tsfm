@@ -9,6 +9,7 @@ from config import config
 import os,time
 from datetime import datetime, timedelta
 from calendar import week
+from adbutils import device
 
 bootstrap = Bootstrap()
 moment = Moment()
@@ -41,37 +42,46 @@ def get_generatedElectricity(uuid):
     else:
         return(0)
 
-def get_weeklygenElec(uuid):
+def get_weeklygenElec(device):
     # Assuming that a week starts from monday
     model='Delta_RPI-M10A'
     scope='generatedElectricity'
-    now_time = datetime.now()
-    prev_monday = now_time - timedelta(days=now_time.weekday())
-    start_time = int(prev_monday.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000
-    end_time = start_time + 86400000
-    max_time = int(now_time.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000+86400000
-    week_sum = 0
-    while end_time <= max_time :
-        if Device_Data.getyesterday(uuid,model,scope,start_time,end_time).first():
-            week_sum += Device_Data.getyesterday(uuid,model,scope,start_time,end_time).first().value
-        end_time += 86400000
-        start_time += 86400000
-    return(round(week_sum, 1))
+    time = int(datetime.now().timestamp()-1800)*1000
+    devicedata = Device_Data.gettoday(device.uuid,model,scope,time).first()
+    #     now_time = datetime.now()
+    #     prev_monday = now_time - timedelta(days=now_time.weekday())
+    #     start_time = int(prev_monday.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000
+    #     end_time = start_time + 86400000
+    #     max_time = int(now_time.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000+86400000
+    #     week_sum = 0
+    #     while end_time <= max_time :
+    #         if Device_Data.getyesterday(device.uuid,model,scope,start_time,end_time).first():
+    #             week_sum += Device_Data.getyesterday(device.uuid,model,scope,start_time,end_time).first().value
+    #         end_time += 86400000
+    #         start_time += 86400000
+    if devicedata:
+        return(round(device.weekly_energy_amount+devicedata.value, 1))
+    return(round(device.weekly_energy_amount, 1))
     
-def get_monthlygenElec(uuid):
+def get_monthlygenElec(device):
+    #     firstDayofMonth = datetime.today().replace(day=1)
+    #     start_time = int(firstDayofMonth.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000
+    #     end_time = start_time + 86400000
+    #     max_time = int(datetime.now().replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000+86400000
+    #     month_sum = 0
+    #     while end_time <= max_time :
+    #         if Device_Data.getyesterday(device.uuid,model,scope,start_time,end_time).first():
+    #             month_sum += Device_Data.getyesterday(device.uuid,model,scope,start_time,end_time).first().value
+    #         end_time += 86400000
+    #         start_time += 86400000
+    #     return(round(month_sum, 1))
     model='Delta_RPI-M10A'
     scope='generatedElectricity'
-    firstDayofMonth = datetime.today().replace(day=1)
-    start_time = int(firstDayofMonth.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000
-    end_time = start_time + 86400000
-    max_time = int(datetime.now().replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000+86400000
-    month_sum = 0
-    while end_time <= max_time :
-        if Device_Data.getyesterday(uuid,model,scope,start_time,end_time).first():
-            month_sum += Device_Data.getyesterday(uuid,model,scope,start_time,end_time).first().value
-        end_time += 86400000
-        start_time += 86400000
-    return(round(month_sum, 1))
+    time = int(datetime.now().timestamp()-1800)*1000
+    devicedata = Device_Data.gettoday(device.uuid,model,scope,time).first()
+    if devicedata:
+        return(round(device.monthly_energy_amount+devicedata.value, 1))
+    return(round(device.monthly_energy_amount, 1))
 
 def get_instanceElectricity(uuid):
     model='Delta_RPI-M10A'

@@ -38,13 +38,13 @@
 					<span>當日總發電量</span>
 					<p>{{ get_generatedElectricity(device.uuid) }} kWh</p>
 					<span>本週總發電量</span>
-					<p>{{ get_weeklygenElec(device.uuid) }} kWh</p>
+					<p>{{ get_weeklygenElec(device) }} kWh</p>
 				</div>
 				<div class='info-col-2'>
 					<span>昨日總發電量</span>
 					<p>{{ get_yesterdaygeneratedElectricity(device.uuid) }} kWh</p>
 					<span>當月總發電量</span>
-					<p>{{ get_monthlygenElec(device.uuid) }} kWh</p>
+					<p>{{ get_monthlygenElec(device) }} kWh</p>
 				</div>
 				<div class='info-col-3'>
 					<span>通　知</span>
