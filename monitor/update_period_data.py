@@ -51,7 +51,7 @@ def if_last_day_of_month(objToday):
         return False
     
 
-def update_period_data(strDBType,objDB,strModels):
+def update_period_data(strDBType,objDB,strModels,intTimeZoneHour):
     
     if strDBType == 'sqlite':
         objDB2 = Sqlite3DB(objDB)
@@ -60,7 +60,8 @@ def update_period_data(strDBType,objDB,strModels):
     
     try:        
         objNow = datetime.now()
-        intCurrentHour = int(objNow.strftime("%H"))
+        objNewDateTime = objNow + timedelta(hours=intTimeZoneHour)
+        intCurrentHour = int(objNewDateTime.strftime("%H"))
         if intCurrentHour == 23:
         #if intCurrentHour > 0: # for testing
             intTimeStamp_MidNight23Hour = int(objNow.timestamp()*1000)

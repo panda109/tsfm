@@ -28,7 +28,7 @@ def monitorPV(strDBPath,strSolarModels,intMonitorInterval):
             objNow = datetime.now()
             
             # update weekly/monthly generated power
-            update_period_data('sqlite',objConn,strSolarModels)
+            update_period_data('sqlite',objConn,strSolarModels,intTimeZoneHour)
             
             # remove old data (24-hours-before)
             objLogger.info('Start to delete old data....')
