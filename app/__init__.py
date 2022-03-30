@@ -20,12 +20,12 @@ from .models import Device_Data , Device_Info , User_Mgmt
 def get_yesterdaygeneratedElectricity(uuid):
     model='Delta_RPI-M10A'
     scope='generatedElectricity'
-    stime = int(datetime.now().timestamp()-24*60*60)*1000
-    etime = int(datetime.now().replace(hour=0,minute=0,second=0,microsecond=0).timestamp()-8*3600)*1000
+    etime = int(datetime.now().replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000
+    stime = etime - 86400000
     devicedata = Device_Data.getyesterday(uuid,model,scope,stime,etime).first()
     
     if devicedata:
-        return(round(devicedata.value, 1))
+        return(devicedata.value, 1)
     #if empty return 0
     else:
         return(0)
