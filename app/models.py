@@ -22,7 +22,7 @@ class Device_Data(UserMixin, db.Model):
     @classmethod
     def getyesterday(cls, uuid ,model ,scope ,stime , etime):
         #print(scope,stime,etime)
-        devices = Device_Data.query.filter_by(dev_uuid=uuid,model=model,scope=scope).filter(Device_Data.generated_time>=stime).filter(Device_Data.generated_time<=etime).order_by(Device_Data.generated_time.asc())
+        devices = Device_Data.query.filter_by(dev_uuid=uuid,model=model,scope=scope).filter(Device_Data.generated_time>=stime).filter(Device_Data.generated_time<=etime).order_by(Device_Data.generated_time.desc())
         return devices
     
     @classmethod
