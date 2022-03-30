@@ -25,7 +25,7 @@ def get_yesterdaygeneratedElectricity(uuid):
     devicedata = Device_Data.getyesterday(uuid,model,scope,stime,etime).first()
     
     if devicedata:
-        return(devicedata.value, 1)
+        return(devicedata.value)
     #if empty return 0
     else:
         return(0)
