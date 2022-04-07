@@ -11,7 +11,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 #S_IMAGEPATH = os.getcwd() + '/static/story/images/'
 
 #IPPORT = 'bytaiwan.me'
-IPPORT = '192.168.7.26:5000'
+IPPORT = '192.168.7.62:5000'
 #IPPORT = '192.168.0.18:5000'
 #IPPORT = '29fa258b.ngrok.io'
 mailpassword=''
@@ -20,6 +20,10 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or '!QIOD*Lioisfhishiwiwe98ew9233'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_COMMIT_TEARDOWN = True
+    BABEL_DEFAULT_LOCALE = 'zh_TW'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
+    #  這個部份就記得以你自己資料夾路徑來設置
+    BABEL_TRANSLATION_DIRECTORIES = './app/templates'
     
     @staticmethod
     def init_app(app):
@@ -46,5 +50,5 @@ config = {
     'testing': TestingConfig,
     'production': ProductionConfig,
 
-    'default': ProductionConfig
+    'default': TestingConfig
 }

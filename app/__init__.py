@@ -10,11 +10,13 @@ import os,time
 from datetime import datetime, timedelta
 from calendar import week
 from adbutils import device
+from flask_babel import Babel
 
 bootstrap = Bootstrap()
 moment = Moment()
 db = SQLAlchemy()
 from .models import Device_Data , Device_Info , User_Mgmt
+
 
 
 def get_yesterdaygeneratedElectricity(uuid):
@@ -111,6 +113,9 @@ def get_grpLowerBound(device):
     if device.group_id != '0':
         return str(device.group_lower_bound) +" W"
     return "未加入任何群組"
+
+
+
     
 def create_app(config_name):
     app = Flask(__name__)
@@ -121,6 +126,7 @@ def create_app(config_name):
     
     app._static_folder = os.path.abspath("static/")
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+    babel = Babel(app)
     db.init_app(app)
     bootstrap.init_app(app)
     moment.init_app(app)

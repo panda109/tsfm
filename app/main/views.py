@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- sssssssssssssssssssscoding: utf-8 -*-
 from flask import send_from_directory
 from . import main
 from flask import render_template
@@ -9,18 +9,40 @@ from app import db
 from sqlalchemy import exists
 import os
 from . import language
+from babel.support import Translations
+from flask import g
+
+@main.route('/<locale>', methods=['GET'])
+def index(locale):
+
+    if locale not in ('jp', 'en', 'zh_TW'):
+        locale = 'zh_TW'
+
+    g.LOCALE = locale
+    request.babel_translations = Translations.load('locales', [locale])
+
+    token = ""
+    userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
+    redirect_app = ""
+     
+    devicelist = Device_Info.get_by_userid(userid)
+    user_info = User_Mgmt.query.filter_by(user_id=userid)
+    return render_template('index.html',userid = userid,redirect_app=redirect_app ,user_info = user_info , devices = devicelist)
+    #return render_template("product/order.html", orders=orders, catalogs=catalogs, message=message)
+
+
 
 
 @main.route('/hello',methods = ["GET"])
 def publish_hello():
 
-    token = request.args.get('token')
-    userid = request.args.get('userid')
-    redirect_app = request.args.get('redirect_app')
+    #token = request.args.get('token')
+    #userid = request.args.get('userid')
+    #redirect_app = request.args.get('redirect_app')
     
-#     token = ""
-#     userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
-#     redirect_app = ""
+    token = ""
+    userid = '94f43ded-55b6-4354-aaae-c5cc20fde280'
+    redirect_app = ""
      
     devicelist = Device_Info.get_by_userid(userid)
     user_info = User_Mgmt.query.filter_by(user_id=userid)
