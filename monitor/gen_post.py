@@ -25,7 +25,7 @@ class GenPosts(object):
     def LowPowerGeneration(self, strPVName, strStartTime, strEndTime, intTotal, intTargetTotal, intTargetPercent):
         dicNotify = {
             "format": 1,
-            "name": "NextDrive 太陽能發電監視服務",
+            "name": "NextDrive 太陽能發電監控服務",
             "icon": "http://%s/postpicture/SolarPanel.png" % self.strHost,
             "title": self.dicMsgs['PST_01_01'],
             # "太陽能發電模組 %s，今日 %s ~ %s 發電量： %s kWh。低於 %s kWh 的 %s%。"
@@ -43,7 +43,7 @@ class GenPosts(object):
     def NoPowerGeneration(self, strPVName, strMin):
         dicNotify = {
             "format": 1,
-            "name": "NextDrive 太陽能發電監視服務",
+            "name": "NextDrive 太陽能發電監控服務",
             "icon": "http://%s/postpicture/SolarPanel.png" % self.strHost,
             "title": self.dicMsgs['PST_02_01'],
             # 太陽能發電模組 %s，過去 %s 分鐘內發電狀況異常，請檢查設備狀態。
@@ -61,7 +61,7 @@ class GenPosts(object):
     def STWrongInGroup(self, strGroup, strMin):
         dicNotify = {
             "format": 1,
-            "name": "NextDrive 太陽能發電監視服務",
+            "name": "NextDrive 太陽能發電監控服務",
             "icon": "http://%s/postpicture/SolarPanel.png" % self.strHost,
             "title": self.dicMsgs['PST_03_01'],
             # 群組 %s 中，過去 %s 分鐘內有部份太陽能發電模組發電狀況異常，請檢查設備狀態。
