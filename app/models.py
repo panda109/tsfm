@@ -66,6 +66,7 @@ class Device_Info(UserMixin, db.Model):
     group_lower_bound = db.Column(db.Integer(),default = 5000)
     weekly_energy_amount = db.Column(db.Float(), default= 0)
     monthly_energy_amount = db.Column(db.Float(), default= 0)
+    annual_energy_amount = db.Column(db.Float(), default= 0)
     
     @classmethod
     def get_by_userid(cls, userid):
