@@ -47,7 +47,7 @@ class GenPosts(object):
             "icon": "http://%s/postpicture/SolarPanel.png" % self.strHost,
             "title": self.dicMsgs['PST_02_01'],
             # 太陽能發電模組 %s，過去 %s 分鐘內發電狀況異常，請檢查設備狀態。
-            "description": self.dicMsgs['%PST_02_02'] % (strPVName, strMin),
+            "description": self.dicMsgs['PST_02_02'] % (strPVName, strMin),
             "images": [
                     {
                         "previewImageUrl": "http://%s/postpicture/post_NoPower.png" % self.strHost,
@@ -65,7 +65,7 @@ class GenPosts(object):
             "icon": "http://%s/postpicture/SolarPanel.png" % self.strHost,
             "title": self.dicMsgs['PST_03_01'],
             # 群組 %s 中，過去 %s 分鐘內有部份太陽能發電模組發電狀況異常，請檢查設備狀態。
-            "description": self.dicMsgs['%PST_03_02'] % (strGroup, strMin),
+            "description": self.dicMsgs['PST_03_02'] % (strGroup, strMin),
             "images": [
                     {
                         "previewImageUrl": "http://%s/postpicture/post_LowSellingPower.png" % self.strHost,
