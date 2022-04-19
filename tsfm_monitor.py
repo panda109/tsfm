@@ -40,9 +40,9 @@ if __name__ == '__main__':
     objLogger = logging.getLogger('tsfm_monitor')
     objLogger.info('TSFM Notify Monitor starts....')
     
-
     # check system setting
     strEnv = os.getenv('FLASK_CONFIG')
+    
     # load supported solar inverter model
     listModels = get_inverter_model(objCurrentPath)
     tupModels = tuple(listModels)

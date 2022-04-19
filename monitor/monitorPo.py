@@ -31,6 +31,7 @@ class monitorPo(threading.Thread):
         self.intCheckInterval = intInterval
         self.strSolarModel = strTup_Modle
         self.objPost = GenPosts('zh_tw') # 2022.02.19 need to load locale setting in the future
+        intCheckNoPowerInterval = intInterval
         
     def get_thread_ID(self):
         return self.strThreadID

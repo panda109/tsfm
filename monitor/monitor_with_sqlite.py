@@ -21,6 +21,8 @@ def monitorPV(strDBPath,strSolarModels,intMonitorInterval):
     objPost = GenPosts('zh_tw') # 2022.02.11 need to load locale setting in the future
     try:
         while True:
+            intCheckNoPowerInterval = intMonitorInterval
+            
             # connect to sqlite3 DB
             objConn = sqlite3.connect(os.path.join(strDBPath,strDB_Test))
             objCursor = objConn.cursor()

@@ -36,7 +36,7 @@ def find_group_diff(strDBType,objDB,strModels,objNotify,strCheckingInterval):
         objDB2 = objDB
     
     try:
-        listDeviceInfoResults = objDB2.query("select user_id, group_id, uuid, group_lower_bound from device_info where model in %s and online_status = 'ONLINE' order by user_id, group_id" % strModels)
+        listDeviceInfoResults = objDB2.query("select user_id, group_id, uuid, group_lower_bound from device_info where group_id != '0' and model in %s and online_status = 'ONLINE' order by user_id, group_id" % strModels)
         #listResults = objDB2.query("select user_id, group_id from device_info where model in %s and online_status = 'ONLINE' order by user_id, group_id" % strModels)
         #print('first query:\n', listResults)
         dicUserGroups = {}
