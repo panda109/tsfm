@@ -1,5 +1,1 @@
-# tsfm
-
-
-
-LLLLLL
+gunicorn -w 10 -b 0.0.0.0:5000 --worker-class gevent wsgi:app >> /dev/null 2>&1 &
