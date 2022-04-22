@@ -43,7 +43,8 @@ def update_notify_all(userid,status,methods = ["GET"]):
 def update_device_setting():
     # get required data 
     if request.method == "POST":
-        print("For TSFM REQUIRED DATA Data: \n", request.form)
+        pass
+        #print("For TSFM REQUIRED DATA Data: \n", request.form)
         #return json.dumps(request.json, ensure_ascii = False)
     else:
         abort(400)
@@ -88,7 +89,8 @@ def publish_setting():
 def required_data():
     # get required data 
     if request.method == "POST":
-        print("For TSFM REQUIRED DATA Data: \n", request.json)
+        pass
+        #print("For TSFM REQUIRED DATA Data: \n", request.json)
         #return json.dumps(request.json, ensure_ascii = False)
     else:
         abort(400) 
@@ -112,7 +114,8 @@ def required_data():
 def device_status():
     #get device status data
     if request.method == "POST":
-        print("For TSFM DEVICE STATUS Data: \n", request.json)
+        pass
+        #print("For TSFM DEVICE STATUS Data: \n", request.json)
         #return json.dumps(request.json, ensure_ascii = False)
     else:
         abort(400)
@@ -169,7 +172,7 @@ def device_status():
 def service_status():
     #get device status data
     if request.method == "POST":
-        print("For TSFM SERVICE STATUS Data: \n", request.json)
+        #print("For TSFM SERVICE STATUS Data: \n", request.json)
         whkSvcSta = request.json
     else:
         abort(400)
