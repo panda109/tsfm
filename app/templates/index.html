@@ -21,7 +21,9 @@
 {% if temp.gw_name != temp.gw_name_last and device.model == 'Delta_RPI-M10A'%}
 	<div class="row" style="border:10px white dashed;">
 		<div  align="center" class="col-xs-12 col-sm-12 device-border" style="border-width:0px;border-style:none;border-color:#BBBCBCB8;padding:0px;">
+		<div class="container2">
 		<p>閘道器 : {{ get_gwname(device.gw_uuid) }}</p>
+		</div>
 		<hr style="border: 1px solid #215EC6;" align="center" width="100%">
 		</div>
 	</div>
