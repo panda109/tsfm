@@ -1,5 +1,5 @@
 gunicorn -w 3 -b 0.0.0.0:5000 --worker-class gevent wsgi:app&
-
+gunicorn -w 10 -b 0.0.0.0:5000 --worker-class gevent wsgi:app >/dev/null 2>&1&
 nginx:site-available
 server {
 listen 80;

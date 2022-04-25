@@ -93,6 +93,26 @@ def get_monthlygenElec(device):
         return(round(device.monthly_energy_amount+devicedata.value, 1))
     return(round(device.monthly_energy_amount, 1))
 
+def get_annualgenElec(device):
+    #     firstDayofMonth = datetime.today().replace(day=1)
+    #     start_time = int(firstDayofMonth.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000
+    #     end_time = start_time + 86400000
+    #     max_time = int(datetime.now().replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000+86400000
+    #     month_sum = 0
+    #     while end_time <= max_time :
+    #         if Device_Data.getyesterday(device.uuid,model,scope,start_time,end_time).first():
+    #             month_sum += Device_Data.getyesterday(device.uuid,model,scope,start_time,end_time).first().value
+    #         end_time += 86400000
+    #         start_time += 86400000
+    #     return(round(month_sum, 1))
+    model='Delta_RPI-M10A'
+    scope='generatedElectricity'
+    time = int(datetime.now().timestamp()-1800)*1000
+    devicedata = Device_Data.gettoday(device.uuid,model,scope,time).first()
+    if devicedata:
+        return(round(device.annual_energy_amount+devicedata.value, 1))
+    return(round(device.annual_energy_amount, 1))
+
 def get_instanceElectricity(uuid):
     model='Delta_RPI-M10A'
     scope='instanceElectricity'
@@ -139,6 +159,7 @@ def create_app(config_name):
     app.jinja_env.globals.update(get_yesterdaygeneratedElectricity=get_yesterdaygeneratedElectricity)
     app.jinja_env.globals.update(get_weeklygenElec=get_weeklygenElec)
     app.jinja_env.globals.update(get_monthlygenElec=get_monthlygenElec)
+    app.jinja_env.globals.update(get_annualgenElec=get_annualgenElec)
     app.jinja_env.globals.update(no_device=no_device)
     app.jinja_env.globals.update(display_device_name=display_device_name)
     app.jinja_env.globals.update(get_grpLowerBound=get_grpLowerBound)
