@@ -10,12 +10,22 @@ import os,time
 from datetime import datetime, timedelta
 from calendar import week
 from adbutils import device
+import requests
 
 bootstrap = Bootstrap()
 moment = Moment()
 db = SQLAlchemy()
 from .models import Device_Data , Device_Info , User_Mgmt
 
+
+def get_gwname(uuid):
+    token='qt5pOgkyHX3SqxqzfvN/ADVAg3KbV5zrWIXbM8H'
+    qa_std = "https://ioeapi-qa.nextdrive.io/v2/gateways/"+ uuid +"/status"
+
+    headers = {'Accept': 'application/json' , 'X-ND-TOKEN' : token}
+    r = requests.get(qa_std , headers = headers )
+    #print(r.text)
+    return(r.json()['name'])
 
 def get_yesterdaygeneratedElectricity(uuid):
     model='Delta_RPI-M10A'
@@ -132,4 +142,5 @@ def create_app(config_name):
     app.jinja_env.globals.update(no_device=no_device)
     app.jinja_env.globals.update(display_device_name=display_device_name)
     app.jinja_env.globals.update(get_grpLowerBound=get_grpLowerBound)
+    app.jinja_env.globals.update(get_gwname=get_gwname)
     return app
