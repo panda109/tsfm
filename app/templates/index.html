@@ -19,9 +19,10 @@
 {% for device in devices.all() %}
 {% set temp.gw_name = device.gw_uuid %}
 {% if temp.gw_name != temp.gw_name_last and device.model == 'Delta_RPI-M10A'%}
-	<div class="row" style="border:10px white dashed;">
+	<div class="row" style="border:3px white dashed;">
 		<div  align="center" class="col-xs-12 col-sm-12 device-border" style="border-width:0.5px;border-style:none;border-color:#BBBCBCB8;padding:0px;">
 		<p>閘道器 : {{ get_gwname(device.gw_uuid) }}</p>
+		<hr style="border: 1px solid #215EC6;" align="center" width="100%">
 		</div>
 	</div>
 {% set temp.gw_name_last = device.gw_uuid %}
