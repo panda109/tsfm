@@ -41,8 +41,8 @@ def monitorPV(strDBPath,strSolarModels,intMonitorInterval):
             objCursor.execute("delete from device_data where generated_time < %s" % intTimeStamp_ToBeDelete)
             objConn.commit()
             objLogger.info('Finish deleting....')
-            objCursor.execute("vacuum")
-            objLogger.info('Run vacuum to reduce DB size....')
+            #objCursor.execute("vacuum")
+            #objLogger.info('Run vacuum to reduce DB size....')
             time.sleep(5)
             
             # start to query and notify           

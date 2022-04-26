@@ -66,7 +66,7 @@ def update_period_data(strDBType,objDB,strModels,intTimeZoneHour):
         #if intCurrentHour > 0: # for testing
             intTimeStamp_MidNight23Hour = int(objNow.timestamp()*1000)
             #intTimeStamp_MidNight23Hour = 1647925628699 # for testing
-            listDeviceInfoResults = objDB2.query("select uuid, weekly_energy_amount, monthly_energy_amount from device_info where model in %s" % strModels)
+            listDeviceInfoResults = objDB2.query("select uuid, weekly_energy_amount, monthly_energy_amount, annual_energy_amount from device_info where model in %s" % strModels)
             for listDevice in listDeviceInfoResults:
                 # Read the value of today's last generated power
                 listGenPower = objDB2.query("select value, generated_time from device_data where dev_uuid = '%s' and scope = 'generatedElectricity' and generated_time < %s order by generated_time desc LIMIT 1" % (listDevice[0],intTimeStamp_MidNight23Hour))
@@ -80,9 +80,14 @@ def update_period_data(strDBType,objDB,strModels,intTimeZoneHour):
                         floatMonthlyAmount = 0 # reset for the total of this month
                     else:
                         floatMonthlyAmount = listDevice[2] + listGenPower[0][0]
+                    if objNow.strftime("%m-%d") == '12-31':
+                        floatAnnualAmount = 0 # reset for the total of this year
+                    else:
+                        floatAnnualAmount = listDevice[3] + listGenPower[0][0]
                     objLogger.debug('floatWeeklyAmount: '+ str(floatWeeklyAmount))
                     objLogger.debug('floatMonthlyAmount: '+ str(floatMonthlyAmount))
-                    objDB2.update("update device_info set weekly_energy_amount = %s, monthly_energy_amount = %s where uuid = '%s'", [floatWeeklyAmount,floatMonthlyAmount,listDevice[0]])
+                    objLogger.debug('floatAnnualAmount: '+ str(floatAnnualAmount))
+                    objDB2.update("update device_info set weekly_energy_amount = %s, monthly_energy_amount = %s, annual_energy_amount = %s where uuid = '%s'", [floatWeeklyAmount,floatMonthlyAmount,floatAnnualAmount,listDevice[0]])
                     time.sleep(1)
     
     except Exception as error:
