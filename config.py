@@ -11,7 +11,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 #S_IMAGEPATH = os.getcwd() + '/static/story/images/'
 
 #IPPORT = 'bytaiwan.me'
-IPPORT = '192.168.7.26:5000'
+IPPORT = 'ec2-13-112-228-148.ap-northeast-1.compute.amazonaws.com'
 #IPPORT = '192.168.0.18:5000'
 #IPPORT = '29fa258b.ngrok.io'
 mailpassword=''
