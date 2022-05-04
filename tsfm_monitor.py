@@ -54,6 +54,7 @@ if __name__ == '__main__':
 
     # for testing
     #strEnv = 'testing'
+    #strEnv = 'production'
     #basedir = os.path.abspath(os.path.dirname(__file__))
     #####################
     
@@ -72,7 +73,7 @@ if __name__ == '__main__':
                     thdMonitor = monitorPo(intMonitorInterval,strModle_Tuple)
                     thdMonitor.start()
                     time.sleep(1)
-                    objLogger.info('Re-launch monitor thread id:',thdMonitor.get_thread_ID())
+                    objLogger.info('Re-launch monitor thread id: %s' % thdMonitor.get_thread_ID())
                 time.sleep(intWatchInterval)
                 
         except Exception as error:

@@ -38,7 +38,8 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:1q2w3e4r@192.168.7.85:5432/TEST"
+    #SQLALCHEMY_DATABASE_URI = "postgresql://postgres:1q2w3e4r@192.168.7.85:5432/TEST"
+    SQLALCHEMY_DATABASE_URI = "postgresql://qa_user:kGm:A.=#=])6P^6j@pgbouncer-qa.nextdrive.io:15432/tsfm"
 
 
 config = {

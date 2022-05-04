@@ -16,8 +16,8 @@ intCheckNoPowerInterval = 600
 dicTSFM_DB = {
     'strHost':'pgbouncer-qa.nextdrive.io',
     'strPort':'15432',
-    'strUser':'nxd_bnop_user',
-    'strPW':'HXvRwdVYT2PbvUGb',
+    'strUser':'qa_user',
+    'strPW':'kGm:A.=#=])6P^6j',
     'strDB':'tsfm'
     }
 
@@ -29,10 +29,11 @@ class monitorPo(threading.Thread):
         threading.Thread.__init__(self)
         self.daemon = True
         self.intCheckInterval = intInterval
-        self.strSolarModel = strTup_Modle
+        self.strSolarModels = strTup_Modle
         self.objPost = GenPosts('zh_tw') # 2022.02.19 need to load locale setting in the future
         intCheckNoPowerInterval = intInterval
-        
+    
+    
     def get_thread_ID(self):
         return self.strThreadID
     
@@ -54,13 +55,13 @@ class monitorPo(threading.Thread):
         """
     
     def run(self):
-        #self.strThreadID = threading.get_ident()
+        self.strThreadID = threading.get_ident()
         try:
             while True:
                 self._conn_postgres_db()
                 objNow = datetime.now()
                 
-                update_period_data('postgresql',self.objTSFMDB,self.strSolarModels)
+                update_period_data('postgresql',self.objTSFMDB,self.strSolarModels,intTimeZoneHour)
                 
                 # remove old data (24-hours-before)
                 objLogger.info('Start to delete old data....')
@@ -71,7 +72,7 @@ class monitorPo(threading.Thread):
                 time.sleep(5)
                 
                 # find users and devices that notify = ON
-                listResults = self.objTSFMDB.query(self.strSQL_FindUser_ON % self.strSolarModel)
+                listResults = self.objTSFMDB.query(self.strSQL_FindUser_ON % self.strSolarModels)
                 #objLogger.debug('find ON user: %s' % str(stResults))
                 # uuid,name,model,online_status,gw_uuid,user_id,associated,target_energy_level,lower_bound,start_time,end_time,notify
                 for listDevice in listResults:
@@ -87,7 +88,7 @@ class monitorPo(threading.Thread):
                         intTimeStamp_Start = int(objFrom.timestamp()*1000)
                         strNowTime = objNow.strftime("%H:%M")
                         
-                        litResults = self.objTSFMDB.query(self.strSQL_QueryValue % (self.strSolarModel,listDevice[0],intTimeStamp_Start,intTimeStamp_Now))
+                        litResults = self.objTSFMDB.query(self.strSQL_QueryValue % (self.strSolarModels,listDevice[0],intTimeStamp_Start,intTimeStamp_Now))
                         #objLogger.debug('litResults: %s' % str(litResults))
                         if litResults != []:
                             if litResults[0][0] is not None:
