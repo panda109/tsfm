@@ -112,6 +112,13 @@ def required_data():
   
 @main.route("/tsfm_device_status", methods = ["POST"])
 def device_status():
+    #get white list
+    str_white_list_path = os.path.join(os.getcwd(), 'monitor', 'inverter_model.json')
+    with open(str_white_list_path) as obj_file:
+        dict_white_list_data = json.load(obj_file)
+    list_white_list = dict_white_list_data['model']
+    obj_file.close()
+    
     #get device status data
     if request.method == "POST":
         pass
@@ -153,16 +160,19 @@ def device_status():
                     )
             # Insert a new device uuid
             else:
-                db.session.add(
-                                Device_Info(
-                                        uuid = dict_data["gateway"]["devices"][i]["uuid"],
-                                        name = dict_data["gateway"]["devices"][i]["name"],
-                                        model = dict_data["gateway"]["devices"][i]["model"],
-                                        online_status = dict_data["gateway"]["devices"][i]["status"],
-                                        gw_uuid = dict_data["gateway"]["uuid"],
-                                        user_id = dict_data["userId"],
-                                        associated = 'TRUE'
-                                    ))
+                if dict_data["gateway"]["devices"][i]["model"] not in list_white_list:
+                    pass
+                else:
+                    db.session.add(
+                                    Device_Info(
+                                            uuid = dict_data["gateway"]["devices"][i]["uuid"],
+                                            name = dict_data["gateway"]["devices"][i]["name"],
+                                            model = dict_data["gateway"]["devices"][i]["model"],
+                                            online_status = dict_data["gateway"]["devices"][i]["status"],
+                                            gw_uuid = dict_data["gateway"]["uuid"],
+                                            user_id = dict_data["userId"],
+                                            associated = 'TRUE'
+                                        ))
             db.session.commit()  
     return json.dumps(request.json, ensure_ascii = False)
             ## Note:
