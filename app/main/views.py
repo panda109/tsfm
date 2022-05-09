@@ -118,6 +118,8 @@ def device_status():
         dict_white_list_data = json.load(obj_file)
     list_white_list = dict_white_list_data['model']
     obj_file.close()
+    print(str_white_list_path)
+    print(list_white_list)
     
     #get device status data
     if request.method == "POST":
