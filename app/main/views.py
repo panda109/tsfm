@@ -214,20 +214,17 @@ def service_status():
         _gatewayid_ = whkSvcSta['associations'][i]['gateway']['uuid']
         for j in range(len(whkSvcSta['associations'][i]['gateway']['devices'])) :
           if Device_Info().query.filter_by(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid']).count() > 0 : 
-              if whkSvcSta['associations'][i]['gateway']['devices'][j]['model'] not in list_white_list:
-                  pass
-              else:
-                Device_Info().query.filter_by(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid']).update({
-                  'online_status': whkSvcSta['associations'][i]['gateway']['devices'][j]['status'],
-                  'name' : whkSvcSta['associations'][i]['gateway']['devices'][j]['name'],
-                  'model': whkSvcSta['associations'][i]['gateway']['devices'][j]['model'],
-                  'gw_uuid': _gatewayid_ ,
-                  'user_id': _userid_ ,
-                  'associated': 'TRUE'
-                  }
-                )
-    
-                db.session.commit()         
+            Device_Info().query.filter_by(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid']).update({
+              'online_status': whkSvcSta['associations'][i]['gateway']['devices'][j]['status'],
+              'name' : whkSvcSta['associations'][i]['gateway']['devices'][j]['name'],
+              'model': whkSvcSta['associations'][i]['gateway']['devices'][j]['model'],
+              'gw_uuid': _gatewayid_ ,
+              'user_id': _userid_ ,
+              'associated': 'TRUE'
+              }
+            )
+
+            db.session.commit()         
         
           else:  
             if whkSvcSta['associations'][i]['gateway']['devices'][j]['model'] in list_white_list:
