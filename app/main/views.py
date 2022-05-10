@@ -228,14 +228,17 @@ def service_status():
                 db.session.commit()         
         
           else:  
-            db.session.add(Device_Info(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid'], 
-              online_status = whkSvcSta['associations'][i]['gateway']['devices'][j]['status'],
-              name = whkSvcSta['associations'][i]['gateway']['devices'][j]['name'], 
-              model = whkSvcSta['associations'][i]['gateway']['devices'][j]['model'], 
-              gw_uuid = _gatewayid_ , 
-              user_id = _userid_ , 
-              associated = 'TRUE'))
-          
-            db.session.commit()
+            if whkSvcSta['associations'][i]['gateway']['devices'][j]['model'] not in list_white_list:
+                  pass
+            else:
+                db.session.add(Device_Info(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid'], 
+                  online_status = whkSvcSta['associations'][i]['gateway']['devices'][j]['status'],
+                  name = whkSvcSta['associations'][i]['gateway']['devices'][j]['name'], 
+                  model = whkSvcSta['associations'][i]['gateway']['devices'][j]['model'], 
+                  gw_uuid = _gatewayid_ , 
+                  user_id = _userid_ , 
+                  associated = 'TRUE'))
+              
+                db.session.commit()
     
     return json.dumps(request.json, ensure_ascii = False)
