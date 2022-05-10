@@ -182,6 +182,12 @@ def device_status():
 
 @main.route("/tsfm_service_status", methods = ["POST"])
 def service_status():
+    # Get device white list from /monitor/inverter_model.json
+    str_white_list_path = os.path.join(os.getcwd(), 'monitor', 'inverter_model.json')
+    with open(str_white_list_path) as obj_file:
+        dict_white_list_data = json.load(obj_file)
+    list_white_list = dict_white_list_data['model']
+    obj_file.close()
     #get device status data
     if request.method == "POST":
         #print("For TSFM SERVICE STATUS Data: \n", request.json)
@@ -206,17 +212,20 @@ def service_status():
         _gatewayid_ = whkSvcSta['associations'][i]['gateway']['uuid']
         for j in range(len(whkSvcSta['associations'][i]['gateway']['devices'])) :
           if Device_Info().query.filter_by(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid']).count() > 0 : 
-            Device_Info().query.filter_by(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid']).update({
-              'online_status': whkSvcSta['associations'][i]['gateway']['devices'][j]['status'],
-              'name' : whkSvcSta['associations'][i]['gateway']['devices'][j]['name'],
-              'model': whkSvcSta['associations'][i]['gateway']['devices'][j]['model'],
-              'gw_uuid': _gatewayid_ ,
-              'user_id': _userid_ ,
-              'associated': 'TRUE'
-              }
-            )
-
-            db.session.commit()         
+              if whkSvcSta['associations'][i]['gateway']['devices'][j]['model'] not in list_white_list:
+                  pass
+              else:
+                Device_Info().query.filter_by(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid']).update({
+                  'online_status': whkSvcSta['associations'][i]['gateway']['devices'][j]['status'],
+                  'name' : whkSvcSta['associations'][i]['gateway']['devices'][j]['name'],
+                  'model': whkSvcSta['associations'][i]['gateway']['devices'][j]['model'],
+                  'gw_uuid': _gatewayid_ ,
+                  'user_id': _userid_ ,
+                  'associated': 'TRUE'
+                  }
+                )
+    
+                db.session.commit()         
         
           else:  
             db.session.add(Device_Info(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid'], 
