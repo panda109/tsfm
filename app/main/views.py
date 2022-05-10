@@ -182,12 +182,6 @@ def device_status():
 
 @main.route("/tsfm_service_status", methods = ["POST"])
 def service_status():
-    # Get device white list from /monitor/inverter_model.json
-    str_white_list_path = os.path.join(os.getcwd(), 'monitor', 'inverter_model.json')
-    with open(str_white_list_path) as obj_file:
-        dict_white_list_data = json.load(obj_file)
-    list_white_list = dict_white_list_data['model']
-    obj_file.close()
     #get device status data
     if request.method == "POST":
         #print("For TSFM SERVICE STATUS Data: \n", request.json)
@@ -206,6 +200,14 @@ def service_status():
 
 ## save user id for device
     _userid_ = whkSvcSta['userId']
+    
+    # Get device white list from /monitor/inverter_model.json
+    str_white_list_path = os.path.join(os.getcwd(), 'monitor', 'inverter_model.json')
+    with open(str_white_list_path) as obj_file:
+        dict_white_list_data = json.load(obj_file)
+    list_white_list = dict_white_list_data['model']
+    obj_file.close()
+    
 ## update device list info / insert new device info entry
     if len(whkSvcSta['associations']) > 0 :
       for i in range(len(whkSvcSta['associations'])) :
