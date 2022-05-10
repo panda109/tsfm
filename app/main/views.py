@@ -230,9 +230,7 @@ def service_status():
                 db.session.commit()         
         
           else:  
-            if whkSvcSta['associations'][i]['gateway']['devices'][j]['model'] not in list_white_list:
-                  pass
-            else:
+            if whkSvcSta['associations'][i]['gateway']['devices'][j]['model'] in list_white_list:
                 db.session.add(Device_Info(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid'], 
                   online_status = whkSvcSta['associations'][i]['gateway']['devices'][j]['status'],
                   name = whkSvcSta['associations'][i]['gateway']['devices'][j]['name'], 
