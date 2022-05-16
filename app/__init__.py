@@ -28,11 +28,11 @@ def get_gwname(uuid):
     return(r.json()['name'])
 
 def get_yesterdaygeneratedElectricity(uuid):
-    model='Delta_RPI-M10A'
+
     scope='generatedElectricity'
     etime = int(datetime.now().replace(hour=0,minute=0,second=0,microsecond=0).timestamp()-3600*8)*1000
     stime = etime - 86400000 - 3600000 * 8
-    devicedata = Device_Data.getyesterday(uuid,model,scope,stime,etime).first()
+    devicedata = Device_Data.getyesterday(uuid,scope,stime,etime).first()
     
     if devicedata:
         return(round(devicedata.value, 1))
@@ -41,10 +41,9 @@ def get_yesterdaygeneratedElectricity(uuid):
         return(0)
 
 def get_generatedElectricity(uuid):
-    model='Delta_RPI-M10A'
     scope='generatedElectricity'
     time = int(datetime.now().replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000
-    devicedata = Device_Data.gettoday(uuid,model,scope,time).first()
+    devicedata = Device_Data.gettoday(uuid,scope,time).first()
     
     if devicedata:
         return(round(devicedata.value, 1))
@@ -54,10 +53,9 @@ def get_generatedElectricity(uuid):
 
 def get_weeklygenElec(device):
     # Assuming that a week starts from monday
-    model='Delta_RPI-M10A'
     scope='generatedElectricity'
     time = int(datetime.now().timestamp()-1800)*1000
-    devicedata = Device_Data.gettoday(device.uuid,model,scope,time).first()
+    devicedata = Device_Data.gettoday(device.uuid,scope,time).first()
     #     now_time = datetime.now()
     #     prev_monday = now_time - timedelta(days=now_time.weekday())
     #     start_time = int(prev_monday.replace(hour=0,minute=0,second=0,microsecond=0).timestamp())*1000
@@ -85,10 +83,9 @@ def get_monthlygenElec(device):
     #         end_time += 86400000
     #         start_time += 86400000
     #     return(round(month_sum, 1))
-    model='Delta_RPI-M10A'
     scope='generatedElectricity'
     time = int(datetime.now().timestamp()-1800)*1000
-    devicedata = Device_Data.gettoday(device.uuid,model,scope,time).first()
+    devicedata = Device_Data.gettoday(device.uuid,scope,time).first()
     if devicedata:
         return(round(device.monthly_energy_amount+devicedata.value, 1))
     return(round(device.monthly_energy_amount, 1))
@@ -105,19 +102,17 @@ def get_annualgenElec(device):
     #         end_time += 86400000
     #         start_time += 86400000
     #     return(round(month_sum, 1))
-    model='Delta_RPI-M10A'
     scope='generatedElectricity'
     time = int(datetime.now().timestamp()-1800)*1000
-    devicedata = Device_Data.gettoday(device.uuid,model,scope,time).first()
+    devicedata = Device_Data.gettoday(device.uuid,scope,time).first()
     if devicedata:
         return(round(device.annual_energy_amount+devicedata.value, 1))
     return(round(device.annual_energy_amount, 1))
 
 def get_instanceElectricity(uuid):
-    model='Delta_RPI-M10A'
     scope='instanceElectricity'
     time = int(datetime.now().timestamp()-1800)*1000
-    devicedata = Device_Data.gettoday(uuid,model,scope,time).first()
+    devicedata = Device_Data.gettoday(uuid,scope,time).first()
     
     if devicedata:
         return(round(devicedata.value, 3))
@@ -128,7 +123,7 @@ def get_instanceElectricity(uuid):
 def no_device(list):
     count = False
     for device in list: 
-        if device.model == 'Delta_RPI-M10A' :
+        if device.model :
             count = True
     return count
 

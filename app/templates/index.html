@@ -18,7 +18,7 @@
 {% set temp = namespace(gw_name_last='') %}
 {% for device in devices.all() %}
 {% set temp.gw_name = device.gw_uuid %}
-{% if temp.gw_name != temp.gw_name_last and device.model == 'Delta_RPI-M10A'%}
+{% if temp.gw_name != temp.gw_name_last %}
 	<div class="row" style="border:10px white dashed;">
 		<div  align="center" class="col-xs-12 col-sm-12 device-border" style="border-width:0px;border-style:none;border-color:#BBBCBCB8;padding:0px;">
 		<div class="container2">
@@ -29,7 +29,6 @@
 	</div>
 {% set temp.gw_name_last = device.gw_uuid %}
 {% endif %}
-{% if device.model == 'Delta_RPI-M10A' %}
 	<div class="row" style="border:10px white dashed;">
 		<div class="col-xs-12 col-sm-12 device-border" style="border-width:0.5px;border-style:solid;border-color:#BBBCBCB8;padding:5px;">
 			<div class="row">
@@ -73,7 +72,6 @@
 			</div>			
 		</div>
 	</div>
-{% endif %}
 {% endfor %}	
 </div>
 {% endif %}

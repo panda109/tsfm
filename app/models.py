@@ -20,27 +20,27 @@ class Device_Data(UserMixin, db.Model):
     uploaded_time = db.Column(db.BigInteger)
     
     @classmethod
-    def getyesterday(cls, uuid ,model ,scope ,stime , etime):
+    def getyesterday(cls, uuid  ,scope ,stime , etime):
         #print(scope,stime,etime)
-        devices = Device_Data.query.filter_by(dev_uuid=uuid,model=model,scope=scope).filter(Device_Data.generated_time>=stime).filter(Device_Data.generated_time<=etime).order_by(Device_Data.generated_time.desc())
+        devices = Device_Data.query.filter_by(dev_uuid=uuid,scope=scope).filter(Device_Data.generated_time>=stime).filter(Device_Data.generated_time<=etime).order_by(Device_Data.generated_time.desc())
         return devices
     
     @classmethod
-    def gettoday(cls, uuid , model , scope , time):
+    def gettoday(cls, uuid , scope , time):
         #print(scope,time)
-        devices = Device_Data.query.filter_by(dev_uuid=uuid,model=model,scope=scope).filter(Device_Data.generated_time>=time).order_by(Device_Data.generated_time.desc())
+        devices = Device_Data.query.filter_by(dev_uuid=uuid,scope=scope).filter(Device_Data.generated_time>=time).order_by(Device_Data.generated_time.desc())
         return devices
     
     @classmethod
-    def getweek(cls, uuid , model , scope , wtime):
+    def getweek(cls, uuid , scope , wtime):
         #print(scope,wtime)
-        wdevices = Device_Data.query.filter_by(dev_uuid=uuid,model=model,scope=scope).filter(Device_Data.generated_time>=wtime).order_by(Device_Data.generated_time.desc())
+        wdevices = Device_Data.query.filter_by(dev_uuid=uuid,scope=scope).filter(Device_Data.generated_time>=wtime).order_by(Device_Data.generated_time.desc())
         return wdevices
     
     @classmethod
-    def getmonth(cls, uuid , model , scope , mtime):
+    def getmonth(cls, uuid , scope , mtime):
         #print(scope,mtime)
-        mdevices = Device_Data.query.filter_by(dev_uuid=uuid,model=model,scope=scope).filter(Device_Data.generated_time>=mtime).order_by(Device_Data.generated_time.desc())
+        mdevices = Device_Data.query.filter_by(dev_uuid=uuid,scope=scope).filter(Device_Data.generated_time>=mtime).order_by(Device_Data.generated_time.desc())
         return mdevices
 
     def __repr__(self):
