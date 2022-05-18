@@ -44,20 +44,20 @@
 			</div>
 			<div class="instanceElectricity">
 				<span>瞬時產電</span>
-				<p>{{ get_instanceElectricity(device.uuid) }} kWh</p>
+				<p>{{ get_instanceElectricity(device.uuid) }}kWh</p>
 			</div>
 			<div class="additional-info additional-info-1">
 				<div class='info-col-1'>
 					<span>當日總發電量</span>
-					<p>{{ get_generatedElectricity(device.uuid) }} kWh</p>
+					<p> device.today_energy_amount kWh</p>
 					<span>本週總發電量</span>
-					<p>{{ get_weeklygenElec(device) }} kWh</p>
+					<p>{{ device.weekly_energy_amount }} kWh</p>
 				</div>
 				<div class='info-col-2'>
 					<span>昨日總發電量</span>
-					<p>{{ get_yesterdaygeneratedElectricity(device.uuid) }} kWh</p>
+					<p> device.yesterday_energy_amount kWh</p>
 					<span>當月總發電量</span>
-					<p>{{ get_monthlygenElec(device) }} kWh</p>
+					<p>{{ device.monthly_energy_amount }} kWh</p>
 				</div>
 				<div class='info-col-3'>
 					<span>通　知</span>
@@ -67,7 +67,8 @@
 					<p style="color:#5EA76E">ON</p>
 					{% endif %}
 					<span>當年總發電量</span>
-					<p>{{ get_annualgenElec(device) }} kWh</p>
+					<p>{{ device.annual_energy_amount }} kWh</p>
+					
 				</div>
 			</div>			
 		</div>
