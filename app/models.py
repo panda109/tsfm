@@ -67,6 +67,8 @@ class Device_Info(UserMixin, db.Model):
     weekly_energy_amount = db.Column(db.Float(), default= 0)
     monthly_energy_amount = db.Column(db.Float(), default= 0)
     annual_energy_amount = db.Column(db.Float(), default= 0)
+    today_energy_amount = db.Column(db.Float(), default= 0)
+    yesterday_energy_amount = db.Column(db.Float(), default= 0)
     
     @classmethod
     def get_by_userid(cls, userid):
