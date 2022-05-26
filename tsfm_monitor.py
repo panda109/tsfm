@@ -58,28 +58,28 @@ if __name__ == '__main__':
     #basedir = os.path.abspath(os.path.dirname(__file__))
     #####################
     
-    if strEnv == 'production': # load postgresql DB
-        from monitor.monitorPo import monitorPo
-        
-        try:
-            thdMonitor = monitorPo(intMonitorInterval,strModle_Tuple)
-            thdMonitor.start()
-            time.sleep(1)
-            while True:
-                #break
-                #objLogger.info('monitor thread heartbeat...')
-                if not thdMonitor.is_alive():
-                    objLogger.debug('Original monitor thread is dead. Now re-launch it.')
-                    thdMonitor = monitorPo(intMonitorInterval,strModle_Tuple)
-                    thdMonitor.start()
-                    time.sleep(1)
-                    objLogger.info('Re-launch monitor thread id: %s' % thdMonitor.get_thread_ID())
-                time.sleep(intWatchInterval)
-                
-        except Exception as error:
-            objLogger.error('Main gets error:',error)
+    #if strEnv == 'production': # load postgresql DB
+    from monitor.monitorPo import monitorPo
+    
+    try:
+        thdMonitor = monitorPo(intMonitorInterval,strModle_Tuple)
+        thdMonitor.start()
+        time.sleep(1)
+        while True:
+            #break
+            #objLogger.info('monitor thread heartbeat...')
+            if not thdMonitor.is_alive():
+                objLogger.debug('Original monitor thread is dead. Now re-launch it.')
+                thdMonitor = monitorPo(intMonitorInterval,strModle_Tuple)
+                thdMonitor.start()
+                time.sleep(1)
+                objLogger.info('Re-launch monitor thread id: %s' % thdMonitor.get_thread_ID())
+            time.sleep(intWatchInterval)
+            
+    except Exception as error:
+        objLogger.error('Main gets error:',error)
 
-        
+    """
     else: # load sqlite DB
         from monitor.monitor_with_sqlite import monitorPV
         import threading
@@ -97,6 +97,6 @@ if __name__ == '__main__':
                 time.sleep(1)
                 objLogger.info('Re-launch monitor thread id:',thdNotify.get_thread_ID())
             time.sleep(intWatchInterval)
-
+    """
         
     objLogger.info('Notify monitor is down....')
