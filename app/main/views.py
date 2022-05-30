@@ -85,7 +85,8 @@ def publish_setting():
 def required_data():
     # get required data 
     if request.method == "POST":
-        print("For TSFM REQUIRED DATA Data: \n", request.json)
+        pass
+        #print("For TSFM REQUIRED DATA Data: \n", request.json)
         #return json.dumps(request.json, ensure_ascii = False)
     else:
         abort(400) 
@@ -107,9 +108,19 @@ def required_data():
   
 @main.route("/tsfm_device_status", methods = ["POST"])
 def device_status():
+    #get white list
+    str_white_list_path = os.path.join(os.getcwd(), 'monitor', 'inverter_model.json')
+    with open(str_white_list_path) as obj_file:
+        dict_white_list_data = json.load(obj_file)
+    list_white_list = dict_white_list_data['model']
+    obj_file.close()
+    #print(str_white_list_path)
+    #print(list_white_list)
+    
     #get device status data
     if request.method == "POST":
-        print("For TSFM DEVICE STATUS Data: \n", request.json)
+        pass
+        #print("For TSFM DEVICE STATUS Data: \n", request.json)
         #return json.dumps(request.json, ensure_ascii = False)
     else:
         abort(400)
@@ -120,7 +131,7 @@ def device_status():
     elif dict_data['triggerReason'] == "DEVICE_UNPAIRED":
         list_exist_data = []
         list_income_data = []
-        for device_info in Device_Info().query.filter_by(user_id = dict_data["userId"]):
+        for device_info in Device_Info().query.filter_by(gw_uuid = dict_data["gateway"]["uuid"]):
             #query all the devices which belongs to user_id = xxxxx
             list_exist_data.append(device_info.uuid)
         for new_income_data in range(len(dict_data['gateway']['devices'])):
@@ -147,16 +158,19 @@ def device_status():
                     )
             # Insert a new device uuid
             else:
-                db.session.add(
-                                Device_Info(
-                                        uuid = dict_data["gateway"]["devices"][i]["uuid"],
-                                        name = dict_data["gateway"]["devices"][i]["name"],
-                                        model = dict_data["gateway"]["devices"][i]["model"],
-                                        online_status = dict_data["gateway"]["devices"][i]["status"],
-                                        gw_uuid = dict_data["gateway"]["uuid"],
-                                        user_id = dict_data["userId"],
-                                        associated = 'TRUE'
-                                    ))
+                if dict_data["gateway"]["devices"][i]["model"] not in list_white_list:
+                    pass
+                else:
+                    db.session.add(
+                                    Device_Info(
+                                            uuid = dict_data["gateway"]["devices"][i]["uuid"],
+                                            name = dict_data["gateway"]["devices"][i]["name"],
+                                            model = dict_data["gateway"]["devices"][i]["model"],
+                                            online_status = dict_data["gateway"]["devices"][i]["status"],
+                                            gw_uuid = dict_data["gateway"]["uuid"],
+                                            user_id = dict_data["userId"],
+                                            associated = 'TRUE'
+                                        ))
             db.session.commit()  
     return json.dumps(request.json, ensure_ascii = False)
             ## Note:
@@ -166,7 +180,7 @@ def device_status():
 def service_status():
     #get device status data
     if request.method == "POST":
-        print("For TSFM SERVICE STATUS Data: \n", request.json)
+        #print("For TSFM SERVICE STATUS Data: \n", request.json)
         whkSvcSta = request.json
     else:
         abort(400)
@@ -182,6 +196,14 @@ def service_status():
 
 ## save user id for device
     _userid_ = whkSvcSta['userId']
+    
+    # Get device white list from /monitor/inverter_model.json
+    str_white_list_path = os.path.join(os.getcwd(), 'monitor', 'inverter_model.json')
+    with open(str_white_list_path) as obj_file:
+        dict_white_list_data = json.load(obj_file)
+    list_white_list = dict_white_list_data['model']
+    obj_file.close()
+    
 ## update device list info / insert new device info entry
     if len(whkSvcSta['associations']) > 0 :
       for i in range(len(whkSvcSta['associations'])) :
@@ -201,14 +223,15 @@ def service_status():
             db.session.commit()         
         
           else:  
-            db.session.add(Device_Info(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid'], 
-              online_status = whkSvcSta['associations'][i]['gateway']['devices'][j]['status'],
-              name = whkSvcSta['associations'][i]['gateway']['devices'][j]['name'], 
-              model = whkSvcSta['associations'][i]['gateway']['devices'][j]['model'], 
-              gw_uuid = _gatewayid_ , 
-              user_id = _userid_ , 
-              associated = 'TRUE'))
-          
-            db.session.commit()
+            if whkSvcSta['associations'][i]['gateway']['devices'][j]['model'] in list_white_list:
+                db.session.add(Device_Info(uuid = whkSvcSta['associations'][i]['gateway']['devices'][j]['uuid'], 
+                  online_status = whkSvcSta['associations'][i]['gateway']['devices'][j]['status'],
+                  name = whkSvcSta['associations'][i]['gateway']['devices'][j]['name'], 
+                  model = whkSvcSta['associations'][i]['gateway']['devices'][j]['model'], 
+                  gw_uuid = _gatewayid_ , 
+                  user_id = _userid_ , 
+                  associated = 'TRUE'))
+              
+                db.session.commit()
     
     return json.dumps(request.json, ensure_ascii = False)
